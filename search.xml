@@ -21,28 +21,6 @@
       </tags>
   </entry>
   <entry>
-    <title>算法学习笔记（一）：牛顿迭代法（计算平方根）</title>
-    <url>/2020/04/11/%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>​    在算法（第四版）的13页里，我看到了一个的函数，它利用了牛顿迭代法来计算一个数的近似平方根，我通过查询资料理解了牛顿迭代法的实现过程。</p>
-<p>​    这个方法所包含的知识：</p>
-<p><em>1.导数的含义</em></p>
-<p><em>2.极限的思维</em></p>
-<p><em>3.函数的零点</em></p>
-<h4 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h4><p>1.在求一个函数零点时，我们可以随意取一个点作为起始点(x0,f(x0)），并过该点做函数的切线,设切线的横截距为x1。在该点（x1,0）垂直于X轴引垂线，交函数于(x1,f(x1)),再对该点做与之前同样的操作，以此往复。如下图：</p>
-<p><img src="http://q86xw0tu1.bkt.clouddn.com/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95%E5%9B%BE%E8%A7%A3.gif" alt="牛顿迭代法"></p>
-<p>2.对所得到的数据进行处理,经过运算，第一条切线的横截距，多条切线横截距为:<br>$$<br>x_1=x_0+f(x_0)/f’(x_0)\<br>x_2=x_1+f(x_1)/f’(x_1)\<br>…….\<br>x_(n+1)=x_n+f(x_n)/f’(x_n)<br>$$</p>
-<h4 id="利用牛顿迭代法来求一个数的平方根"><a href="#利用牛顿迭代法来求一个数的平方根" class="headerlink" title="利用牛顿迭代法来求一个数的平方根"></a>利用牛顿迭代法来求一个数的平方根</h4><p>1.假设：<br>$$<br>t=\sqrt[2]n\<br>则设f(x)=x^2-n\<br>可设x_0=n<br>$$<br>2.利用代码实现如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> t;</span><br><span class="line">	t=n;</span><br><span class="line">	<span class="keyword">while</span>(t-n/t&lt;=<span class="number">1e-15</span>*t)</span><br><span class="line">        <span class="comment">//这里跳出循环的条件是你所要求的精度，即1-n/t^2要满足一定精度。</span></span><br><span class="line">		t=(t+n/t);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>算法（第四版）</category>
-      </categories>
-      <tags>
-        <tag>算法学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>阿里云CentOS8.0服务器宝塔安装失败，提示（setuptools installation failed）</title>
     <url>/2020/04/03/%E9%98%BF%E9%87%8C%E4%BA%91CentOS8-0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%EF%BC%8C%E6%8F%90%E7%A4%BA%EF%BC%88setuptools-installation-failed%EF%BC%89/</url>
     <content><![CDATA[<p>对于想要搭建一些个人网站的小伙伴们，苦于阿里云繁琐的设置界面无从下手，推荐一个简洁的控制面板：宝塔面板</p>
@@ -62,6 +40,28 @@
       <tags>
         <tag>网站搭建</tag>
         <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法学习笔记（一）：牛顿迭代法（计算平方根）</title>
+    <url>/2020/04/11/%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>​    在算法（第四版）的13页里，我看到了一个的函数，它利用了牛顿迭代法来计算一个数的近似平方根，我通过查询资料理解了牛顿迭代法的实现过程。</p>
+<p>​    这个方法所包含的知识：</p>
+<p><em>1.导数的含义</em></p>
+<p><em>2.极限的思维</em></p>
+<p><em>3.函数的零点</em></p>
+<h4 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h4><p>1.在求一个函数零点时，我们可以随意取一个点作为起始点(x0,f(x0)），并过该点做函数的切线,设切线的横截距为x1。在该点（x1,0）垂直于X轴引垂线，交函数于(x1,f(x1)),再对该点做与之前同样的操作，以此往复。如下图：</p>
+<p><img src="http://q86xw0tu1.bkt.clouddn.com/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95%E5%9B%BE%E8%A7%A3.gif" alt="牛顿迭代法"></p>
+<p>2.对所得到的数据进行处理,经过运算，第一条切线的横截距，多条切线横截距为:<br>$$<br>x_1=x_0+f(x_0)/f’(x_0)\<br>x_2=x_1+f(x_1)/f’(x_1)\<br>…….\<br>x_(n+1)=x_n+f(x_n)/f’(x_n)<br>$$</p>
+<h4 id="利用牛顿迭代法来求一个数的平方根"><a href="#利用牛顿迭代法来求一个数的平方根" class="headerlink" title="利用牛顿迭代法来求一个数的平方根"></a>利用牛顿迭代法来求一个数的平方根</h4><p>1.假设：<br>$$<br>t=\sqrt[2]n\<br>则设f(x)=x^2-n\<br>可设x_0=n<br>$$<br>2.利用代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> t;</span><br><span class="line">	t=n;</span><br><span class="line">	<span class="keyword">while</span>(t-n/t&lt;=<span class="number">1e-15</span>*t)</span><br><span class="line">        <span class="comment">//这里跳出循环的条件是你所要求的精度，即1-n/t^2要满足一定精度。</span></span><br><span class="line">		t=(t+n/t);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>算法（第四版）</category>
+      </categories>
+      <tags>
+        <tag>算法学习</tag>
       </tags>
   </entry>
 </search>
