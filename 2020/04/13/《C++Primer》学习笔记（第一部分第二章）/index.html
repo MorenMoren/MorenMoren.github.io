@@ -81,12 +81,12 @@
 
 <meta name="description" content="2020.4.13写： 变量 初始化列表（initialize list）：  如以下4个初始化是等价的： ​    int i &#x3D; 0 ; ​    int i &#x3D; {0} ; ​    int i{0} ; ​    int i(0) ;  变量的声明：  ​    当我们仅仅是想声明一个变量，而非去定义，我们可以用extern来完成，而当我们用extern去声明一个变量时，我们如果给它初始">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《C++Primer》学习笔记（第二章）">
-<meta property="og:url" content="http://moleague.com/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/index.html">
+<meta property="og:title" content="《C++Primer》学习笔记（第一部分第二章）">
+<meta property="og:url" content="http://moleague.com/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/index.html">
 <meta property="og:site_name" content="mo&#39;s blog">
 <meta property="og:description" content="2020.4.13写： 变量 初始化列表（initialize list）：  如以下4个初始化是等价的： ​    int i &#x3D; 0 ; ​    int i &#x3D; {0} ; ​    int i{0} ; ​    int i(0) ;  变量的声明：  ​    当我们仅仅是想声明一个变量，而非去定义，我们可以用extern来完成，而当我们用extern去声明一个变量时，我们如果给它初始">
 <meta property="article:published_time" content="2020-04-13T04:08:49.000Z">
-<meta property="article:modified_time" content="2020-04-13T08:33:35.308Z">
+<meta property="article:modified_time" content="2020-04-14T06:11:48.603Z">
 <meta property="article:author" content="MorenMoren">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://moleague.com/2020/04/13/《C++Primer》学习笔记（第二章）/"/>
+  <link rel="canonical" href="http://moleague.com/2020/04/13/《C++Primer》学习笔记（第一部分第二章）/"/>
 
 
 
 
 
-  <title>《C++Primer》学习笔记（第二章） | mo's blog</title>
+  <title>《C++Primer》学习笔记（第一部分第二章） | mo's blog</title>
   
 
 
@@ -296,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://moleague.com/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://moleague.com/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MorenMoren">
@@ -313,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">《C++Primer》学习笔记（第二章）</h1>
+          <h1 class="post-title" itemprop="name headline">《C++Primer》学习笔记（第一部分第二章）</h1>
         
 
         <div class="post-meta">
@@ -387,7 +387,7 @@
       
         <hr>
 <p>2020.4.13写：</p>
-<h4 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h4><ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ul>
 <li>初始化列表（initialize list）：</li>
 </ul>
 <p>如以下4个初始化是等价的：</p>
@@ -404,18 +404,18 @@
 </ul>
 <p>​    当我们在函数体外定义了一个全局变量，如果我们在函数体再次定义了该变量，那么在函数体定义的变量会覆盖该全局变量，而不是去修改它。</p>
 <p>​    而如果我们想要显式的访问全局变量而不是局部变量，那么我们就要如此调用      ‘ : :i ’。此处：：便是作用域操作符。</p>
-<h4 id="引用："><a href="#引用：" class="headerlink" title="引用："></a>引用：</h4><p>​    引用可以给对象起一个别名，但是该引用本身并不是一个对象。然而引用要注意以下几点：</p>
+<h3 id="引用："><a href="#引用：" class="headerlink" title="引用："></a>引用：</h3><p>​    引用可以给对象起一个别名，但是该引用本身并不是一个对象。然而引用要注意以下几点：</p>
 <pre><code>1. 引用类型必须初始化。因为引用与一个对象绑定以后，不能再改变绑定对象。
  2. 引用类型必须与对象的类型一致，否则会出错。
  3. 引用类型的初始值必须是一个对象。假如你给一个int类型的引用赋予10，那么系统就会报错。
-</code></pre><h4 id="指针："><a href="#指针：" class="headerlink" title="指针："></a>指针：</h4><ol>
+</code></pre><h3 id="指针："><a href="#指针：" class="headerlink" title="指针："></a>指针：</h3><ol>
 <li><p>当我们想要将一个指针初始化为空指针，在C语言中我们学过，可以使用NULL（预处理变量）进行初始化，如此那和用0初始化指针本质上没有区别。</p>
 <p>所以在C++上，我们更倾向于用 <strong>nullptr</strong> 来将指针初始化为空指针。</p>
 </li>
 <li><p><strong>void*</strong>是一个特殊的指针类型，它可以存放任意对象的地址，然而我们一般不拿<strong>void*</strong>指针所指的变量来进行比较，因为我们并不知道它所指的对象是什么类型。概括来说，以<strong>void*</strong>的视角看内存空间也仅仅是内存空间，它没办法访问内存空间所存的变量。</p>
 </li>
 </ol>
-<h4 id="const与constexpr-const-expression-限定符："><a href="#const与constexpr-const-expression-限定符：" class="headerlink" title="const与constexpr(const expression) 限定符："></a>const与constexpr(const expression) 限定符：</h4><p>​    const限定符的主要意图就是不想我们在初始化一个变量后再去改变它，所以用const修饰一个变量时，一定要去初始化该变量。</p>
+<h3 id="const与constexpr-const-expression-限定符："><a href="#const与constexpr-const-expression-限定符：" class="headerlink" title="const与constexpr(const expression) 限定符："></a>const与constexpr(const expression) 限定符：</h3><p>​    const限定符的主要意图就是不想我们在初始化一个变量后再去改变它，所以用const修饰一个变量时，一定要去初始化该变量。</p>
 <p>​    默认情况下，const 对象被设定为仅在文件内有效，当多个文件出现同名的const 变量时，等同于在不同文件定义了独立的变量。而如果我们想在多个文件中使用同一个变量，那么我们只要在声明和定义 const 变量的前面加上 extern 就行了。</p>
 <ol>
 <li><p><strong>const的引用：</strong></p>
@@ -449,6 +449,31 @@
 </li>
 </ol>
 <hr>
+<p>2020.4.14.写：</p>
+<h3 id="处理类型"><a href="#处理类型" class="headerlink" title="处理类型"></a>处理类型</h3><h4 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h4><ol>
+<li><p>typedef：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> wages;	<span class="comment">//wages是double的同义词</span></span><br><span class="line"><span class="keyword">typedef</span> wages base,*p;</span><br><span class="line"><span class="comment">//base同样是double的同义词</span></span><br><span class="line"><span class="comment">//p是double*的同义词</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>using: </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> SI = sales_item;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>当我们的类型别名是一个复合类型或是常量，那使用的时候会有所不同，如下：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *pstr;</span><br><span class="line"><span class="keyword">const</span> pstr d=<span class="number">0</span>;		<span class="comment">//此处const是一个顶层const</span></span><br><span class="line"><span class="keyword">const</span> pstr *f;		<span class="comment">//f的对象是指向char的常量指针,而f并非常量指针</span></span><br></pre></td></tr></table></figure>
+<h4 id="auto类型说明符"><a href="#auto类型说明符" class="headerlink" title="auto类型说明符"></a>auto类型说明符</h4><p>​    我们常常需要将表达式的值赋予给变量，当我们不知道表达式的值属于什么类型时，我们可以使用auto类型说明符，来让编译器帮我们判断变量的类型。</p>
+<ol>
+<li>基本数据类型运用：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> item = val1 + val2;	<span class="comment">//item的类型由后面表达式的类型来决定</span></span><br><span class="line"><span class="keyword">auto</span> i = <span class="number">0</span>,*p = &amp;i;		<span class="comment">//（正确）i是整型变量，p是指向整型变量的指针</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> sz = <span class="number">0</span>,*p = <span class="number">3.14</span>; <span class="comment">// (错误) 两变量的基本数据类型不一致</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>复合类型，常量中auto的运用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i;</span><br><span class="line"><span class="comment">//auto会忽略掉顶层const，例子如下：</span></span><br><span class="line"><span class="keyword">auto</span> b = ci;	<span class="comment">//此处b只是普通的变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//然而auto不会忽略底层const</span></span><br><span class="line"><span class="keyword">auto</span> *p = &amp;ci;	<span class="comment">//此处p是指向整型常量的指针</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h4><p>​    我们希望从表达式的类型推断出要定义变量的类型，但不想用该表达式的值初始化变量，于是引入了第二种类型说明符decltype，它的作用是选择并返回操作数的数据类型。再此过程中，编译器不去计算表达式的值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">decltype</span>(f()) sum = x;	<span class="comment">//sum的类型是f()的返回类型</span></span><br><span class="line"><span class="comment">//编译器并不会去调用f,而是在调用f时，将f的返回类型当作sum的类型</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//decltype处理顶层const与auto有所不同</span></span><br><span class="line"><span class="comment">//如果decltype使用的表达式是一个变量，那么的decltype就会返回该变量的类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i = <span class="number">0</span>，&amp;y = i;</span><br><span class="line"><span class="keyword">decltype</span>(i) x = <span class="number">0</span>;	<span class="comment">//x的类型是const int，即顶层const</span></span><br><span class="line"><span class="keyword">decltype</span>(y) z = x;	<span class="comment">//z的类型是const int&amp;，因为是引用，所以z必须初始化</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果decltype使用的表达式不是一个变量，那么就会返回表达式对应的类型</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>,*p = &amp;i, &amp;r = i;</span><br><span class="line"><span class="keyword">decltype</span>(r+<span class="number">0</span>) b;	<span class="comment">//b的类型是int，而不是int&amp;</span></span><br><span class="line"><span class="keyword">decltype</span>(*p) c=i;		<span class="comment">//c的类型是int&amp;,而不是int,所以c必须初始化</span></span><br><span class="line"><span class="keyword">decltype</span>(p) d	<span class="comment">//d的类型是int*</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">//对于decltype所用的表达式来说，表达式带上括号与不带上括号有所不同</span></span><br><span class="line"><span class="comment">//如果使用不加括号的变量，那么得到的就是该变量的类型</span></span><br><span class="line"><span class="comment">//如果使用加括号的变量（一层或多层），那就会得到引用类型（变量被当成表达式）</span></span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">decltype</span>((i)) d=i;	<span class="comment">//d的类型是int&amp;,所以必须初始化</span></span><br><span class="line"><span class="keyword">decltype</span>(i) e;	<span class="comment">//e的类型是int</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -479,8 +504,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/" rel="next" title="《C++ Primer》学习笔记（第一章）">
-                <i class="fa fa-chevron-left"></i> 《C++ Primer》学习笔记（第一章）
+              <a href="/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/" rel="next" title="《C++ Primer》学习笔记（第一部分第一章）">
+                <i class="fa fa-chevron-left"></i> 《C++ Primer》学习笔记（第一部分第一章）
               </a>
             
           </div>
@@ -623,7 +648,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量"><span class="nav-number">1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用："><span class="nav-number">2.</span> <span class="nav-text">引用：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指针："><span class="nav-number">3.</span> <span class="nav-text">指针：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#const与constexpr-const-expression-限定符："><span class="nav-number">4.</span> <span class="nav-text">const与constexpr(const expression) 限定符：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">1.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用："><span class="nav-number">2.</span> <span class="nav-text">引用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针："><span class="nav-number">3.</span> <span class="nav-text">指针：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const与constexpr-const-expression-限定符："><span class="nav-number">4.</span> <span class="nav-text">const与constexpr(const expression) 限定符：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理类型"><span class="nav-number">5.</span> <span class="nav-text">处理类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#类型别名"><span class="nav-number">5.1.</span> <span class="nav-text">类型别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#auto类型说明符"><span class="nav-number">5.2.</span> <span class="nav-text">auto类型说明符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decltype类型指示符"><span class="nav-number">5.3.</span> <span class="nav-text">decltype类型指示符</span></a></li></ol></li></ol></div>
             
 
           </div>
