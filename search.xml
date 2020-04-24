@@ -1,72 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Java通信客户端</title>
-    <url>/2020/04/22/Java%E9%80%9A%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
-    <content><![CDATA[<p>​    <strong>在经过一段时间的学习，Java的一些基础知识基本上已经掌握，我十分急切的想要体验到Java的网络编程，但仍然实力不足，我偶然间看到B站上有一个教程，写着TCP通信客户端代码实现，在已经研究清楚的情况下，我在自己电脑里复现了一遍。</strong></p>
-<h4 id="1-实现客户端的创建和数据传递："><a href="#1-实现客户端的创建和数据传递：" class="headerlink" title="1.实现客户端的创建和数据传递："></a>1.实现客户端的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  该文件的代码的目的是创建一个客户端</span></span><br><span class="line"><span class="comment">// 可以在Java文档里面查询到Socket的详细信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Inetclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个socket客户端，ip地址为127.0.0.1，端口号为8888</span></span><br><span class="line">        Socket socket=<span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//write方法接收的是byte类型的对象</span></span><br><span class="line">        <span class="comment">//向服务器写入数据,写入数据需要转化为byte类型，所以使用getbytes()</span></span><br><span class="line">        os.write(<span class="string">"你好服务器"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getinput()获取网络字节输入流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由服务器发送给该客户端的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2-实现服务器的创建和数据传递："><a href="#2-实现服务器的创建和数据传递：" class="headerlink" title="2.实现服务器的创建和数据传递："></a>2.实现服务器的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用accept方法获取到客户端对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Netserver</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建服务器，并指定端口号</span></span><br><span class="line">        ServerSocket server=<span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用accept方法链接一个客户端</span></span><br><span class="line">        Socket socket=server.accept();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将输入流写入到服务器</span></span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由客户端发送给该服务器的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//给客户端回写一条数据</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        os.write(<span class="string">"你好客户端"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭服务器和客户端</span></span><br><span class="line">        socket.close();</span><br><span class="line">        server.close();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="以下为实现结果："><a href="#以下为实现结果：" class="headerlink" title="以下为实现结果："></a>以下为实现结果：</h5><p>客户端实现结果：</p>
-<p><img src="http://www.morenmoren.com/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%93%E6%9E%9C.png" alt=""></p>
-<p>服务器实现结果：</p>
-<p><img src="http://www.morenmoren.com/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%8C%E6%88%90%E7%BB%93%E6%9E%9C.png" alt=""></p>
-<ul>
-<li><strong>之后我会尝试在我的阿里云服务器上传递数据</strong></li>
+    <title>《C++Primer》学习笔记（第一部分第三章）</title>
+    <url>/2020/04/20/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/</url>
+    <content><![CDATA[<h2 id="一-命名空间的using声明"><a href="#一-命名空间的using声明" class="headerlink" title="一.命名空间的using声明"></a><strong>一.命名空间的using声明</strong></h2><ul>
+<li>我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：</li>
 </ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>TCP通信客户端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《C++ Primer》学习笔记（第一部分第一章）</title>
-    <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[<h4 id="初识输入输出"><a href="#初识输入输出" class="headerlink" title="初识输入输出"></a>初识输入输出</h4><p>一. 输入输出流</p>
+<p>​    <em>编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。</em></p>
 <ol>
-<li><p><strong>istream</strong>: 输入流</p>
-<p>1.1. cin: 标准输入</p>
-</li>
-<li><p>ostream: 输出流</p>
-<p>2.1. cout: 标准输出</p>
-<p>2.2. cerr: 输出警告和错误消息</p>
-<p>2.3. clog: 输出程序运行时的一般性消息</p>
+<li><p>我们可以使用using声明，来免去专门的前缀（如命名空间：：）：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span>::name ;</span><br><span class="line"><span class="comment">//例子如下：</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		</span><br><span class="line"><span class="comment">//如此声明，那么可以直接使用cin。</span></span><br><span class="line"><span class="comment">//然而其他的由于没有声明，如果直接使用（如cout），那么会报错</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>二. 输入输出运算符</p>
-<p> 1.输出运算符:’ &lt;&lt; ‘:输出运算符接收两个运算对象，左侧必须是ostream的运算对象，右侧运算对象是要打印值</p>
-<p> 2.操作符：std::endl :该效果是结束当前行，并保证输入流的所有输出都真正写入输出流。</p>
-<p> 3.输入运算符: ‘ &gt;&gt; ‘:与输出运算符类似，该运算符左侧接受一个istream作为他的左侧运算对象，接受一个对象作为右侧运算对象</p>
-<h4 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h4><p><strong><em>注意：在for语句中，如果我们在for语句外已经定义了一个变量如i,那么如果我们在for语句如此写：for(int i; ; ),那么for循环里的i是与循环外的i无关的，即可将for语句当成单独函数。</em></strong></p>
-<ul>
-<li>读取数量不定的输入数据：当我们使用istream对象作为作为条件是，如：while（cin &gt;&gt; value），它的效果是检测流的状态，只要输入正常，那么它就返回true。而遇到文件结束符（Windows里时Ctrl+Z,其它系统是Ctrl+D）或是遇到无效输入时（类型不匹配），istream才会返回false。</li>
+<h2 id="二-标准库类型string"><a href="#二-标准库类型string" class="headerlink" title="二.标准库类型string"></a><strong>二.标准库类型string</strong></h2><ul>
+<li><p>string表示可变长的字符序列，使用string类型必须包含string头文件。注意，string定义再命名空间std中，所以下面假定已包含以下代码：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h4 id="小结术语"><a href="#小结术语" class="headerlink" title="小结术语"></a>小结术语</h4><ol>
-<li>命名空间（namespace）：可以将库定义的名字放在单一位置处。</li>
-<li>std：标准库所使用的命名空间。</li>
-<li>操纵符：在读写流时用来“操纵流”本身，如std::endl。</li>
-<li>库类型：标准库定义的类型。</li>
-<li>方法：成员函数的术名。</li>
-<li>‘ . ‘运算符: 左侧为类类型对象，右侧时此对象的成员的名字。</li>
-<li>‘ :: ‘运算符：作用域运算符</li>
-</ol>
-<h5 id="注：’-‘-运算符和’-‘-运算符的区别："><a href="#注：’-‘-运算符和’-‘-运算符的区别：" class="headerlink" title="注：’ . ‘ 运算符和’ :: ‘ 运算符的区别："></a>注：’ . ‘ 运算符和’ :: ‘ 运算符的区别：</h5><ol>
-<li><p>名称和用法都不一样<br>1.1. “::” 操作符的用法有很多<br>（1）代表全局作用域  用法： ::name<br>（2）代表类作用域   用法:       class::name<br>（3）名字空间作用域  用法： namespace::name</p>
-<p>1.2. “.” 操作符的主要作用是成员选择<br>（1）用法:     object.name</p>
+<h5 id="1-定义和初始化string对象"><a href="#1-定义和初始化string对象" class="headerlink" title="1.定义和初始化string对象"></a>1.定义和初始化string对象</h5><ul>
+<li><p>初始化对象常用方式：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">stirng s1;		<span class="comment">//得到空的string</span></span><br><span class="line"><span class="built_in">string</span> s2=s1;	<span class="comment">//s2是s1的副本</span></span><br><span class="line"><span class="built_in">string</span> s3=<span class="string">"hiya"</span>;	<span class="comment">//直接赋给s3</span></span><br><span class="line"><span class="built_in">string</span> s4=(<span class="number">10</span>,<span class="string">'c'</span>);		<span class="comment">//内容是10个c</span></span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<h5 id="2-string对象上的操作"><a href="#2-string对象上的操作" class="headerlink" title="2.string对象上的操作"></a>2.string对象上的操作</h5><ul>
+<li><p>string的操作：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> s,is;</span><br><span class="line">getline(is,s)	</span><br><span class="line"><span class="comment">//从is读取一行赋给s（换行符也被读取，但是不赋予），返回is</span></span><br><span class="line">s.empty();		<span class="comment">//s为空返回true</span></span><br><span class="line">s.<span class="built_in">size</span>();		<span class="comment">//返回s中的字符个数</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getline（），empty（），size（）：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//empty()：</span></span><br><span class="line"><span class="built_in">string</span> <span class="built_in">line</span>;</span><br><span class="line"><span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">line</span>.enpty())</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">line</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//如果读到空行就直接跳过</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//size()：</span></span><br><span class="line"><span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">line</span>.<span class="built_in">size</span>() &gt; <span class="number">80</span>)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">line</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//输出其中超过80字符的行</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>string::size_type类型</p>
+<p>对于size函数来说，它返回的并不是int或是unsigned类型，而是<strong>string::size_type</strong>类型。</p>
+<p><strong>注意：size函数返回的是无符号类型的数，所以在表达式中不应该混用int类型的数</strong></p>
+</li>
+<li><p>比较string对象</p>
+</li>
+</ul>
+<p>在使用字符串加法时，必须要确保+号两边至少有一个string对象：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> s3=s1+s2;</span><br><span class="line"><span class="built_in">string</span> s4=s1+<span class="string">","</span>;</span><br><span class="line"><span class="built_in">string</span> s5=s1+<span class="string">","</span>+<span class="string">"hello"</span>;</span><br><span class="line"><span class="comment">//由于加法是从左到右的，所以实际上第二个加号左侧仍然是string对象。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//! string s6=","+"hello"+s1;</span></span><br><span class="line"><span class="comment">//很明显，上式的第一个加号的两侧都不是string对象，所以出错</span></span><br></pre></td></tr></table></figure>
+<h5 id="3-处理string对象中的字符"><a href="#3-处理string对象中的字符" class="headerlink" title="3.处理string对象中的字符"></a>3.处理string对象中的字符</h5><p>​    为了单独处理string字符串某个特定字符，完成一些特定的功能，在cctype头文件中定义了一组标准库函数处理这部分工作。：</p>
+<p><img src="http://www.morenmoren.com/cctype.png" alt=""></p>
+<ul>
+<li><strong>范围for语句</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//for(declaration:expression)</span></span><br><span class="line"><span class="comment">//    statement</span></span><br><span class="line"><span class="comment">//expression是一个对象，而declaration则是定义一个变量。</span></span><br><span class="line"><span class="comment">//每次循环都会被初始化为expression的下一个元素值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.每行输出一个字符串的一个字符</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str1</span><span class="params">(<span class="string">"some"</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> c : str1)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.统计string对象的标点符号的个数</span></span><br><span class="line"><span class="keyword">decltype</span>(s.<span class="built_in">size</span>()) cnt=<span class="number">0</span>;	</span><br><span class="line"><span class="comment">//将size()返回值类型作为cnt的类型，使代码的可读性更好。</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> c:s)</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">ispunct</span>(c))	<span class="comment">//判断c是不是标点符号</span></span><br><span class="line">        ++cnt;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; cnt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.改变字符串的字符（利用引用）</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;c:s)</span><br><span class="line">    c = <span class="built_in">toupper</span>（c）	<span class="comment">//将不是大写字符的字符变成大写字符</span></span><br><span class="line"><span class="comment">//由于c是当前字符的引用，所以可以通过改变c来改变字符</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="三-标准库类型vector"><a href="#三-标准库类型vector" class="headerlink" title="三.标准库类型vector"></a><strong>三.标准库类型vector</strong></h2><p>​    vector表示对象的集合，其中所有对象类型相同。，要想使用vector，必须包含适当的头文件——#include <vector>。它同样处于命名空间std中。</p>
+<p>​    模板本身不是类或函数，相反可以将模板作为编译器生成类或函数编写的一份说明。编译器根据模板创建类或函数的过程称为实例化，所以当使用模板时，需要指出编译器应该把类或函数实例化为什么类型。（<strong>vector是类模板</strong>）</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec;	<span class="comment">//保存int类型对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;Sales_item&gt; Sales_vec;	<span class="comment">//保存Sales_item类型对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; file;	<span class="comment">//保存vector对象</span></span><br><span class="line"><span class="comment">//引用不是对象，所以vector不包含引用</span></span><br></pre></td></tr></table></figure>
+<h5 id="1-定义和初始化vector对象"><a href="#1-定义和初始化vector对象" class="headerlink" title="1.定义和初始化vector对象"></a>1.定义和初始化vector对象</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1.vector的拷贝</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v2</span><span class="params">(v1)</span> <span class="comment">//注意，在拷贝时，必须保持两vector类型一致</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 2.列表初始化vector对象</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v1</span>&#123;<span class="string">"a"</span>,<span class="string">"an"</span>&#125;;</span><br><span class="line"><span class="comment">//!vector&lt;string&gt; v1("a","an");不可以使用圆括号</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.用vector对象容纳个数和统一初始值来初始化vector对象</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="number">10</span>,<span class="number">-1</span>)</span>		<span class="comment">//10个int类型元素被初始化为-1</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//4.值初始化</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="number">10</span>)</span>	<span class="comment">//编译器帮你初始化这10个元素</span></span></span><br></pre></td></tr></table></figure>
+<h5 id="2-向vector对象中添加元素"><a href="#2-向vector对象中添加元素" class="headerlink" title="2.向vector对象中添加元素"></a>2.向vector对象中添加元素</h5><p>​    我们可以利用vector的成员函数push_back向其中添加元素。push_back负责将一个值当作vector对象的尾函数压入到vector对象的尾部。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;++i)</span><br><span class="line">    v2.push_back(i);	<span class="comment">//依次将整数值i压入vector对象中</span></span><br><span class="line"><span class="comment">//结束后vector对象有100个元素，为0~99。</span></span><br><span class="line"><span class="comment">//一般情况下我们还是将vector对象设为空</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>注：如果循环体内包含有向vector对象添加元素的语句，就不能使用范围for。(于5.4.3节详细解释)</strong></li>
+</ul>
+<h5 id="3-其他vector操作"><a href="#3-其他vector操作" class="headerlink" title="3.其他vector操作"></a>3.其他vector操作</h5><ul>
+<li><p>vector的许多操作与string类似，如empty(),size()等。同样，访问vector对象中元素的方法与访问string对象中字符的方法也差不多。</p>
+</li>
+<li><p>不能用下标形式去添加元素：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1;</span><br><span class="line"><span class="keyword">for</span>((<span class="keyword">decltype</span>)(v1.<span class="built_in">size</span>()) ix=<span class="number">0</span>; ix!=<span class="number">0</span> ; ++ix)</span><br><span class="line">    v1.push_back(ix);</span><br><span class="line"><span class="comment">//! v1[ix] = ix;	空对象，无法访问该下标</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="四-迭代器介绍"><a href="#四-迭代器介绍" class="headerlink" title="四.迭代器介绍"></a><strong>四.迭代器介绍</strong></h2><h5 id="1-使用迭代器"><a href="#1-使用迭代器" class="headerlink" title="1.使用迭代器"></a><strong>1.使用迭代器</strong></h5><ul>
+<li>我们可以通过下标来访问string对象的字符或者是vector对象的元素。还要另一个更通用的机制也可以实现同样的目的，这就是迭代器。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//v表示的是对象。</span></span><br><span class="line"><span class="comment">//b表示的是v的第一个元素，e表示v的尾元素的下一个位置</span></span><br><span class="line"><span class="keyword">auto</span> b=v.<span class="built_in">begin</span>(),e=v.<span class="built_in">end</span>();		<span class="comment">//b，e的类型相同</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果容器为空，那么begin和end返回的是同一个迭代器</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>迭代器的运算符：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将string对象的每个字符都改为大写字母</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"..."</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> x=s.<span class="built_in">begin</span>() ; x!=s.<span class="built_in">end</span>() &amp;&amp; !<span class="built_in">isspace</span>(*x) ; ++x)</span><br><span class="line">    *x=<span class="built_in">toupper</span>(*x);</span><br><span class="line"><span class="comment">//结束条件是迭代器指向尾部的下一个元素，或者是迭代器指向空格</span></span><br><span class="line"><span class="comment">//++x代表，每循环一次就让迭代器指向下一个元素</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>迭代器类型：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//iterator类型可以修改它所指向的对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it;</span><br><span class="line"><span class="built_in">string</span>::iterator it2;</span><br><span class="line"></span><br><span class="line"><span class="comment">//const_iterator类型不能修改它所指向的对象，只能访问</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator it3;</span><br><span class="line"><span class="built_in">string</span>::const_iterator it4;</span><br><span class="line"></span><br><span class="line"><span class="comment">//为了专门得到const_iterator类型的迭代器，可以使用cbegin(),cend()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结合解引用和成员的访问操作：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//p是vector，其对象是string类型，以下去检查对象是否为空</span></span><br><span class="line">(*p).empty();</span><br><span class="line">p-&gt;empty();</span><br><span class="line"><span class="comment">//以上是两种进行解引用和成员访问的操作</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>注：凡是使用了迭代器的循环体，都不要想迭代器所指的容器添加元素。</strong></p>
+</li>
+</ul>
+<h5 id="2-迭代器运算"><a href="#2-迭代器运算" class="headerlink" title="2.迭代器运算"></a>2.迭代器运算</h5><ul>
+<li><p>迭代器的算术运算：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//可令迭代器和一个整数相加（相减），即向前（向后）移动若干位置</span></span><br><span class="line"><span class="keyword">auto</span> mid = vi.<span class="built_in">begin</span>() + vi.<span class="built_in">size</span>()/<span class="number">2</span>;</span><br><span class="line"><span class="comment">//该迭代器指向vector对象中间的元素</span></span><br><span class="line"><span class="keyword">if</span>(it &lt; mid)		<span class="comment">//迭代器可以作比较</span></span><br><span class="line">    <span class="comment">//处理前半部分的元素</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>利用迭代器完成二分查找：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> beg = <span class="built_in">text</span>.<span class="built_in">begin</span>(),<span class="built_in">end</span> = <span class="built_in">text</span>.<span class="built_in">end</span>();</span><br><span class="line"><span class="keyword">auto</span> mid = <span class="built_in">text</span>.<span class="built_in">begin</span>() + (<span class="built_in">end</span>-beg)/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">while</span>(mid!=<span class="built_in">end</span> &amp;&amp; *mid!=sought)&#123;</span><br><span class="line">    <span class="keyword">if</span>(sought &lt; *mid)</span><br><span class="line">        <span class="built_in">end</span> = mid;</span><br><span class="line">	<span class="keyword">if</span>(sought &gt; *mid)</span><br><span class="line">        beg = mid+<span class="number">1</span>;</span><br><span class="line">	mid = beg + (<span class="built_in">end</span>-beg)/<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="五-数组"><a href="#五-数组" class="headerlink" title="五.数组"></a><strong>五.数组</strong></h2><h5 id="1-定义和初始化内置数组"><a href="#1-定义和初始化内置数组" class="headerlink" title="1.定义和初始化内置数组"></a><strong>1.定义和初始化内置数组</strong></h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> *ptrs[<span class="number">10</span>];	<span class="comment">//ptrs是含有10个整数指针的数组</span></span><br><span class="line"><span class="keyword">int</span> (*parray)[<span class="number">10</span>];	<span class="comment">//指向一个含有10个整数的数组</span></span><br><span class="line"><span class="keyword">int</span> (&amp;attref)[<span class="number">10</span>];	<span class="comment">//attref引用一个含有10个整数的数组</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-访问数组元素"><a href="#2-访问数组元素" class="headerlink" title="2.访问数组元素"></a><strong>2.访问数组元素</strong></h5><p>​    在使用数组下标时，通常将其定义为size_t类型。</p>
+<p>​    我们必须要防止数组越界。        </p>
+<h5 id="3-指针和数组"><a href="#3-指针和数组" class="headerlink" title="3.指针和数组"></a><strong>3.指针和数组</strong></h5><ul>
+<li><p>指针也是迭代器</p>
+</li>
+<li><p>标准库函数begin和end：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> ia[] = &#123;...&#125;;</span><br><span class="line"><span class="keyword">int</span> *beg = <span class="built_in">begin</span>(ia);	<span class="comment">//指向ia的首元素的指针</span></span><br><span class="line"><span class="keyword">int</span> *<span class="built_in">end</span> = <span class="built_in">end</span>(ia);		<span class="comment">//指向ia尾元素下一个位置的指针</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="4-C风格字符串"><a href="#4-C风格字符串" class="headerlink" title="4.C风格字符串"></a><strong>4.C风格字符串</strong></h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">strlen</span>(p)	<span class="comment">//返回p的长度，空字符不计入</span></span><br><span class="line"><span class="built_in">strcmp</span>(p1,p2)	<span class="comment">//比较p1,p2,相等返回0。p1&gt;p2返回正值。p1&lt;p2返回负值</span></span><br><span class="line"><span class="built_in">strcat</span>(p1,p2)	<span class="comment">//将p2附加到p1后面</span></span><br><span class="line"><span class="built_in">strcpy</span>(p1,p2)	<span class="comment">//将p2拷贝给p1</span></span><br></pre></td></tr></table></figure>
+<h5 id="5-与旧代码接口"><a href="#5-与旧代码接口" class="headerlink" title="5.与旧代码接口"></a><strong>5.与旧代码接口</strong></h5><ul>
+<li><p>使用数组初始化vector对象：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> int_array[] = &#123;...&#125;;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="built_in">begin</span>(int_array),<span class="built_in">end</span>(int_array))</span></span>;</span><br><span class="line"><span class="comment">//上述代码最终，ivec将包含array的所有元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//下述代码可以指定一部分</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(int_array + <span class="number">1</span>,int_array + <span class="number">4</span>)</span></span>;</span><br><span class="line"><span class="comment">//用3个元素创建了vector对象，分别来自数组下标为1，2，3的元素</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="6-多维数组"><a href="#6-多维数组" class="headerlink" title="6.多维数组"></a><strong>6.多维数组</strong></h5><ul>
+<li>多维数组其实就是数组的数组。</li>
+</ul>
+<h2 id="六-小结"><a href="#六-小结" class="headerlink" title="六.小结"></a>六.小结</h2><ol>
+<li>迭代器： <code>auto b=v.begin(),e=v.end();</code></li>
+<li>vector：可用于存放相同类型的对象：<code>vector&lt;T&gt;  ivec;</code></li>
+<li>push_back：向vector对象末尾添加元素。</li>
 </ol>
-<p>   ​    <strong><em>ps:</em></strong></p>
-<p>   （1）’ :: ‘    针对 <strong>类</strong>，表示作用域</p>
-<p>   （2）’ . ‘     针对 <strong>对象</strong>，表示成员选择</p>
-<p>   所以呢，类的静态成员（静态成员属于类），使用 ‘ :: ‘ 调用。</p>
 ]]></content>
       <categories>
         <category>C++学习笔记</category>
       </categories>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>制作简易的网页</title>
+    <url>/2020/04/24/%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E9%A1%B5/</url>
+    <content><![CDATA[<p>​    <strong>上周跟着老师的步骤做了一个自己的网页，还挺有意思的。</strong></p>
+<ol>
+<li><p>首先利用css来对网页的风格进行设置：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-tag">article</span> &#123;<span class="attribute">color</span>:white;&#125;</span><br><span class="line"><span class="selector-tag">h2</span> &#123;<span class="attribute">color</span>:white;&#125;</span><br><span class="line"><span class="selector-tag">p</span> &#123;<span class="attribute">color</span>:white;<span class="attribute">text-align</span>:center;&#125;</span><br><span class="line">//设置网页主题风格</span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="attribute">line-height</span>:<span class="number">200%</span>;</span><br><span class="line">    <span class="attribute">text-indent</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">color</span>: wheat;</span><br><span class="line">    <span class="attribute">text-align</span>: left;</span><br><span class="line">    <span class="attribute">background-image</span>:<span class="built_in">url</span>(<span class="string">'../imag/image1.jpg'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用HTML，JavaScript实现想要的功能（四则运算）：</p>
+<p>2.1 建立网页的外观：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">  	 // 导入JavaScript文件</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/tocircum.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span>&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"computedemo"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">！--定义变量来存储你输入的数字--</span>&gt;</span></span><br><span class="line">    请输入数字：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"txt_a"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"请选择运算符"</span> <span class="attr">id</span>=<span class="string">"computetype"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 下面的为要实现的函数（加减乘除） --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"add"</span>&gt;</span>+<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"minus"</span>&gt;</span>-<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"multiply"</span>&gt;</span>*<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">"divide"</span>&gt;</span>/<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"txt_b"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></span><br><span class="line">    =</span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"txt_c"</span> <span class="attr">value</span>=<span class="string">""</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">id</span>=<span class="string">"btn_compute"</span> <span class="attr">value</span>=<span class="string">"点我计算"</span> <span class="attr">onclick</span>=<span class="string">"compute()"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.2 实现函数：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">a,b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Number</span>(a)+<span class="built_in">Number</span>(b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">minus</span>(<span class="params">a,b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a-b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">multiply</span>(<span class="params">a,b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a*b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">divide</span>(<span class="params">a,b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a/b;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">compute</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a=<span class="built_in">document</span>.getElementById(<span class="string">'txt_a'</span>).value;</span><br><span class="line">    <span class="keyword">var</span> b=<span class="built_in">document</span>.getElementById(<span class="string">'txt_b'</span>).value;</span><br><span class="line">    <span class="keyword">var</span> type=<span class="built_in">document</span>.getElementById(<span class="string">'computetype'</span>).value;</span><br><span class="line">    <span class="keyword">if</span>(a==<span class="string">''</span>||b==<span class="string">''</span>)&#123;</span><br><span class="line">        alert(<span class="string">"输入参数！"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> y;</span><br><span class="line">        <span class="keyword">if</span>(type==<span class="string">'add'</span>)&#123;</span><br><span class="line">            y=add(a,b);</span><br><span class="line">            alert(<span class="string">"加的结果是："</span>+y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type==<span class="string">'minus'</span>)&#123;</span><br><span class="line">            y=minus(a,b);</span><br><span class="line">            alert(<span class="string">"减的结果是："</span>+y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type==<span class="string">'multiply'</span>)&#123;</span><br><span class="line">            y=multiply(a,b);</span><br><span class="line">            alert(<span class="string">"乘的结果是："</span>+y);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(type==<span class="string">'divide'</span>)&#123;</span><br><span class="line">            y=divide(a,b);</span><br><span class="line">            alert(<span class="string">"除的结果是："</span>+y);</span><br><span class="line">             &#125;</span><br><span class="line">        &lt;!-- 将结果输出给等号后面的空位 --&gt;</span><br><span class="line">             <span class="built_in">document</span>.getElementById(<span class="string">'txt_c'</span>).value=y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>之后进行首页的制作：</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- 导入css文件	--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"css/myfirstcss.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!--这里我将页面分块，这样更有观赏性--&gt;</span></span><br><span class="line">    </span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"menu"</span> <span class="attr">style</span>=<span class="string">"text-align:center;height:500px;width: 150px;float:left;"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">b</span>&gt;</span>菜单<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--利用HTML实现时间安排表，再利用JavaScript实现四则运算	--&gt;</span>   </span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">"color: burlywood;"</span> <span class="attr">href</span>=<span class="string">"mytable.html"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>时间安排表<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">a</span> <span class="attr">style</span>=<span class="string">"color: burlywood;"</span> <span class="attr">href</span>=<span class="string">"tocircum.html"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span>四则运算<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span> <span class="attr">style</span>=<span class="string">"height:200px;width:400px;float:left;"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">h2</span> &gt;</span>卷福<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>	<span class="attr">style</span>=<span class="string">"text-align: center;"</span>&gt;</span></span><br><span class="line">			本尼迪克特·康伯巴奇（Benedict Cumberbatch），1976年7月19日出			生于英国伦敦，英国演员、制片人。</span><br><span class="line">			2000年，康伯巴奇出演电视剧《心跳》，开始演艺生涯。</span><br><span class="line">			2010年，开始主演电视系列剧《神探夏洛克》，凭借剧集，获得艾美			奖、金卫星奖等多项最佳男主角奖，亦得到金球奖最佳男主角提名。</span><br><span class="line">			2011年，因舞台剧《弗兰肯斯坦》获得奥利弗奖等最佳男主角奖。2013				年，成立制作公司SunnyMarch。</span><br><span class="line">			2014年，凭影片《模仿游戏》获得好莱坞电影奖最佳男主角奖，和奥斯			 卡金像奖、金球奖、英国电影学院奖等最佳男主角提名，</span><br><span class="line">			并入选《时代周刊》年度“全球最具影响力人物”榜单，更再度登上该杂			志美国版及国际版12月号封面。</span><br><span class="line">			2015年，被英国女王授予大英帝国司令勋章（CBE），并受邀加入美国			  电影艺术与科学学院。</span><br><span class="line">			2016年，开始主演漫威系列电影《奇异博士》。</span><br><span class="line">			2019年，凭电视剧《梅尔罗斯》获得英国电视学院奖最佳男主角奖。</span><br><span class="line">		<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">p</span>	<span class="attr">style</span>=<span class="string">"text-align: right; color: red;"</span>&gt;</span></span><br><span class="line">			如果想访问特定的网页请看左侧菜单栏</span><br><span class="line">		<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以下为实现效果：</p>
+<p><img src="http://www.morenmoren.com/firsthtml.png" alt=""></p>
+<p><img src="http://www.morenmoren.com/jsplus.png" alt=""></p>
+]]></content>
+      <categories>
+        <category>HTML/css/javascript</category>
+      </categories>
+      <tags>
+        <tag>网页制作</tag>
       </tags>
   </entry>
   <entry>
@@ -187,6 +264,104 @@
       </tags>
   </entry>
   <entry>
+    <title>《C++ Primer》学习笔记（第一部分第一章）</title>
+    <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/</url>
+    <content><![CDATA[<h4 id="初识输入输出"><a href="#初识输入输出" class="headerlink" title="初识输入输出"></a>初识输入输出</h4><p>一. 输入输出流</p>
+<ol>
+<li><p><strong>istream</strong>: 输入流</p>
+<p>1.1. cin: 标准输入</p>
+</li>
+<li><p>ostream: 输出流</p>
+<p>2.1. cout: 标准输出</p>
+<p>2.2. cerr: 输出警告和错误消息</p>
+<p>2.3. clog: 输出程序运行时的一般性消息</p>
+</li>
+</ol>
+<p>二. 输入输出运算符</p>
+<p> 1.输出运算符:’ &lt;&lt; ‘:输出运算符接收两个运算对象，左侧必须是ostream的运算对象，右侧运算对象是要打印值</p>
+<p> 2.操作符：std::endl :该效果是结束当前行，并保证输入流的所有输出都真正写入输出流。</p>
+<p> 3.输入运算符: ‘ &gt;&gt; ‘:与输出运算符类似，该运算符左侧接受一个istream作为他的左侧运算对象，接受一个对象作为右侧运算对象</p>
+<h4 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h4><p><strong><em>注意：在for语句中，如果我们在for语句外已经定义了一个变量如i,那么如果我们在for语句如此写：for(int i; ; ),那么for循环里的i是与循环外的i无关的，即可将for语句当成单独函数。</em></strong></p>
+<ul>
+<li>读取数量不定的输入数据：当我们使用istream对象作为作为条件是，如：while（cin &gt;&gt; value），它的效果是检测流的状态，只要输入正常，那么它就返回true。而遇到文件结束符（Windows里时Ctrl+Z,其它系统是Ctrl+D）或是遇到无效输入时（类型不匹配），istream才会返回false。</li>
+</ul>
+<h4 id="小结术语"><a href="#小结术语" class="headerlink" title="小结术语"></a>小结术语</h4><ol>
+<li>命名空间（namespace）：可以将库定义的名字放在单一位置处。</li>
+<li>std：标准库所使用的命名空间。</li>
+<li>操纵符：在读写流时用来“操纵流”本身，如std::endl。</li>
+<li>库类型：标准库定义的类型。</li>
+<li>方法：成员函数的术名。</li>
+<li>‘ . ‘运算符: 左侧为类类型对象，右侧时此对象的成员的名字。</li>
+<li>‘ :: ‘运算符：作用域运算符</li>
+</ol>
+<h5 id="注：’-‘-运算符和’-‘-运算符的区别："><a href="#注：’-‘-运算符和’-‘-运算符的区别：" class="headerlink" title="注：’ . ‘ 运算符和’ :: ‘ 运算符的区别："></a>注：’ . ‘ 运算符和’ :: ‘ 运算符的区别：</h5><ol>
+<li><p>名称和用法都不一样<br>1.1. “::” 操作符的用法有很多<br>（1）代表全局作用域  用法： ::name<br>（2）代表类作用域   用法:       class::name<br>（3）名字空间作用域  用法： namespace::name</p>
+<p>1.2. “.” 操作符的主要作用是成员选择<br>（1）用法:     object.name</p>
+</li>
+</ol>
+<p>   ​    <strong><em>ps:</em></strong></p>
+<p>   （1）’ :: ‘    针对 <strong>类</strong>，表示作用域</p>
+<p>   （2）’ . ‘     针对 <strong>对象</strong>，表示成员选择</p>
+<p>   所以呢，类的静态成员（静态成员属于类），使用 ‘ :: ‘ 调用。</p>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java通信客户端</title>
+    <url>/2020/04/22/Java%E9%80%9A%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
+    <content><![CDATA[<p>​    <strong>在经过一段时间的学习，Java的一些基础知识基本上已经掌握，我十分急切的想要体验到Java的网络编程，但仍然实力不足，我偶然间看到B站上有一个教程，写着TCP通信客户端代码实现，在已经研究清楚的情况下，我在自己电脑里复现了一遍。</strong></p>
+<h4 id="1-实现客户端的创建和数据传递："><a href="#1-实现客户端的创建和数据传递：" class="headerlink" title="1.实现客户端的创建和数据传递："></a>1.实现客户端的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  该文件的代码的目的是创建一个客户端</span></span><br><span class="line"><span class="comment">// 可以在Java文档里面查询到Socket的详细信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Inetclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个socket客户端，ip地址为127.0.0.1，端口号为8888</span></span><br><span class="line">        Socket socket=<span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//write方法接收的是byte类型的对象</span></span><br><span class="line">        <span class="comment">//向服务器写入数据,写入数据需要转化为byte类型，所以使用getbytes()</span></span><br><span class="line">        os.write(<span class="string">"你好服务器"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getinput()获取网络字节输入流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由服务器发送给该客户端的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-实现服务器的创建和数据传递："><a href="#2-实现服务器的创建和数据传递：" class="headerlink" title="2.实现服务器的创建和数据传递："></a>2.实现服务器的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用accept方法获取到客户端对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Netserver</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建服务器，并指定端口号</span></span><br><span class="line">        ServerSocket server=<span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用accept方法链接一个客户端</span></span><br><span class="line">        Socket socket=server.accept();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将输入流写入到服务器</span></span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由客户端发送给该服务器的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//给客户端回写一条数据</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        os.write(<span class="string">"你好客户端"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭服务器和客户端</span></span><br><span class="line">        socket.close();</span><br><span class="line">        server.close();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="以下为实现结果："><a href="#以下为实现结果：" class="headerlink" title="以下为实现结果："></a>以下为实现结果：</h5><p>客户端实现结果：</p>
+<p><img src="http://www.morenmoren.com/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%93%E6%9E%9C.png" alt=""></p>
+<p>服务器实现结果：</p>
+<p><img src="http://www.morenmoren.com/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%8C%E6%88%90%E7%BB%93%E6%9E%9C.png" alt=""></p>
+<ul>
+<li><strong>之后我会尝试在我的阿里云服务器上传递数据</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>TCP通信客户端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法学习笔记（一）：牛顿迭代法（计算平方根）</title>
+    <url>/2020/04/11/%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
+    <content><![CDATA[<p>​    在算法（第四版）的13页里，我看到了一个的函数，它利用了牛顿迭代法来计算一个数的近似平方根，我通过查询资料理解了牛顿迭代法的实现过程。</p>
+<p>​    这个方法所包含的知识：</p>
+<p><em>1.导数的含义</em></p>
+<p><em>2.极限的思维</em></p>
+<p><em>3.函数的零点</em></p>
+<h4 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h4><p>1.在求一个函数零点时，我们可以随意取一个点作为起始点(x0,f(x0)），并过该点做函数的切线,设切线的横截距为x1。在该点（x1,0）垂直于X轴引垂线，交函数于(x1,f(x1)),再对该点做与之前同样的操作，以此往复。如下图：</p>
+<p><img src="http://www.morenmoren.com/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95%E5%9B%BE%E8%A7%A3.gif" alt="牛顿迭代法"></p>
+<p>2.对所得到的数据进行处理,经过运算，第一条切线的横截距，多条切线横截距为:</p>
+<script type="math/tex; mode=display">
+x_1=x_0+f(x_0)/f'(x_0)\\
+x_2=x_1+f(x_1)/f'(x_1)\\
+.......\\
+x_(n+1)=x_n+f(x_n)/f'(x_n)</script><h4 id="利用牛顿迭代法来求一个数的平方根"><a href="#利用牛顿迭代法来求一个数的平方根" class="headerlink" title="利用牛顿迭代法来求一个数的平方根"></a>利用牛顿迭代法来求一个数的平方根</h4><p>1.假设：</p>
+<script type="math/tex; mode=display">
+t=\sqrt[2]n\\
+则设f(x)=x^2-n\\
+可设x_0=n</script><p>2.利用代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> t;</span><br><span class="line">	t=n;</span><br><span class="line">	<span class="keyword">while</span>(t-n/t&lt;=<span class="number">1e-15</span>*t)</span><br><span class="line">        <span class="comment">//这里跳出循环的条件是你所要求的精度，即1-n/t^2要满足一定精度。</span></span><br><span class="line">		t=(t+n/t);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法（第四版）</category>
+      </categories>
+      <tags>
+        <tag>算法学习</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>学生管理系统（持续更新）</title>
     <url>/2020/04/08/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
     <content><![CDATA[<p>​    最近一直在学习C++，就想着用C++语言自己做一个程序，就先从最简单的开始吧——学生管理系统（随着我的能力提高会逐步完善该程序）</p>
@@ -225,151 +400,6 @@
       <tags>
         <tag>网站搭建</tag>
         <tag>问题解决</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法学习笔记（一）：牛顿迭代法（计算平方根）</title>
-    <url>/2020/04/11/%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</url>
-    <content><![CDATA[<p>​    在算法（第四版）的13页里，我看到了一个的函数，它利用了牛顿迭代法来计算一个数的近似平方根，我通过查询资料理解了牛顿迭代法的实现过程。</p>
-<p>​    这个方法所包含的知识：</p>
-<p><em>1.导数的含义</em></p>
-<p><em>2.极限的思维</em></p>
-<p><em>3.函数的零点</em></p>
-<h4 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h4><p>1.在求一个函数零点时，我们可以随意取一个点作为起始点(x0,f(x0)），并过该点做函数的切线,设切线的横截距为x1。在该点（x1,0）垂直于X轴引垂线，交函数于(x1,f(x1)),再对该点做与之前同样的操作，以此往复。如下图：</p>
-<p><img src="http://www.morenmoren.com/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95%E5%9B%BE%E8%A7%A3.gif" alt="牛顿迭代法"></p>
-<p>2.对所得到的数据进行处理,经过运算，第一条切线的横截距，多条切线横截距为:</p>
-<script type="math/tex; mode=display">
-x_1=x_0+f(x_0)/f'(x_0)\\
-x_2=x_1+f(x_1)/f'(x_1)\\
-.......\\
-x_(n+1)=x_n+f(x_n)/f'(x_n)</script><h4 id="利用牛顿迭代法来求一个数的平方根"><a href="#利用牛顿迭代法来求一个数的平方根" class="headerlink" title="利用牛顿迭代法来求一个数的平方根"></a>利用牛顿迭代法来求一个数的平方根</h4><p>1.假设：</p>
-<script type="math/tex; mode=display">
-t=\sqrt[2]n\\
-则设f(x)=x^2-n\\
-可设x_0=n</script><p>2.利用代码实现如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> t;</span><br><span class="line">	t=n;</span><br><span class="line">	<span class="keyword">while</span>(t-n/t&lt;=<span class="number">1e-15</span>*t)</span><br><span class="line">        <span class="comment">//这里跳出循环的条件是你所要求的精度，即1-n/t^2要满足一定精度。</span></span><br><span class="line">		t=(t+n/t);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法（第四版）</category>
-      </categories>
-      <tags>
-        <tag>算法学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《C++Primer》学习笔记（第一部分第三章）</title>
-    <url>/2020/04/20/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[<h2 id="一-命名空间的using声明"><a href="#一-命名空间的using声明" class="headerlink" title="一.命名空间的using声明"></a><strong>一.命名空间的using声明</strong></h2><ul>
-<li>我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：</li>
-</ul>
-<p>​    <em>编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。</em></p>
-<ol>
-<li><p>我们可以使用using声明，来免去专门的前缀（如命名空间：：）：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span>::name ;</span><br><span class="line"><span class="comment">//例子如下：</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		</span><br><span class="line"><span class="comment">//如此声明，那么可以直接使用cin。</span></span><br><span class="line"><span class="comment">//然而其他的由于没有声明，如果直接使用（如cout），那么会报错</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="二-标准库类型string"><a href="#二-标准库类型string" class="headerlink" title="二.标准库类型string"></a><strong>二.标准库类型string</strong></h2><ul>
-<li><p>string表示可变长的字符序列，使用string类型必须包含string头文件。注意，string定义再命名空间std中，所以下面假定已包含以下代码：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">string</span>;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="1-定义和初始化string对象"><a href="#1-定义和初始化string对象" class="headerlink" title="1.定义和初始化string对象"></a>1.定义和初始化string对象</h5><ul>
-<li><p>初始化对象常用方式：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">stirng s1;		<span class="comment">//得到空的string</span></span><br><span class="line"><span class="built_in">string</span> s2=s1;	<span class="comment">//s2是s1的副本</span></span><br><span class="line"><span class="built_in">string</span> s3=<span class="string">"hiya"</span>;	<span class="comment">//直接赋给s3</span></span><br><span class="line"><span class="built_in">string</span> s4=(<span class="number">10</span>,<span class="string">'c'</span>);		<span class="comment">//内容是10个c</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="2-string对象上的操作"><a href="#2-string对象上的操作" class="headerlink" title="2.string对象上的操作"></a>2.string对象上的操作</h5><ul>
-<li><p>string的操作：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> s,is;</span><br><span class="line">getline(is,s)	</span><br><span class="line"><span class="comment">//从is读取一行赋给s（换行符也被读取，但是不赋予），返回is</span></span><br><span class="line">s.empty();		<span class="comment">//s为空返回true</span></span><br><span class="line">s.<span class="built_in">size</span>();		<span class="comment">//返回s中的字符个数</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>getline（），empty（），size（）：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//empty()：</span></span><br><span class="line"><span class="built_in">string</span> <span class="built_in">line</span>;</span><br><span class="line"><span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">line</span>.enpty())</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">line</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//如果读到空行就直接跳过</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//size()：</span></span><br><span class="line"><span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">line</span>.<span class="built_in">size</span>() &gt; <span class="number">80</span>)</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="built_in">line</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//输出其中超过80字符的行</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>string::size_type类型</p>
-<p>对于size函数来说，它返回的并不是int或是unsigned类型，而是<strong>string::size_type</strong>类型。</p>
-<p><strong>注意：size函数返回的是无符号类型的数，所以在表达式中不应该混用int类型的数</strong></p>
-</li>
-<li><p>比较string对象</p>
-</li>
-</ul>
-<p>在使用字符串加法时，必须要确保+号两边至少有一个string对象：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">string</span> s3=s1+s2;</span><br><span class="line"><span class="built_in">string</span> s4=s1+<span class="string">","</span>;</span><br><span class="line"><span class="built_in">string</span> s5=s1+<span class="string">","</span>+<span class="string">"hello"</span>;</span><br><span class="line"><span class="comment">//由于加法是从左到右的，所以实际上第二个加号左侧仍然是string对象。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//! string s6=","+"hello"+s1;</span></span><br><span class="line"><span class="comment">//很明显，上式的第一个加号的两侧都不是string对象，所以出错</span></span><br></pre></td></tr></table></figure>
-<h5 id="3-处理string对象中的字符"><a href="#3-处理string对象中的字符" class="headerlink" title="3.处理string对象中的字符"></a>3.处理string对象中的字符</h5><p>​    为了单独处理string字符串某个特定字符，完成一些特定的功能，在cctype头文件中定义了一组标准库函数处理这部分工作。：</p>
-<p><img src="http://www.morenmoren.com/cctype.png" alt=""></p>
-<ul>
-<li><strong>范围for语句</strong></li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//for(declaration:expression)</span></span><br><span class="line"><span class="comment">//    statement</span></span><br><span class="line"><span class="comment">//expression是一个对象，而declaration则是定义一个变量。</span></span><br><span class="line"><span class="comment">//每次循环都会被初始化为expression的下一个元素值。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1.每行输出一个字符串的一个字符</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">str1</span><span class="params">(<span class="string">"some"</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> c : str1)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.统计string对象的标点符号的个数</span></span><br><span class="line"><span class="keyword">decltype</span>(s.<span class="built_in">size</span>()) cnt=<span class="number">0</span>;	</span><br><span class="line"><span class="comment">//将size()返回值类型作为cnt的类型，使代码的可读性更好。</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> c:s)</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">ispunct</span>(c))	<span class="comment">//判断c是不是标点符号</span></span><br><span class="line">        ++cnt;</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; cnt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.改变字符串的字符（利用引用）</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> &amp;c:s)</span><br><span class="line">    c = <span class="built_in">toupper</span>（c）	<span class="comment">//将不是大写字符的字符变成大写字符</span></span><br><span class="line"><span class="comment">//由于c是当前字符的引用，所以可以通过改变c来改变字符</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; s &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
-<h2 id="三-标准库类型vector"><a href="#三-标准库类型vector" class="headerlink" title="三.标准库类型vector"></a><strong>三.标准库类型vector</strong></h2><p>​    vector表示对象的集合，其中所有对象类型相同。，要想使用vector，必须包含适当的头文件——#include <vector>。它同样处于命名空间std中。</p>
-<p>​    模板本身不是类或函数，相反可以将模板作为编译器生成类或函数编写的一份说明。编译器根据模板创建类或函数的过程称为实例化，所以当使用模板时，需要指出编译器应该把类或函数实例化为什么类型。（<strong>vector是类模板</strong>）</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ivec;	<span class="comment">//保存int类型对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;Sales_item&gt; Sales_vec;	<span class="comment">//保存Sales_item类型对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&gt; file;	<span class="comment">//保存vector对象</span></span><br><span class="line"><span class="comment">//引用不是对象，所以vector不包含引用</span></span><br></pre></td></tr></table></figure>
-<h5 id="1-定义和初始化vector对象"><a href="#1-定义和初始化vector对象" class="headerlink" title="1.定义和初始化vector对象"></a>1.定义和初始化vector对象</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1.vector的拷贝</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">v2</span><span class="params">(v1)</span> <span class="comment">//注意，在拷贝时，必须保持两vector类型一致</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 2.列表初始化vector对象</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v1</span>&#123;<span class="string">"a"</span>,<span class="string">"an"</span>&#125;;</span><br><span class="line"><span class="comment">//!vector&lt;string&gt; v1("a","an");不可以使用圆括号</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.用vector对象容纳个数和统一初始值来初始化vector对象</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="number">10</span>,<span class="number">-1</span>)</span>		<span class="comment">//10个int类型元素被初始化为-1</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">//4.值初始化</span></span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="number">10</span>)</span>	<span class="comment">//编译器帮你初始化这10个元素</span></span></span><br></pre></td></tr></table></figure>
-<h5 id="2-向vector对象中添加元素"><a href="#2-向vector对象中添加元素" class="headerlink" title="2.向vector对象中添加元素"></a>2.向vector对象中添加元素</h5><p>​    我们可以利用vector的成员函数push_back向其中添加元素。push_back负责将一个值当作vector对象的尾函数压入到vector对象的尾部。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v2;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100</span>;++i)</span><br><span class="line">    v2.push_back(i);	<span class="comment">//依次将整数值i压入vector对象中</span></span><br><span class="line"><span class="comment">//结束后vector对象有100个元素，为0~99。</span></span><br><span class="line"><span class="comment">//一般情况下我们还是将vector对象设为空</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>注：如果循环体内包含有向vector对象添加元素的语句，就不能使用范围for。(于5.4.3节详细解释)</strong></li>
-</ul>
-<h5 id="3-其他vector操作"><a href="#3-其他vector操作" class="headerlink" title="3.其他vector操作"></a>3.其他vector操作</h5><ul>
-<li><p>vector的许多操作与string类似，如empty(),size()等。同样，访问vector对象中元素的方法与访问string对象中字符的方法也差不多。</p>
-</li>
-<li><p>不能用下标形式去添加元素：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1;</span><br><span class="line"><span class="keyword">for</span>((<span class="keyword">decltype</span>)(v1.<span class="built_in">size</span>()) ix=<span class="number">0</span>; ix!=<span class="number">0</span> ; ++ix)</span><br><span class="line">    v1.push_back(ix);</span><br><span class="line"><span class="comment">//! v1[ix] = ix;	空对象，无法访问该下标</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="四-迭代器介绍"><a href="#四-迭代器介绍" class="headerlink" title="四.迭代器介绍"></a><strong>四.迭代器介绍</strong></h2><h5 id="1-使用迭代器"><a href="#1-使用迭代器" class="headerlink" title="1.使用迭代器"></a><strong>1.使用迭代器</strong></h5><ul>
-<li>我们可以通过下标来访问string对象的字符或者是vector对象的元素。还要另一个更通用的机制也可以实现同样的目的，这就是迭代器。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//v表示的是对象。</span></span><br><span class="line"><span class="comment">//b表示的是v的第一个元素，e表示v的尾元素的下一个位置</span></span><br><span class="line"><span class="keyword">auto</span> b=v.<span class="built_in">begin</span>(),e=v.<span class="built_in">end</span>();		<span class="comment">//b，e的类型相同</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果容器为空，那么begin和end返回的是同一个迭代器</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>迭代器的运算符：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//将string对象的每个字符都改为大写字母</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s</span><span class="params">(<span class="string">"..."</span>)</span></span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> x=s.<span class="built_in">begin</span>() ; x!=s.<span class="built_in">end</span>() &amp;&amp; !<span class="built_in">isspace</span>(*x) ; ++x)</span><br><span class="line">    *x=<span class="built_in">toupper</span>(*x);</span><br><span class="line"><span class="comment">//结束条件是迭代器指向尾部的下一个元素，或者是迭代器指向空格</span></span><br><span class="line"><span class="comment">//++x代表，每循环一次就让迭代器指向下一个元素</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>迭代器类型：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//iterator类型可以修改它所指向的对象</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::iterator it;</span><br><span class="line"><span class="built_in">string</span>::iterator it2;</span><br><span class="line"></span><br><span class="line"><span class="comment">//const_iterator类型不能修改它所指向的对象，只能访问</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;::const_iterator it3;</span><br><span class="line"><span class="built_in">string</span>::const_iterator it4;</span><br><span class="line"></span><br><span class="line"><span class="comment">//为了专门得到const_iterator类型的迭代器，可以使用cbegin(),cend()</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>结合解引用和成员的访问操作：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//p是vector，其对象是string类型，以下去检查对象是否为空</span></span><br><span class="line">(*p).empty();</span><br><span class="line">p-&gt;empty();</span><br><span class="line"><span class="comment">//以上是两种进行解引用和成员访问的操作</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>注：凡是使用了迭代器的循环体，都不要想迭代器所指的容器添加元素。</strong></p>
-</li>
-</ul>
-<h5 id="2-迭代器运算"><a href="#2-迭代器运算" class="headerlink" title="2.迭代器运算"></a>2.迭代器运算</h5><ul>
-<li><p>迭代器的算术运算：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//可令迭代器和一个整数相加（相减），即向前（向后）移动若干位置</span></span><br><span class="line"><span class="keyword">auto</span> mid = vi.<span class="built_in">begin</span>() + vi.<span class="built_in">size</span>()/<span class="number">2</span>;</span><br><span class="line"><span class="comment">//该迭代器指向vector对象中间的元素</span></span><br><span class="line"><span class="keyword">if</span>(it &lt; mid)		<span class="comment">//迭代器可以作比较</span></span><br><span class="line">    <span class="comment">//处理前半部分的元素</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>利用迭代器完成二分查找：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> beg = <span class="built_in">text</span>.<span class="built_in">begin</span>(),<span class="built_in">end</span> = <span class="built_in">text</span>.<span class="built_in">end</span>();</span><br><span class="line"><span class="keyword">auto</span> mid = <span class="built_in">text</span>.<span class="built_in">begin</span>() + (<span class="built_in">end</span>-beg)/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">while</span>(mid!=<span class="built_in">end</span> &amp;&amp; *mid!=sought)&#123;</span><br><span class="line">    <span class="keyword">if</span>(sought &lt; *mid)</span><br><span class="line">        <span class="built_in">end</span> = mid;</span><br><span class="line">	<span class="keyword">if</span>(sought &gt; *mid)</span><br><span class="line">        beg = mid+<span class="number">1</span>;</span><br><span class="line">	mid = beg + (<span class="built_in">end</span>-beg)/<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="五-数组"><a href="#五-数组" class="headerlink" title="五.数组"></a><strong>五.数组</strong></h2><h5 id="1-定义和初始化内置数组"><a href="#1-定义和初始化内置数组" class="headerlink" title="1.定义和初始化内置数组"></a><strong>1.定义和初始化内置数组</strong></h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> *ptrs[<span class="number">10</span>];	<span class="comment">//ptrs是含有10个整数指针的数组</span></span><br><span class="line"><span class="keyword">int</span> (*parray)[<span class="number">10</span>];	<span class="comment">//指向一个含有10个整数的数组</span></span><br><span class="line"><span class="keyword">int</span> (&amp;attref)[<span class="number">10</span>];	<span class="comment">//attref引用一个含有10个整数的数组</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-访问数组元素"><a href="#2-访问数组元素" class="headerlink" title="2.访问数组元素"></a><strong>2.访问数组元素</strong></h5><p>​    在使用数组下标时，通常将其定义为size_t类型。</p>
-<p>​    我们必须要防止数组越界。        </p>
-<h5 id="3-指针和数组"><a href="#3-指针和数组" class="headerlink" title="3.指针和数组"></a><strong>3.指针和数组</strong></h5><ul>
-<li><p>指针也是迭代器</p>
-</li>
-<li><p>标准库函数begin和end：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> ia[] = &#123;...&#125;;</span><br><span class="line"><span class="keyword">int</span> *beg = <span class="built_in">begin</span>(ia);	<span class="comment">//指向ia的首元素的指针</span></span><br><span class="line"><span class="keyword">int</span> *<span class="built_in">end</span> = <span class="built_in">end</span>(ia);		<span class="comment">//指向ia尾元素下一个位置的指针</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="4-C风格字符串"><a href="#4-C风格字符串" class="headerlink" title="4.C风格字符串"></a><strong>4.C风格字符串</strong></h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">strlen</span>(p)	<span class="comment">//返回p的长度，空字符不计入</span></span><br><span class="line"><span class="built_in">strcmp</span>(p1,p2)	<span class="comment">//比较p1,p2,相等返回0。p1&gt;p2返回正值。p1&lt;p2返回负值</span></span><br><span class="line"><span class="built_in">strcat</span>(p1,p2)	<span class="comment">//将p2附加到p1后面</span></span><br><span class="line"><span class="built_in">strcpy</span>(p1,p2)	<span class="comment">//将p2拷贝给p1</span></span><br></pre></td></tr></table></figure>
-<h5 id="5-与旧代码接口"><a href="#5-与旧代码接口" class="headerlink" title="5.与旧代码接口"></a><strong>5.与旧代码接口</strong></h5><ul>
-<li><p>使用数组初始化vector对象：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> int_array[] = &#123;...&#125;;</span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(<span class="built_in">begin</span>(int_array),<span class="built_in">end</span>(int_array))</span></span>;</span><br><span class="line"><span class="comment">//上述代码最终，ivec将包含array的所有元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//下述代码可以指定一部分</span></span><br><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">ivec</span><span class="params">(int_array + <span class="number">1</span>,int_array + <span class="number">4</span>)</span></span>;</span><br><span class="line"><span class="comment">//用3个元素创建了vector对象，分别来自数组下标为1，2，3的元素</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h5 id="6-多维数组"><a href="#6-多维数组" class="headerlink" title="6.多维数组"></a><strong>6.多维数组</strong></h5><ul>
-<li>多维数组其实就是数组的数组。</li>
-</ul>
-<h2 id="六-小结"><a href="#六-小结" class="headerlink" title="六.小结"></a>六.小结</h2><ol>
-<li>迭代器： <code>auto b=v.begin(),e=v.end();</code></li>
-<li>vector：可用于存放相同类型的对象：<code>vector&lt;T&gt;  ivec;</code></li>
-<li>push_back：向vector对象末尾添加元素。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
       </tags>
   </entry>
 </search>
