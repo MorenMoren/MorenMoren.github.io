@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Java通信客户端</title>
-    <url>/2020/04/22/Java%E9%80%9A%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
-    <content><![CDATA[<p>​    <strong>在经过一段时间的学习，Java的一些基础知识基本上已经掌握，我十分急切的想要体验到Java的网络编程，但仍然实力不足，我偶然间看到B站上有一个教程，写着TCP通信客户端代码实现，在已经研究清楚的情况下，我在自己电脑里复现了一遍。</strong></p>
-<h4 id="1-实现客户端的创建和数据传递："><a href="#1-实现客户端的创建和数据传递：" class="headerlink" title="1.实现客户端的创建和数据传递："></a>1.实现客户端的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  该文件的代码的目的是创建一个客户端</span></span><br><span class="line"><span class="comment">// 可以在Java文档里面查询到Socket的详细信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Inetclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个socket客户端，ip地址为127.0.0.1，端口号为8888</span></span><br><span class="line">        Socket socket=<span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//write方法接收的是byte类型的对象</span></span><br><span class="line">        <span class="comment">//向服务器写入数据,写入数据需要转化为byte类型，所以使用getbytes()</span></span><br><span class="line">        os.write(<span class="string">"你好服务器"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getinput()获取网络字节输入流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由服务器发送给该客户端的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2-实现服务器的创建和数据传递："><a href="#2-实现服务器的创建和数据传递：" class="headerlink" title="2.实现服务器的创建和数据传递："></a>2.实现服务器的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用accept方法获取到客户端对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Netserver</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建服务器，并指定端口号</span></span><br><span class="line">        ServerSocket server=<span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用accept方法链接一个客户端</span></span><br><span class="line">        Socket socket=server.accept();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将输入流写入到服务器</span></span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由客户端发送给该服务器的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//给客户端回写一条数据</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        os.write(<span class="string">"你好客户端"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭服务器和客户端</span></span><br><span class="line">        socket.close();</span><br><span class="line">        server.close();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="以下为实现结果："><a href="#以下为实现结果：" class="headerlink" title="以下为实现结果："></a>以下为实现结果：</h5><p>客户端实现结果：</p>
-<p><img src="http://www.morenmoren.com/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%93%E6%9E%9C.png" alt=""></p>
-<p>服务器实现结果：</p>
-<p><img src="http://www.morenmoren.com/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%8C%E6%88%90%E7%BB%93%E6%9E%9C.png" alt=""></p>
-<ul>
-<li><strong>之后我会尝试在我的阿里云服务器上传递数据</strong></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>TCP通信客户端</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《C++ Primer》学习笔记（第一部分第一章）</title>
     <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/</url>
     <content><![CDATA[<h4 id="初识输入输出"><a href="#初识输入输出" class="headerlink" title="初识输入输出"></a>初识输入输出</h4><p>一. 输入输出流</p>
@@ -61,6 +40,64 @@
 <p>   （1）’ :: ‘    针对 <strong>类</strong>，表示作用域</p>
 <p>   （2）’ . ‘     针对 <strong>对象</strong>，表示成员选择</p>
 <p>   所以呢，类的静态成员（静态成员属于类），使用 ‘ :: ‘ 调用。</p>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java通信客户端</title>
+    <url>/2020/04/22/Java%E9%80%9A%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
+    <content><![CDATA[<p>​    <strong>在经过一段时间的学习，Java的一些基础知识基本上已经掌握，我十分急切的想要体验到Java的网络编程，但仍然实力不足，我偶然间看到B站上有一个教程，写着TCP通信客户端代码实现，在已经研究清楚的情况下，我在自己电脑里复现了一遍。</strong></p>
+<h4 id="1-实现客户端的创建和数据传递："><a href="#1-实现客户端的创建和数据传递：" class="headerlink" title="1.实现客户端的创建和数据传递："></a>1.实现客户端的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  该文件的代码的目的是创建一个客户端</span></span><br><span class="line"><span class="comment">// 可以在Java文档里面查询到Socket的详细信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Inetclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个socket客户端，ip地址为127.0.0.1，端口号为8888</span></span><br><span class="line">        Socket socket=<span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//write方法接收的是byte类型的对象</span></span><br><span class="line">        <span class="comment">//向服务器写入数据,写入数据需要转化为byte类型，所以使用getbytes()</span></span><br><span class="line">        os.write(<span class="string">"你好服务器"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getinput()获取网络字节输入流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由服务器发送给该客户端的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-实现服务器的创建和数据传递："><a href="#2-实现服务器的创建和数据传递：" class="headerlink" title="2.实现服务器的创建和数据传递："></a>2.实现服务器的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用accept方法获取到客户端对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Netserver</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建服务器，并指定端口号</span></span><br><span class="line">        ServerSocket server=<span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用accept方法链接一个客户端</span></span><br><span class="line">        Socket socket=server.accept();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将输入流写入到服务器</span></span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由客户端发送给该服务器的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//给客户端回写一条数据</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        os.write(<span class="string">"你好客户端"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭服务器和客户端</span></span><br><span class="line">        socket.close();</span><br><span class="line">        server.close();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="以下为实现结果："><a href="#以下为实现结果：" class="headerlink" title="以下为实现结果："></a>以下为实现结果：</h5><p>客户端实现结果：</p>
+<p><img src="http://www.morenmoren.com/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%93%E6%9E%9C.png" alt=""></p>
+<p>服务器实现结果：</p>
+<p><img src="http://www.morenmoren.com/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%8C%E6%88%90%E7%BB%93%E6%9E%9C.png" alt=""></p>
+<ul>
+<li><strong>之后我会尝试在我的阿里云服务器上传递数据</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>TCP通信客户端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《C++Primer》学习笔记（第一部分第四·五章）</title>
+    <url>/2020/04/26/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E5%9B%9B%C2%B7%E4%BA%94%E7%AB%A0%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h1><h2 id="1-基础"><a href="#1-基础" class="headerlink" title="1.基础"></a>1.基础</h2><h5 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h5><ul>
+<li>重载运算符：当运算符作用于类类型的运算对象时，用户可以自行定义其含义。因为这种自定义的过程事实上是为已存在的运算符赋予另一层含义，所以称之为重载运算符。</li>
+</ul>
+<h2 id="2-条件运算符"><a href="#2-条件运算符" class="headerlink" title="2.条件运算符"></a>2.条件运算符</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cond?expr1:expr2;</span><br><span class="line"><span class="comment">//cond是判断条件的表达式，若为真，返回expr1，为假，返回expr2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//嵌套条件运算符</span></span><br><span class="line">fianlgrade = (grade&gt;<span class="number">90</span>)?<span class="string">"high Pass"</span>:(grade&lt;<span class="number">60</span>)?<span class="string">"fail"</span>:<span class="string">"Pass"</span>;</span><br><span class="line"><span class="comment">//若大于90，则直接返回high Pass,否则执行之后的语句，即再来一次判断</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-sizeof运算符"><a href="#3-sizeof运算符" class="headerlink" title="3.sizeof运算符"></a>3.sizeof运算符</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Sales_data data,*p;</span><br><span class="line"><span class="keyword">sizeof</span>(Sales_data);		<span class="comment">//储存Sales_data类型的对象所占空间大小</span></span><br><span class="line"><span class="keyword">sizeof</span> data;	<span class="comment">//data所属类型的大小</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-显示类型转换"><a href="#4-显示类型转换" class="headerlink" title="4.显示类型转换"></a>4.显示类型转换</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//static_cast</span></span><br><span class="line"><span class="keyword">double</span> slope=<span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(j)/i;	<span class="comment">//利用显示类型转换可以关闭警告</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//const_cast</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *pc;</span><br><span class="line"><span class="keyword">char</span> *p=<span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>*&gt;(pc);</span><br><span class="line"><span class="comment">//如此做相当于抛弃了pc的const性质，编译器将不再阻止我们对它进行写操作</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h1><h4 id="try语句块和异常处理："><a href="#try语句块和异常处理：" class="headerlink" title="try语句块和异常处理："></a>try语句块和异常处理：</h4><ul>
+<li><p>​    异常是指存在于运行时的反常行为，这些行为超过了函数的正常功能范围。典型的异常包括失去数据库的连接，以及遇到意外的输入等。处理这些反常行为可能是设计所有系统最难的一部分。</p>
+</li>
+<li><p>异常处理包括：</p>
+<ol>
+<li>throw表达式，异常检测部分使用throw表达式来表示它遇到了无法处理的问题。我们说throw引发了异常。</li>
+<li>try语句块，try语句块以关键字try开始，并以一个或多个catch子句结束。try语句块中代码抛出的异常通常会被某个catch子句处理。因为catch子句“处理”异常，所以它们也被称作为异常处理代码。</li>
+<li>一套异常类，用于在throw表达式和相关的catch子句之间传递异常的具体信息。</li>
+</ol>
+</li>
+</ul>
+<h5 id="throw表达式"><a href="#throw表达式" class="headerlink" title="throw表达式"></a>throw表达式</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Sales_item item1,item2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line"><span class="keyword">if</span>(item1.isbn() != item2.isbn())</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">"Data must refer to same ISBN"</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; item1+item2 &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//如果ISBN不一样，就抛出异常，不再执行当前函数</span></span><br><span class="line"><span class="comment">//并把控制权转移给能处理该异常的代码</span></span><br></pre></td></tr></table></figure>
+<h5 id="try语句块"><a href="#try语句块" class="headerlink" title="try语句块"></a>try语句块</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2)&#123;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(item1.isbn() != item2.isbn())</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">"Data must refer to same ISBN"</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; item1+item2 &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;<span class="keyword">catch</span>(runtime_error err)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; err.what() &lt;&lt; <span class="string">"\nTry again?"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">cin</span> || c== <span class="string">'n'</span>)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h5><ul>
+<li>exception 头文件定义了最通用的异常类exception。它只报告异常的发生。</li>
+<li>stdexcept头文件定义了几种常用的异常类。</li>
+<li>new头文件定义了bad_alloc异常类型。</li>
+<li>type_info头文件定义了bad_cast异常类型。</li>
+</ul>
 ]]></content>
       <categories>
         <category>C++学习笔记</category>
@@ -303,6 +340,28 @@
       </tags>
   </entry>
   <entry>
+    <title>阿里云CentOS8.0服务器宝塔安装失败，提示（setuptools installation failed）</title>
+    <url>/2020/04/03/%E9%98%BF%E9%87%8C%E4%BA%91CentOS8-0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%EF%BC%8C%E6%8F%90%E7%A4%BA%EF%BC%88setuptools-installation-failed%EF%BC%89/</url>
+    <content><![CDATA[<p>对于想要搭建一些个人网站的小伙伴们，苦于阿里云繁琐的设置界面无从下手，推荐一个简洁的控制面板：宝塔面板</p>
+<p>推荐教程：[阿里云服务器安装宝塔面板图文教程]（<a href="https://developer.aliyun.com/ask/233242?spm=a2c6h.13524658）" target="_blank" rel="noopener">https://developer.aliyun.com/ask/233242?spm=a2c6h.13524658）</a></p>
+<h1 id="我在安装宝塔服务器时，安装突然终止，然后给出"><a href="#我在安装宝塔服务器时，安装突然终止，然后给出" class="headerlink" title="我在安装宝塔服务器时，安装突然终止，然后给出"></a>我在安装宝塔服务器时，安装突然终止，然后给出</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">setuptools installation failed</span><br></pre></td></tr></table></figure>
+<h1 id="我想到的可能的解决办法："><a href="#我想到的可能的解决办法：" class="headerlink" title="我想到的可能的解决办法："></a>我想到的可能的解决办法：</h1><p>1.重新初始化我的云盘<br>2.重装我的云服务器系统</p>
+<h3 id="办法一：重新初始化我的云盘"><a href="#办法一：重新初始化我的云盘" class="headerlink" title="办法一：重新初始化我的云盘"></a>办法一：重新初始化我的云盘</h3><p>1.关闭你的云服务器（一定要关，不然他不让你初始化）<br>2.点击本实例磁盘<br><img src="http://www.morenmoren.com/22548835-1b744f8ca09c6a6d.png" alt="进入初始化界面"><br>3.点击重新初始化，再安装一次宝塔面板即可<br><img src="http://www.morenmoren.com/22548835-43b129a4f77972ee.png" alt="云存储"></p>
+<h3 id="办法二：重装我的云服务器系统"><a href="#办法二：重装我的云服务器系统" class="headerlink" title="办法二：重装我的云服务器系统"></a>办法二：重装我的云服务器系统</h3><p>我是先完成的重新初始化磁盘，发现安装还是失败了，于是我想到了重装系统，成功安装了宝塔面板。我所使用的时CentOS 8.0系统,也就是阿里云服务器上centos的最新版本，我认为也许是新版并不兼容宝塔面板。下面是解决办法：</p>
+<p>1.如上：关闭云服务器（不再做演示）</p>
+<p>2.在实例详细页面，往下翻找到配置信息，点击更多，点击更换操作系统进入更改页面<br><img src="http://www.morenmoren.com/22548835-a5d0f9b89f3c0a24.png" alt=""></p>
+<p><img src="http://q86xw0tu1.bkt.clouddn.com/22548835-dff63787afe67517.png" alt="更改页面"><br>3.在这里我们还是选择centos系统，但是我们将版本选择为7.5 64位（当然也可以选择其他版本，我没试过），然后再重新设置一下密码，远程连接需要用到。</p>
+<p>4.点击确认更换，然后系统重装完成，再安装宝塔面板（我成功安装了）。</p>
+<h5 id="如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。"><a href="#如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。" class="headerlink" title="如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。"></a>如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。</h5>]]></content>
+      <categories>
+        <category>问题解决</category>
+      </categories>
+      <tags>
+        <tag>网站搭建</tag>
+        <tag>问题解决</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>制作简易的网页</title>
     <url>/2020/04/24/%E5%88%B6%E4%BD%9C%E7%AE%80%E6%98%93%E7%9A%84%E7%BD%91%E9%A1%B5/</url>
     <content><![CDATA[<p>​    <strong>上周跟着老师的步骤做了一个自己的网页，还挺有意思的。</strong></p>
@@ -333,43 +392,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《C++Primer》学习笔记（第一部分第四·五章）</title>
-    <url>/2020/04/26/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E5%9B%9B%C2%B7%E4%BA%94%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h1><h2 id="1-基础"><a href="#1-基础" class="headerlink" title="1.基础"></a>1.基础</h2><h5 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h5><ul>
-<li>重载运算符：当运算符作用于类类型的运算对象时，用户可以自行定义其含义。因为这种自定义的过程事实上是为已存在的运算符赋予另一层含义，所以称之为重载运算符。</li>
-</ul>
-<h2 id="2-条件运算符"><a href="#2-条件运算符" class="headerlink" title="2.条件运算符"></a>2.条件运算符</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cond?expr1:expr2;</span><br><span class="line"><span class="comment">//cond是判断条件的表达式，若为真，返回expr1，为假，返回expr2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//嵌套条件运算符</span></span><br><span class="line">fianlgrade = (grade&gt;<span class="number">90</span>)?<span class="string">"high Pass"</span>:(grade&lt;<span class="number">60</span>)?<span class="string">"fail"</span>:<span class="string">"Pass"</span>;</span><br><span class="line"><span class="comment">//若大于90，则直接返回high Pass,否则执行之后的语句，即再来一次判断</span></span><br></pre></td></tr></table></figure>
-<h2 id="3-sizeof运算符"><a href="#3-sizeof运算符" class="headerlink" title="3.sizeof运算符"></a>3.sizeof运算符</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Sales_data data,*p;</span><br><span class="line"><span class="keyword">sizeof</span>(Sales_data);		<span class="comment">//储存Sales_data类型的对象所占空间大小</span></span><br><span class="line"><span class="keyword">sizeof</span> data;	<span class="comment">//data所属类型的大小</span></span><br></pre></td></tr></table></figure>
-<h2 id="4-显示类型转换"><a href="#4-显示类型转换" class="headerlink" title="4.显示类型转换"></a>4.显示类型转换</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//static_cast</span></span><br><span class="line"><span class="keyword">double</span> slope=<span class="keyword">static_cast</span>&lt;<span class="keyword">double</span>&gt;(j)/i;	<span class="comment">//利用显示类型转换可以关闭警告</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//const_cast</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> *pc;</span><br><span class="line"><span class="keyword">char</span> *p=<span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>*&gt;(pc);</span><br><span class="line"><span class="comment">//如此做相当于抛弃了pc的const性质，编译器将不再阻止我们对它进行写操作</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h1 id="第五章"><a href="#第五章" class="headerlink" title="第五章"></a>第五章</h1><h4 id="try语句块和异常处理："><a href="#try语句块和异常处理：" class="headerlink" title="try语句块和异常处理："></a>try语句块和异常处理：</h4><ul>
-<li><p>​    异常是指存在于运行时的反常行为，这些行为超过了函数的正常功能范围。典型的异常包括失去数据库的连接，以及遇到意外的输入等。处理这些反常行为可能是设计所有系统最难的一部分。</p>
-</li>
-<li><p>异常处理包括：</p>
-<ol>
-<li>throw表达式，异常检测部分使用throw表达式来表示它遇到了无法处理的问题。我们说throw引发了异常。</li>
-<li>try语句块，try语句块以关键字try开始，并以一个或多个catch子句结束。try语句块中代码抛出的异常通常会被某个catch子句处理。因为catch子句“处理”异常，所以它们也被称作为异常处理代码。</li>
-<li>一套异常类，用于在throw表达式和相关的catch子句之间传递异常的具体信息。</li>
-</ol>
-</li>
-</ul>
-<h5 id="throw表达式"><a href="#throw表达式" class="headerlink" title="throw表达式"></a>throw表达式</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Sales_item item1,item2;</span><br><span class="line"><span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2;</span><br><span class="line"><span class="keyword">if</span>(item1.isbn() != item2.isbn())</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">"Data must refer to same ISBN"</span>);</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; item1+item2 &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"><span class="comment">//如果ISBN不一样，就抛出异常，不再执行当前函数</span></span><br><span class="line"><span class="comment">//并把控制权转移给能处理该异常的代码</span></span><br></pre></td></tr></table></figure>
-<h5 id="try语句块"><a href="#try语句块" class="headerlink" title="try语句块"></a>try语句块</h5><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">cin</span> &gt;&gt; item1 &gt;&gt; item2)&#123;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(item1.isbn() != item2.isbn())</span><br><span class="line">    <span class="keyword">throw</span> runtime_error(<span class="string">"Data must refer to same ISBN"</span>);</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; item1+item2 &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">&#125;<span class="keyword">catch</span>(runtime_error err)&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; err.what() &lt;&lt; <span class="string">"\nTry again?"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; c;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">cin</span> || c== <span class="string">'n'</span>)</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="标准异常"><a href="#标准异常" class="headerlink" title="标准异常"></a>标准异常</h5><ul>
-<li>exception 头文件定义了最通用的异常类exception。它只报告异常的发生。</li>
-<li>stdexcept头文件定义了几种常用的异常类。</li>
-<li>new头文件定义了bad_alloc异常类型。</li>
-<li>type_info头文件定义了bad_cast异常类型。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>学生管理系统（持续更新）</title>
     <url>/2020/04/08/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
     <content><![CDATA[<p>​    最近一直在学习C++，就想着用C++语言自己做一个程序，就先从最简单的开始吧——学生管理系统（随着我的能力提高会逐步完善该程序）</p>
@@ -386,28 +408,6 @@
       </categories>
       <tags>
         <tag>C/C++语言</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>阿里云CentOS8.0服务器宝塔安装失败，提示（setuptools installation failed）</title>
-    <url>/2020/04/03/%E9%98%BF%E9%87%8C%E4%BA%91CentOS8-0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%EF%BC%8C%E6%8F%90%E7%A4%BA%EF%BC%88setuptools-installation-failed%EF%BC%89/</url>
-    <content><![CDATA[<p>对于想要搭建一些个人网站的小伙伴们，苦于阿里云繁琐的设置界面无从下手，推荐一个简洁的控制面板：宝塔面板</p>
-<p>推荐教程：[阿里云服务器安装宝塔面板图文教程]（<a href="https://developer.aliyun.com/ask/233242?spm=a2c6h.13524658）" target="_blank" rel="noopener">https://developer.aliyun.com/ask/233242?spm=a2c6h.13524658）</a></p>
-<h1 id="我在安装宝塔服务器时，安装突然终止，然后给出"><a href="#我在安装宝塔服务器时，安装突然终止，然后给出" class="headerlink" title="我在安装宝塔服务器时，安装突然终止，然后给出"></a>我在安装宝塔服务器时，安装突然终止，然后给出</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">setuptools installation failed</span><br></pre></td></tr></table></figure>
-<h1 id="我想到的可能的解决办法："><a href="#我想到的可能的解决办法：" class="headerlink" title="我想到的可能的解决办法："></a>我想到的可能的解决办法：</h1><p>1.重新初始化我的云盘<br>2.重装我的云服务器系统</p>
-<h3 id="办法一：重新初始化我的云盘"><a href="#办法一：重新初始化我的云盘" class="headerlink" title="办法一：重新初始化我的云盘"></a>办法一：重新初始化我的云盘</h3><p>1.关闭你的云服务器（一定要关，不然他不让你初始化）<br>2.点击本实例磁盘<br><img src="http://www.morenmoren.com/22548835-1b744f8ca09c6a6d.png" alt="进入初始化界面"><br>3.点击重新初始化，再安装一次宝塔面板即可<br><img src="http://www.morenmoren.com/22548835-43b129a4f77972ee.png" alt="云存储"></p>
-<h3 id="办法二：重装我的云服务器系统"><a href="#办法二：重装我的云服务器系统" class="headerlink" title="办法二：重装我的云服务器系统"></a>办法二：重装我的云服务器系统</h3><p>我是先完成的重新初始化磁盘，发现安装还是失败了，于是我想到了重装系统，成功安装了宝塔面板。我所使用的时CentOS 8.0系统,也就是阿里云服务器上centos的最新版本，我认为也许是新版并不兼容宝塔面板。下面是解决办法：</p>
-<p>1.如上：关闭云服务器（不再做演示）</p>
-<p>2.在实例详细页面，往下翻找到配置信息，点击更多，点击更换操作系统进入更改页面<br><img src="http://www.morenmoren.com/22548835-a5d0f9b89f3c0a24.png" alt=""></p>
-<p><img src="http://q86xw0tu1.bkt.clouddn.com/22548835-dff63787afe67517.png" alt="更改页面"><br>3.在这里我们还是选择centos系统，但是我们将版本选择为7.5 64位（当然也可以选择其他版本，我没试过），然后再重新设置一下密码，远程连接需要用到。</p>
-<p>4.点击确认更换，然后系统重装完成，再安装宝塔面板（我成功安装了）。</p>
-<h5 id="如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。"><a href="#如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。" class="headerlink" title="如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。"></a>如果仍然没有解决问题，很抱歉耽搁你的时间了。。。。。。</h5>]]></content>
-      <categories>
-        <category>问题解决</category>
-      </categories>
-      <tags>
-        <tag>网站搭建</tag>
-        <tag>问题解决</tag>
       </tags>
   </entry>
   <entry>
