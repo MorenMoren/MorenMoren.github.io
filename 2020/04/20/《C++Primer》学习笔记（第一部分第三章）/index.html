@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="一.命名空间的using声明 我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：  ​    编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。  我们可以使用using声明，来免去专门的前缀（如命名空间：：）： 123456using namespace::name ;&#x2F;&#x2F;例子如下：#include &lt;iostream&gt;u">
+<meta name="description" content="一.命名空间的using声明 我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：  ​    编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《C++Primer》学习笔记（第一部分第三章）">
 <meta property="og:url" content="http://moleague.com/2020/04/20/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89/index.html">
 <meta property="og:site_name" content="mo&#39;s blog">
-<meta property="og:description" content="一.命名空间的using声明 我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：  ​    编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。  我们可以使用using声明，来免去专门的前缀（如命名空间：：）： 123456using namespace::name ;&#x2F;&#x2F;例子如下：#include &lt;iostream&gt;u">
+<meta property="og:description" content="一.命名空间的using声明 我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：  ​    编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。">
 <meta property="og:image" content="http://www.morenmoren.com/cctype.png">
 <meta property="article:published_time" content="2020-04-20T00:30:32.000Z">
-<meta property="article:modified_time" content="2020-04-21T03:19:55.742Z">
+<meta property="article:modified_time" content="2020-05-05T04:19:14.255Z">
 <meta property="article:author" content="MorenMoren">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -391,6 +391,7 @@
 <li>我们目前使用到的库函数基本上都属于命名空间std。如std::cin。此处的‘：：’作用域操作符的含义是：</li>
 </ul>
 <p>​    <em>编译器从操作符左侧的名字所示的作用域中寻找右侧那个名字。</em></p>
+<a id="more"></a>
 <ol>
 <li><p>我们可以使用using声明，来免去专门的前缀（如命名空间：：）：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span>::name ;</span><br><span class="line"><span class="comment">//例子如下：</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="built_in">std</span>::<span class="built_in">cin</span>;		</span><br><span class="line"><span class="comment">//如此声明，那么可以直接使用cin。</span></span><br><span class="line"><span class="comment">//然而其他的由于没有声明，如果直接使用（如cout），那么会报错</span></span><br></pre></td></tr></table></figure>
