@@ -32,7 +32,7 @@ t=\sqrt[2]n\\
   </entry>
   <entry>
     <title>《C++Primer》学习笔记（第一部分第六章）</title>
-    <url>/2020/05/06/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%89/</url>
+    <url>/2020/05/06/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%89/</url>
     <content><![CDATA[<ul>
 <li><p>本章首先介绍函数的定义和声明，包括参数如何传入函数以及函数如何返回结果。在C++语言中允许重载函数，即几个不同函数共名。所以接下来我们介绍重载函数的方法，以及编译器如何从函数的若干重载形式中选取一个与调用匹配的版本。最后介绍关于函数指针。</p>
 <a id="more"></a>
@@ -115,11 +115,6 @@ t=\sqrt[2]n\\
       <tags>
         <tag>C++</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>《C++Primer》学习笔记（第一部分第七章）</title>
-    <url>/2020/05/06/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>《C++ Primer》学习笔记（第一部分第一章）</title>
