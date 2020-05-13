@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="初识输入输出">
+<meta name="description" content="​        类的基本思想是数据抽象和封装。数据抽象是一种依赖于接口和实现分离的编程技术。类的接口包括用户所能执行的操作；类的实现则包括类的数据成员，负责接口实现的函数体以及定义类所需要的各种私有函数。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《C++ Primer》学习笔记（第一部分第一章）">
-<meta property="og:url" content="http://moleague.com/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/index.html">
+<meta property="og:title" content="《C++Primer》学习笔记（第一部分第七章）">
+<meta property="og:url" content="http://moleague.com/2020/05/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%89/index.html">
 <meta property="og:site_name" content="mo&#39;s blog">
-<meta property="og:description" content="初识输入输出">
-<meta property="article:published_time" content="2020-04-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-05T04:19:44.310Z">
+<meta property="og:description" content="​        类的基本思想是数据抽象和封装。数据抽象是一种依赖于接口和实现分离的编程技术。类的接口包括用户所能执行的操作；类的实现则包括类的数据成员，负责接口实现的函数体以及定义类所需要的各种私有函数。">
+<meta property="article:published_time" content="2020-05-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-05-13T11:28:01.270Z">
 <meta property="article:author" content="MorenMoren">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://moleague.com/2020/04/13/《C++Primer》学习笔记（第一部分第一章）/"/>
+  <link rel="canonical" href="http://moleague.com/2020/05/13/《C++Primer》学习笔记（第一部分第七章）/"/>
 
 
 
 
 
-  <title>《C++ Primer》学习笔记（第一部分第一章） | mo's blog</title>
+  <title>《C++Primer》学习笔记（第一部分第七章） | mo's blog</title>
   
 
 
@@ -296,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://moleague.com/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/">
+    <link itemprop="mainEntityOfPage" href="http://moleague.com/2020/05/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MorenMoren">
@@ -313,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">《C++ Primer》学习笔记（第一部分第一章）</h1>
+          <h1 class="post-title" itemprop="name headline">《C++Primer》学习笔记（第一部分第七章）</h1>
         
 
         <div class="post-meta">
@@ -325,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T00:00:00+08:00">
-                2020-04-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-13T00:00:00+08:00">
+                2020-05-13
               </time>
             
 
@@ -385,44 +385,78 @@
       
 
       
-        <h4 id="初识输入输出"><a href="#初识输入输出" class="headerlink" title="初识输入输出"></a>初识输入输出</h4><a id="more"></a>
-<p>一. 输入输出流</p>
-<ol>
-<li><p><strong>istream</strong>: 输入流</p>
-<p>1.1. cin: 标准输入</p>
+        <p>​        类的基本思想是<strong>数据抽象</strong>和<strong>封装</strong>。数据抽象是一种依赖于<strong>接口</strong>和<strong>实现</strong>分离的编程技术。类的接口包括用户所能执行的操作；类的实现则包括类的数据成员，负责接口实现的函数体以及定义类所需要的各种私有函数。</p>
+<a id="more"></a>
+<h2 id="一-定义抽象数据类型"><a href="#一-定义抽象数据类型" class="headerlink" title="一.定义抽象数据类型"></a>一.定义抽象数据类型</h2><ul>
+<li><p>成员函数通过一个名为this的额外隐式参数来访问它的对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">total.isbn();</span><br><span class="line"><span class="comment">//编译器负责把total的地址传递给isbn的隐式形参this，可认为如下调用：</span></span><br><span class="line">Sales_data::isbn(&amp;total);</span><br><span class="line"></span><br><span class="line"><span class="comment">//this是一个常量指针，我们不允许改变this所保存的地址</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>ostream: 输出流</p>
-<p>2.1. cout: 标准输出</p>
-<p>2.2. cerr: 输出警告和错误消息</p>
-<p>2.3. clog: 输出程序运行时的一般性消息</p>
+<li><p>默认情况下，this的类型是指向类类型非常量版本的常量指针，这也意味着一般情况下，我们不能把this绑定到一个常量对象上，而如果我们想要让const指向一个常量对象上，我们要将函数定义为常量成员函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">Sales_data::isbn</span><span class="params">()</span> <span class="keyword">const</span></span>&#123;<span class="keyword">return</span> <span class="keyword">this</span>-&gt;isbn;&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">std</span>::<span class="built_in">string</span> <span class="title">Sales_data::isbn</span><span class="params">(<span class="keyword">const</span> Sales_data *<span class="keyword">const</span> <span class="keyword">this</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;isbn;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//常量成员函数中const的作用可见第二个函数定义</span></span><br><span class="line"><span class="comment">//isbn可以读取调用它的对象的数据成员，但不能写入新值</span></span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>二. 输入输出运算符</p>
-<p> 1.输出运算符:’ &lt;&lt; ‘:输出运算符接收两个运算对象，左侧必须是ostream的运算对象，右侧运算对象是要打印值</p>
-<p> 2.操作符：std::endl :该效果是结束当前行，并保证输入流的所有输出都真正写入输出流。</p>
-<p> 3.输入运算符: ‘ &gt;&gt; ‘:与输出运算符类似，该运算符左侧接受一个istream作为他的左侧运算对象，接受一个对象作为右侧运算对象</p>
-<h4 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h4><p><strong><em>注意：在for语句中，如果我们在for语句外已经定义了一个变量如i,那么如果我们在for语句如此写：for(int i; ; ),那么for循环里的i是与循环外的i无关的，即可将for语句当成单独函数。</em></strong></p>
-<ul>
-<li>读取数量不定的输入数据：当我们使用istream对象作为作为条件是，如：while（cin &gt;&gt; value），它的效果是检测流的状态，只要输入正常，那么它就返回true。而遇到文件结束符（Windows里时Ctrl+Z,其它系统是Ctrl+D）或是遇到无效输入时（类型不匹配），istream才会返回false。</li>
+<li><p>定义一个返回this对象的函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//该函数类似于+=，调用该函数的对象处在运算符左侧，参数处在右侧</span></span><br><span class="line"><span class="function">Sales_data&amp; <span class="title">Sales_data::combine</span><span class="params">(<span class="keyword">const</span> Sales_data &amp;rhs)</span></span>&#123;</span><br><span class="line">    units_sold += rhs.units_sold;</span><br><span class="line">    revenue += rhs.revenue;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;	<span class="comment">//解引用，并返回调用该函数的对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构造函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Sales_data()=<span class="keyword">default</span>;</span><br><span class="line">Sales_data(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;s):bookNo(s)&#123;&#125;</span><br><span class="line">Sales_data(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;s,<span class="keyword">unsigned</span> n,<span class="keyword">double</span> p):</span><br><span class="line">			bookNo(s),units_sold(n),revenue(p*n)&#123;&#125;</span><br><span class="line">Sales_data(<span class="built_in">std</span>::istream &amp;);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*Sales_data()=default,此语句要求编译器生成默认构造函数*/</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<h4 id="小结术语"><a href="#小结术语" class="headerlink" title="小结术语"></a>小结术语</h4><ol>
-<li>命名空间（namespace）：可以将库定义的名字放在单一位置处。</li>
-<li>std：标准库所使用的命名空间。</li>
-<li>操纵符：在读写流时用来“操纵流”本身，如std::endl。</li>
-<li>库类型：标准库定义的类型。</li>
-<li>方法：成员函数的术名。</li>
-<li>‘ . ‘运算符: 左侧为类类型对象，右侧时此对象的成员的名字。</li>
-<li>‘ :: ‘运算符：作用域运算符</li>
-</ol>
-<h5 id="注：’-‘-运算符和’-‘-运算符的区别："><a href="#注：’-‘-运算符和’-‘-运算符的区别：" class="headerlink" title="注：’ . ‘ 运算符和’ :: ‘ 运算符的区别："></a>注：’ . ‘ 运算符和’ :: ‘ 运算符的区别：</h5><ol>
-<li><p>名称和用法都不一样<br>1.1. “::” 操作符的用法有很多<br>（1）代表全局作用域  用法： ::name<br>（2）代表类作用域   用法:       class::name<br>（3）名字空间作用域  用法： namespace::name</p>
-<p>1.2. “.” 操作符的主要作用是成员选择<br>（1）用法:     object.name</p>
+<h2 id="二-访问控制与封装"><a href="#二-访问控制与封装" class="headerlink" title="二.访问控制与封装"></a>二.访问控制与封装</h2><ul>
+<li><p>class和struct定义类唯一的区别就是默认的访问权限。如果我们希望定义的类所有的成员是public，使用struct；如果使用class，则这些成员是private的。</p>
 </li>
-</ol>
-<p>   ​    <strong><em>ps:</em></strong></p>
-<p>   （1）’ :: ‘    针对 <strong>类</strong>，表示作用域</p>
-<p>   （2）’ . ‘     针对 <strong>对象</strong>，表示成员选择</p>
-<p>   所以呢，类的静态成员（静态成员属于类），使用 ‘ :: ‘ 调用。</p>
+<li><p>友元：类允许其它类或者函数访问它的非公有成员，方法是令其他类或者函数称为它的友元。只需添加一条以friend关键字开始的函数声明语句即可。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span>&#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">friend</span> Sales_data <span class="title">add</span><span class="params">(<span class="keyword">const</span> Sales_data&amp;,<span class="keyword">const</span> Sales_data&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="built_in">std</span>::istream &amp;<span class="title">read</span><span class="params">(<span class="built_in">std</span>::istream,Sales_data&amp;)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">friend</span> <span class="built_in">std</span>::ostream &amp;<span class="title">print</span><span class="params">(<span class="built_in">std</span>::ostream,<span class="keyword">const</span> Sales_data&amp;)</span></span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ...</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//友元的声明仅仅指定了访问权限，而非通常意义上的函数声明。</span></span><br><span class="line"><span class="comment">//如果我们希望类的用户能调用某友元函数，我们需要在外部专门声明一次</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="三-类的其他特性"><a href="#三-类的其他特性" class="headerlink" title="三.类的其他特性"></a>三.类的其他特性</h2><ul>
+<li><p>可变数据成员：有时我们希望能修改类的某个数据成员，即使是在一个const成员函数内。我们通过在变量的声明中加入mutable关键字。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Screen</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> some_member <span class="keyword">const</span> &#123;++access_ctr;&#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">mutable</span> <span class="keyword">size_t</span> access_ctr;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//此时尽管some_member函数是const函数，但是仍然能够修改可变数据成员</span></span><br><span class="line"><span class="comment">//一个可变数据成员永远不会是const，即使它是const对象的成员。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类数据成员的初始值：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window_mgr</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Screen&gt; screens&#123;Screen(<span class="number">24</span>,<span class="number">80</span>,<span class="string">' '</span>)&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在我们初始化类类型的成员时，需要为构造函数传递一个符合成员类型的实参。</span></span><br><span class="line"><span class="comment">//此例我们使用一个单独元素值对vector成员执行了列表初始化</span></span><br><span class="line"><span class="comment">//这个值将被传递给vector&lt;Screen&gt;的构造函数，从而创建单元素vector对象</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回*this的成员函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> Screen &amp;<span class="title">Screen::set</span><span class="params">(<span class="keyword">char</span> c)</span></span>&#123;</span><br><span class="line">    contents[<span class="built_in">cursor</span>] = c;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> Screen &amp;<span class="title">Screen::set</span><span class="params">(pos r,pos col,<span class="keyword">char</span> c)</span></span>&#123;</span><br><span class="line">    contents[r*<span class="built_in">width</span> + col] = c;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//该函数返回的是对象的引用，而非对象的副本</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>就像可以把函数的声明和定义分离开来一样，我们也能仅仅声明类而暂时不定义它。它在声明之后定义之前是一个不完全类型。</p>
+</li>
+<li><p>当某类需要用到另一个类里的私有成员时，我们可以用到友元：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Window_mgr</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">using</span> ScreenIndex = <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Screen&gt;::size_type;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">clear</span><span class="params">(ScreenIndex)</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::vector&lt;Screen&gt; screens&#123;Screen(24,80.' ')&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Window_mgr::clear</span><span class="params">(ScreenIndex i)</span></span>&#123;</span><br><span class="line">    Screen &amp;s = screens[i];</span><br><span class="line">    s.contents = <span class="built_in">string</span>(s.<span class="built_in">height</span> * s.<span class="built_in">width</span>,<span class="string">' '</span>);	<span class="comment">//清空Screen</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一个类想要把一组重载函数声明为友元，那么必须对每一个重载函数分别声明</p>
+</li>
+</ul>
+<h2 id="四-构造函数再探"><a href="#四-构造函数再探" class="headerlink" title="四.构造函数再探"></a>四.构造函数再探</h2><ul>
+<li><p>委托构造函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span>&#123;</span></span><br><span class="line">  Sales_data(<span class="built_in">std</span>::<span class="built_in">string</span> s,<span class="keyword">unsigned</span> cnt,<span class="keyword">double</span> price):</span><br><span class="line">    		bookNo(s),units_sold(cnt),revenue(cnt*price)&#123;&#125;</span><br><span class="line">  Sales_data():Sales_data(<span class="string">""</span>,<span class="number">0</span>,<span class="number">0</span>)&#123;&#125;</span><br><span class="line">  Sales_data(<span class="built_in">std</span>::<span class="built_in">string</span> s):Sales_data(s,<span class="number">0</span>,<span class="number">0</span>)&#123;&#125;</span><br><span class="line">  Sales_data(<span class="built_in">std</span>::istream &amp;is):Sales_data()&#123;<span class="built_in">read</span>(is,*<span class="keyword">this</span>);&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">最后一个构造函数同样是委托构造函数，它委托给了默认构造函数，默认构造函数又接着委托给了第一个构造函数。当这些受委托的构造函数执行完，最后执行委托构造函数体的内容。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>隐式类类型转换：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> null_book = <span class="string">"9 9 9 9"</span>;</span><br><span class="line">item.combine();		<span class="comment">//将item所属类对象相结合</span></span><br><span class="line"><span class="comment">//编译器用给定的string自动创建了一个Sales_data对象</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>抑制构造函数定义的隐式转换：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我们可以通过将构造函数声明为explicit来阻止隐式转换：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Sales_data</span>&#123;</span></span><br><span class="line">    Sales_data()=<span class="keyword">default</span>;</span><br><span class="line">    Sales_data(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;s,<span class="keyword">unsigned</span> n,<span class="keyword">double</span> p):</span><br><span class="line">    		  bookNo(s),units_sold(n),revenue(n*p)&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Sales_data</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span> &amp;s)</span>:<span class="title">booNo</span><span class="params">(s)</span></span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Sales_data</span><span class="params">(<span class="built_in">std</span>::istream)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//! item.combine(null_book);</span></span><br><span class="line"><span class="comment">//! item.combine(cin);</span></span><br><span class="line"><span class="comment">//以上2种隐式转换是错误的，因为对应的构造函数是explicit</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//explicit关键字只允许出现在类内构造函数，在外部定义不应该重复</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>聚合类：使得用户可以直接访问其成员，并且具有特殊的初始化语法形式。</p>
+</li>
+<li><p>constexpr 构造函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Debug</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    constexpr Debug(bool b =true):hw(b),io(b),other(b)&#123;&#125;</span><br><span class="line">    constexpr Debug(bool h,bool i,bool o):hw(h),io(i),other(o)&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">constexpr</span> <span class="keyword">bool</span> <span class="title">any</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> hw||io||other;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">bool</span> hw;</span><br><span class="line">    <span class="keyword">bool</span> io;</span><br><span class="line">    <span class="keyword">bool</span> other;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//注意，constexpr构造函数必须有一个空的函数体，即所有成员变量的初始化都放  到初始化列表中。</span></span><br><span class="line"><span class="comment">//constexpr修饰构造函数代表所接收的参数是一个常量表达式</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="五-类的静态成员"><a href="#五-类的静态成员" class="headerlink" title="五.类的静态成员"></a>五.类的静态成员</h2><ul>
+<li>类的静态成员存在于任何对象中。同样的，静态成员函数不能与任何对象绑定在一起，它们不包含 <strong>this</strong> 指针。</li>
+</ul>
+<ul>
+<li>成员函数不用通过作用域运算符就能直接使用静态成员。</li>
+</ul>
+<ul>
+<li>因为静态数据成员不属于类的任意一个对象所以它们并不是在创建类的时候被定义的。一般来说，我们必须在类的外部定义和初始化每个静态成员。</li>
+</ul>
+<ul>
+<li><p>如果静态变量应用场景仅限于编译器可以将其替换为某值时，那么我们不必定义它。相反，如果我们将它用于值不能替换的场景中，则该成员必须有一条定义语句。</p>
+</li>
+<li><p>我们可以使用静态数据成员作为默认实参，而非静态数据成员不行。</p>
+</li>
+</ul>
 
       
     </div>
@@ -453,8 +487,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/04/11/Al%20%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80)/" rel="next" title="算法学习笔记（一）：牛顿迭代法（计算平方根）">
-                <i class="fa fa-chevron-left"></i> 算法学习笔记（一）：牛顿迭代法（计算平方根）
+              <a href="/2020/05/11/Introduction-to-CSAPP-%E5%AE%9E%E9%AA%8C%E4%BA%8C%EF%BC%9ABomblab/" rel="next" title="Introduction to CSAPP 实验二：Bomblab">
+                <i class="fa fa-chevron-left"></i> Introduction to CSAPP 实验二：Bomblab
               </a>
             
           </div>
@@ -462,10 +496,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/" rel="prev" title="《C++Primer》学习笔记（第一部分第二章）">
-                《C++Primer》学习笔记（第一部分第二章） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -601,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#初识输入输出"><span class="nav-number">1.</span> <span class="nav-text">初识输入输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制流"><span class="nav-number">2.</span> <span class="nav-text">控制流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小结术语"><span class="nav-number">3.</span> <span class="nav-text">小结术语</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#注：’-‘-运算符和’-‘-运算符的区别："><span class="nav-number">3.1.</span> <span class="nav-text">注：’ . ‘ 运算符和’ :: ‘ 运算符的区别：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-定义抽象数据类型"><span class="nav-number">1.</span> <span class="nav-text">一.定义抽象数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-访问控制与封装"><span class="nav-number">2.</span> <span class="nav-text">二.访问控制与封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-类的其他特性"><span class="nav-number">3.</span> <span class="nav-text">三.类的其他特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-构造函数再探"><span class="nav-number">4.</span> <span class="nav-text">四.构造函数再探</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-类的静态成员"><span class="nav-number">5.</span> <span class="nav-text">五.类的静态成员</span></a></li></ol></div>
             
 
           </div>
