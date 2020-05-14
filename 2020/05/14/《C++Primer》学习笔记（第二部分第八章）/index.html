@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="mo&#39;s blog">
 <meta property="og:description" content="​        C++语言不直接处理输入输出，而是通过一族定义在标准库中的类型处理IO。这些类型支持从设备读取数据，向设备写入数据的IO操作。">
 <meta property="article:published_time" content="2020-05-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-14T02:45:40.146Z">
+<meta property="article:modified_time" content="2020-05-14T02:51:20.690Z">
 <meta property="article:author" content="MorenMoren">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
@@ -389,8 +389,10 @@
 <a id="more"></a>
 <h2 id="IO类"><a href="#IO类" class="headerlink" title="IO类"></a>IO类</h2><ul>
 <li><p>为支持不同种类种类的IO处理操作，我们标准库定义了一些IO类型：</p>
-<p>| 头文件     | 类型                                            |      |      |<br>| ————— | ———————————————————————- | —— | —— |<br>| <code>iostream</code> | <code>istream,wistream</code> 从流读取数据                 |      |      |<br>|            | <code>ostream,wostream</code> 向流写入数据                 |      |      |<br>|            | <code>iostream,wiostream</code> 读写流                     |      |      |<br>| <code>fstream</code>  | <code>ifstream,wifstream</code> 从文件读取数据             |      |      |<br>|            | <code>ofstream,wofstream</code> 向文件写入数据             |      |      |<br>|            | <code>fstream,wfstream</code> 读写文件                     |      |      |<br>| <code>sstream</code>  | <code>istringstream,wistringstream</code> 从string读取数据 |      |      |<br>|            | <code>ostringstream,wostringstream</code> 从string写入数据 |      |      |<br>|            | <code>stringstream,wstringstream</code> 读写string         |      |      |<br>|            |                                                 |      |      |</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">头文件    		类型                                          </span><br><span class="line">iostream	  istream,wistream 从流读取数据                  </span><br><span class="line">              ostream,wostream 向流写入数据            </span><br><span class="line">              iostream,wiostream 读写流             </span><br><span class="line">              </span><br><span class="line">fstream 	  ifstream,wifstream 从文件读取数据                  </span><br><span class="line">			 ofstream,wofstream 向文件写入数据                   </span><br><span class="line">              fstream,wfstream 读写文件    </span><br><span class="line">              </span><br><span class="line">sstream	      istringstream,wistringstream 从string读取数据     </span><br><span class="line">              ostringstream,wostringstream 从string写入数据     </span><br><span class="line">              stringstream,wstringstream 读写string</span><br></pre></td></tr></table></figure>
 </li>
+</ul>
+<ul>
 <li><p>为了支持使用宽字符的语言，标准库定义了一组类型和对象来操作wchar_t类型的数据。宽字符版本的类型和函数名字以一个 w 开头。</p>
 </li>
 <li><p>标准库使我们能忽略这些不同类型的流之间的差异，这是通过继承机制实现的。我们通常可以将一个派生类对象当作基类对象使用。</p>

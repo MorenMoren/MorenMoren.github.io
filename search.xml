@@ -1,52 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Introduction to CSAPP 实验(一)：Datalab</title>
-    <url>/2020/05/08/Introduction-to-CSAPP-%E5%AE%9E%E9%AA%8C-%E4%B8%80-%EF%BC%9ADatalab/</url>
-    <content><![CDATA[<p>​        深入理解计算机系统实验：<strong>datalab</strong></p>
+    <title>路径压缩的quick-union算法</title>
+    <url>/2020/05/05/Al%20%E8%B7%AF%E5%BE%84%E5%8E%8B%E7%BC%A9%E7%9A%84quick-union%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<p>​    输入的整数表示的可能是大型计算机网络中的计算机，整数对表示网络中的连接，这个算法可以判定我们是否需要在p和q之间架设新的连接才能通信。以下为最优算法算法——路径压缩的加权quick-union</p>
+<p>​    其他算法还有quick-find，quick-union，加权quick-union算法。</p>
 <a id="more"></a>
-<ol>
-<li>仅用~ &amp;实现异或：</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * bitXor - x^y using only ~ and &amp; </span></span><br><span class="line"><span class="comment"> *   Example: bitXor(4, 5) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ~ &amp;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//相当于实现书上bis(bic(x,y),bic(y,x))函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitXor</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ~(~(~x&amp;y)&amp;~(x&amp;~y));  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>返回最小的二进制补码整数，即最高位为1，其它全为0：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * tmin - return minimum two's complement integer </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//即符号位为1，其它全为0</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmin</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>&lt;&lt;<span class="number">31</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当x是最大的二进制补码时返回1，否则返回0：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * isTmax - returns 1 if x is the maximum, two's complement number,</span></span><br><span class="line"><span class="comment"> *     and 0 otherwise </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | +</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个条件是想筛选出最大的二进制数与全1</span></span><br><span class="line"><span class="comment">//第二个条件则是将全一排除</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isTmax</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (!(x+<span class="number">1</span>+x+<span class="number">1</span>))&amp;(!!(x+<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果x所有偶数位为1,那么返回1，否则返回0：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * allOddBits - return 1 if all odd-numbered bits in word set to 1</span></span><br><span class="line"><span class="comment"> *   where bits are numbered from 0 (least significant) to 31 (most significant)</span></span><br><span class="line"><span class="comment"> *   Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第一步就是创造一个偶数位为1，奇数位为0的数，通过移位实现</span></span><br><span class="line"><span class="comment">//第二步，检测x的偶数位</span></span><br><span class="line"><span class="comment">//第三步，检测第二步是否有改变偶数位，若不改变，那么返回1</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">allOddBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> k = <span class="number">0xaa</span> + (<span class="number">0xaa</span> &lt;&lt; <span class="number">8</span>) + (<span class="number">0xaa</span> &lt;&lt; <span class="number">16</span>) + (<span class="number">0xaa</span> &lt;&lt; <span class="number">24</span>);</span><br><span class="line">  <span class="keyword">int</span> y = k &amp; x;</span><br><span class="line">  <span class="keyword">return</span> !(y ^ k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>求x的加法逆元：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * negate - return -x </span></span><br><span class="line"><span class="comment"> *   Example: negate(1) = -1.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ~x+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果x在0x30到0x39之间(包含二者)，那么返回1，否则返回0：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * isAsciiDigit - return 1 if 0x30 &lt;= x &lt;= 0x39 (ASCII codes for characters '0' to '9')</span></span><br><span class="line"><span class="comment"> *   Example: isAsciiDigit(0x35) = 1.</span></span><br><span class="line"><span class="comment"> *            isAsciiDigit(0x3a) = 0.</span></span><br><span class="line"><span class="comment"> *            isAsciiDigit(0x05) = 0.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//运用了上一个函数的结论，我们无法用-，那么可以加上它的加法逆元</span></span><br><span class="line"><span class="comment">//通过判断2次相减后的正负（运用移位，只留下符号位）来看是否在该区间内</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isAsciiDigit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !((x+~<span class="number">48</span>+<span class="number">1</span>)&gt;&gt;<span class="number">31</span>)&amp;((x+~<span class="number">58</span>+<span class="number">1</span>)&gt;&gt;<span class="number">31</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>实现C语言里的：x ? y : z</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * conditional - same as x ? y : z </span></span><br><span class="line"><span class="comment"> *   Example: conditional(2,4,5) = 4</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//思想：运用|，x非0，那么关于z的项为0. x为0，那么关于y的项为0</span></span><br><span class="line"><span class="comment">//我们可以通过！来直接区分0和非0</span></span><br><span class="line"><span class="comment">//如此便很容易将二者变为全1或者全0</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">conditional</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ((!x+~<span class="number">1</span>+<span class="number">1</span>)&amp;y)|((~!x+<span class="number">1</span>)&amp;z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果x&lt;=y，那么返回1，否则返回0：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * isLessOrEqual - if x &lt;= y  then return 1, else return 0 </span></span><br><span class="line"><span class="comment"> *   Example: isLessOrEqual(4,5) = 1.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里我发现如果二者的符号不同，加法逆元的时候会出问题，因为这可能导致溢出</span></span><br><span class="line"><span class="comment">//如此我们可以将2种情况分开，在一种情况发生时，另一种情况不起作用</span></span><br><span class="line"><span class="comment">//由此我们可以引进标识符sign.相同符号为0，否则为1.如此便简单许多</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isLessOrEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">int</span> sign = !(x&gt;&gt;<span class="number">31</span>)^!(y&gt;&gt;<span class="number">31</span>);      </span><br><span class="line">   <span class="keyword">int</span> a = sign &amp; (x&gt;&gt;<span class="number">31</span>);   </span><br><span class="line">   <span class="keyword">int</span> b = !sign &amp; !((y+(~x+<span class="number">1</span>))&gt;&gt;<span class="number">31</span>);  </span><br><span class="line">   <span class="keyword">return</span> a | b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>运用位级运算符实现！：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * logicalNeg - implement the ! operator, using all of </span></span><br><span class="line"><span class="comment"> *              the legal operators except !</span></span><br><span class="line"><span class="comment"> *   Examples: logicalNeg(3) = 0, logicalNeg(0) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//我们一般都首先实现特殊情况，再推广到一般</span></span><br><span class="line"><span class="comment">//显然，只有全0能够为实现在首位为0的情况下，~(~x+1)操作后首位变为1</span></span><br><span class="line"><span class="comment">//需要&amp;1,因为右移位补的是1</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">logicalNeg</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ((~(~x+<span class="number">1</span>)&amp;~x)&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>计算构成x所需要的位数：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* howManyBits - return the minimum number of bits required to represent x in</span></span><br><span class="line"><span class="comment"> *             two's complement</span></span><br><span class="line"><span class="comment"> *  Examples: howManyBits(12) = 5</span></span><br><span class="line"><span class="comment"> *            howManyBits(298) = 10</span></span><br><span class="line"><span class="comment"> *            howManyBits(-5) = 4</span></span><br><span class="line"><span class="comment"> *            howManyBits(0)  = 1</span></span><br><span class="line"><span class="comment"> *            howManyBits(-1) = 1</span></span><br><span class="line"><span class="comment"> *            howManyBits(0x80000000) = 32</span></span><br><span class="line"><span class="comment"> *  Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//本题最难，运用了二分法的思想</span></span><br><span class="line"><span class="comment">//通过把负数取反，正数不变，我们需要找到第一个1所在的位数然后加1</span></span><br><span class="line"><span class="comment">//如此一共32位，我们就首先查16位处，之后8位处。。。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">howManyBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  x=x^(x&gt;&gt;<span class="number">31</span>);</span><br><span class="line">  <span class="keyword">int</span> b16=(!!(x&gt;&gt;<span class="number">16</span>))&lt;&lt;<span class="number">4</span>;</span><br><span class="line">  x=x&gt;&gt;b16;</span><br><span class="line">  <span class="keyword">int</span> b8=(!!(x&gt;&gt;<span class="number">8</span>))&lt;&lt;<span class="number">3</span>;</span><br><span class="line">  x=x&gt;&gt;b8;</span><br><span class="line">  <span class="keyword">int</span> b4=(!!(x&gt;&gt;<span class="number">4</span>))&lt;&lt;<span class="number">2</span>;</span><br><span class="line">  x=x&gt;&gt;b4;</span><br><span class="line">  <span class="keyword">int</span> b2=(!!(x&gt;&gt;<span class="number">2</span>))&lt;&lt;<span class="number">1</span>;</span><br><span class="line">  x=x&gt;&gt;b2;</span><br><span class="line">  <span class="keyword">int</span> b=(!!(x&gt;&gt;<span class="number">1</span>));</span><br><span class="line">  x=x&gt;&gt;b;</span><br><span class="line">  <span class="keyword">return</span> b+b16+b8+b4+b2+x+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-</li>
-</ol>
-<p>以下位浮点数的使用：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//float</span></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * floatScale2 - Return bit-level equivalent of expression 2*f for</span></span><br><span class="line"><span class="comment"> *   floating point argument f.</span></span><br><span class="line"><span class="comment"> *   Both the argument and result are passed as unsigned int's, but</span></span><br><span class="line"><span class="comment"> *   they are to be interpreted as the bit-level representation of</span></span><br><span class="line"><span class="comment"> *   single-precision floating point values.</span></span><br><span class="line"><span class="comment"> *   When argument is NaN, return argument</span></span><br><span class="line"><span class="comment"> *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">floatScale2</span><span class="params">(<span class="keyword">unsigned</span> uf)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> flag = uf &amp; <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="built_in">exp</span> = uf &gt;&gt; <span class="number">23</span> &amp; <span class="number">0xFF</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> frac = uf &amp; <span class="number">0x7fffff</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">exp</span> == <span class="number">0xff</span>) <span class="comment">// NaN或者无穷大</span></span><br><span class="line">    flag = flag;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">exp</span> == <span class="number">0</span>) <span class="comment">// 非规格化的</span></span><br><span class="line">    frac &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">exp</span> == <span class="number">0xfe</span>) &#123; <span class="comment">//接近无穷大</span></span><br><span class="line">    frac = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">exp</span> = <span class="number">0xff</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="built_in">exp</span> += <span class="number">1</span>; <span class="comment">// 规格化的</span></span><br><span class="line">  <span class="keyword">return</span> flag | (<span class="built_in">exp</span> &lt;&lt; <span class="number">23</span>) | frac;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * floatFloat2Int - Return bit-level equivalent of expression (int) f</span></span><br><span class="line"><span class="comment"> *   for floating point argument f.</span></span><br><span class="line"><span class="comment"> *   Argument is passed as unsigned int, but</span></span><br><span class="line"><span class="comment"> *   it is to be interpreted as the bit-level representation of a</span></span><br><span class="line"><span class="comment"> *   single-precision floating point value.</span></span><br><span class="line"><span class="comment"> *   Anything out of range (including NaN and infinity) should return</span></span><br><span class="line"><span class="comment"> *   0x80000000u.</span></span><br><span class="line"><span class="comment"> *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">floatFloat2Int</span><span class="params">(<span class="keyword">unsigned</span> uf)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> s_    = uf&gt;&gt;<span class="number">31</span>;</span><br><span class="line">  <span class="keyword">int</span> exp_  = ((uf&amp;<span class="number">0x7f800000</span>)&gt;&gt;<span class="number">23</span>)<span class="number">-127</span>;</span><br><span class="line">  <span class="keyword">int</span> frac_ = (uf&amp;<span class="number">0x007fffff</span>)|<span class="number">0x00800000</span>;</span><br><span class="line">  <span class="keyword">if</span>(!(uf&amp;<span class="number">0x7fffffff</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(exp_ &gt; <span class="number">30</span>) <span class="keyword">return</span> <span class="number">0x80000000</span>;</span><br><span class="line">    <span class="comment">//当E&gt;30时，即使frac=1,符号位也会被覆盖，所以不可以，返回0x800000。</span></span><br><span class="line">  <span class="keyword">if</span>(exp_ &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">    <span class="comment">//（1右移x位,x&gt;0，结果为0）则返回0。</span></span><br><span class="line">  <span class="keyword">if</span>(exp_ &gt; <span class="number">23</span>) frac_ &lt;&lt;= (exp_<span class="number">-23</span>);</span><br><span class="line">  <span class="keyword">else</span> frac_ &gt;&gt;= (<span class="number">23</span>-exp_);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(!((frac_&gt;&gt;<span class="number">31</span>)^s_)) <span class="keyword">return</span> frac_;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(frac_&gt;&gt;<span class="number">31</span>) <span class="keyword">return</span> <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> ~frac_+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * floatPower2 - Return bit-level equivalent of the expression 2.0^x</span></span><br><span class="line"><span class="comment"> *   (2.0 raised to the power x) for any 32-bit integer x.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   The unsigned value that is returned should have the identical bit</span></span><br><span class="line"><span class="comment"> *   representation as the single-precision floating-point number 2.0^x.</span></span><br><span class="line"><span class="comment"> *   If the result is too small to be represented as a denorm, return</span></span><br><span class="line"><span class="comment"> *   0. If too large, return +INF.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. Also if, while </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">floatPower2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">-149</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (x &lt; <span class="number">-127</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> &lt;&lt; (x + <span class="number">149</span>);</span><br><span class="line">  <span class="keyword">if</span> (x &gt; <span class="number">127</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0x7f800000</span>;</span><br><span class="line">  <span class="keyword">return</span> (x + <span class="number">127</span>) &lt;&lt; <span class="number">23</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">weight</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span>* id,*sz;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">	weight(<span class="keyword">int</span> N) &#123;</span><br><span class="line">		count = N;			<span class="comment">//统计分量的数量，每连接一个就减一</span></span><br><span class="line">		id = <span class="keyword">new</span> <span class="keyword">int</span>[N];	<span class="comment">//父链接数组（连接它的上一级）</span></span><br><span class="line">		sz = <span class="keyword">new</span> <span class="keyword">int</span>[N];	<span class="comment">//统计节点的分量大小</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) id[i] = i;</span><br><span class="line">		<span class="comment">//将所有节点的分支初始化为1</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) sz[i] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> count;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">connected</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//判断根节点是否相同</span></span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">find</span>(p) == <span class="built_in">find</span>(q);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> box = s,sbox;</span><br><span class="line">		<span class="comment">//找到根节点</span></span><br><span class="line">		<span class="keyword">while</span> (s != id[s]) s = id[s];</span><br><span class="line">		<span class="comment">//以下循环就是路径压缩，将路径上的所有点连接到根节点处</span></span><br><span class="line">		<span class="keyword">while</span> (box != s) &#123;</span><br><span class="line">			sbox = id[box];</span><br><span class="line">			id[box] = s;</span><br><span class="line">			box = sbox;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//返回根节点</span></span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//返回根节点，若从无根节点，就返回自身</span></span><br><span class="line">		<span class="keyword">int</span> i = <span class="built_in">find</span>(p);</span><br><span class="line">		<span class="keyword">int</span> j = <span class="built_in">find</span>(q);</span><br><span class="line">		<span class="comment">//两节点相同就退出该函数</span></span><br><span class="line">		<span class="keyword">if</span> (i == j) <span class="keyword">return</span>;</span><br><span class="line">		<span class="comment">//用以下语句将小树连接到大树</span></span><br><span class="line">		<span class="keyword">if</span> (sz[i] &lt; sz[j]) &#123; id[i] = j; sz[j] += sz[i]; &#125;</span><br><span class="line">		<span class="keyword">else</span> &#123; id[j] = i; sz[i] += sz[j]; &#125;</span><br><span class="line">		count--;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>压缩路径的加权quick-union算法是解决该问题的最优算法。</li>
+</ul>
 ]]></content>
       <categories>
-        <category>《深入理解计算机系统》学习</category>
+        <category>算法（第四版）</category>
       </categories>
       <tags>
-        <tag>《深入理解计算机系统》实验</tag>
+        <tag>算法学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法学习笔记（一）：牛顿迭代法（计算平方根）</title>
+    <url>/2020/04/11/Al%20%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80)/</url>
+    <content><![CDATA[<p>​    在算法（第四版）的13页里，我看到了一个的函数，它利用了牛顿迭代法来计算一个数的近似平方根，我通过查询资料理解了牛顿迭代法的实现过程。</p>
+<a id="more"></a>
+<p>​    这个方法所包含的知识：</p>
+<p><em>1.导数的含义</em></p>
+<p><em>2.极限的思维</em></p>
+<p><em>3.函数的零点</em></p>
+<h4 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h4><p>1.在求一个函数零点时，我们可以随意取一个点作为起始点(x0,f(x0)），并过该点做函数的切线,设切线的横截距为x1。在该点（x1,0）垂直于X轴引垂线，交函数于(x1,f(x1)),再对该点做与之前同样的操作，以此往复。如下图：</p>
+<p><img src="http://www.morenmoren.com/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95%E5%9B%BE%E8%A7%A3.gif" alt="牛顿迭代法"></p>
+<p>2.对所得到的数据进行处理,经过运算，第一条切线的横截距，多条切线横截距为:</p>
+<script type="math/tex; mode=display">
+x_1=x_0+f(x_0)/f'(x_0)\\
+x_2=x_1+f(x_1)/f'(x_1)\\
+.......\\
+x_(n+1)=x_n+f(x_n)/f'(x_n)</script><h4 id="利用牛顿迭代法来求一个数的平方根"><a href="#利用牛顿迭代法来求一个数的平方根" class="headerlink" title="利用牛顿迭代法来求一个数的平方根"></a>利用牛顿迭代法来求一个数的平方根</h4><p>1.假设：</p>
+<script type="math/tex; mode=display">
+t=\sqrt[2]n\\
+则设f(x)=x^2-n\\
+可设x_0=n</script><p>2.利用代码实现如下：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> t;</span><br><span class="line">	t=n;</span><br><span class="line">	<span class="keyword">while</span>(t-n/t&lt;=<span class="number">1e-15</span>*t)</span><br><span class="line">        <span class="comment">//这里跳出循环的条件是你所要求的精度，即1-n/t^2要满足一定精度。</span></span><br><span class="line">		t=(t+n/t);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>算法（第四版）</category>
+      </categories>
+      <tags>
+        <tag>算法学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《C++ Primer》学习笔记（第一部分第一章）</title>
+    <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/</url>
+    <content><![CDATA[<h4 id="初识输入输出"><a href="#初识输入输出" class="headerlink" title="初识输入输出"></a>初识输入输出</h4><a id="more"></a>
+<p>一. 输入输出流</p>
+<ol>
+<li><p><strong>istream</strong>: 输入流</p>
+<p>1.1. cin: 标准输入</p>
+</li>
+<li><p>ostream: 输出流</p>
+<p>2.1. cout: 标准输出</p>
+<p>2.2. cerr: 输出警告和错误消息</p>
+<p>2.3. clog: 输出程序运行时的一般性消息</p>
+</li>
+</ol>
+<p>二. 输入输出运算符</p>
+<p> 1.输出运算符:’ &lt;&lt; ‘:输出运算符接收两个运算对象，左侧必须是ostream的运算对象，右侧运算对象是要打印值</p>
+<p> 2.操作符：std::endl :该效果是结束当前行，并保证输入流的所有输出都真正写入输出流。</p>
+<p> 3.输入运算符: ‘ &gt;&gt; ‘:与输出运算符类似，该运算符左侧接受一个istream作为他的左侧运算对象，接受一个对象作为右侧运算对象</p>
+<h4 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h4><p><strong><em>注意：在for语句中，如果我们在for语句外已经定义了一个变量如i,那么如果我们在for语句如此写：for(int i; ; ),那么for循环里的i是与循环外的i无关的，即可将for语句当成单独函数。</em></strong></p>
+<ul>
+<li>读取数量不定的输入数据：当我们使用istream对象作为作为条件是，如：while（cin &gt;&gt; value），它的效果是检测流的状态，只要输入正常，那么它就返回true。而遇到文件结束符（Windows里时Ctrl+Z,其它系统是Ctrl+D）或是遇到无效输入时（类型不匹配），istream才会返回false。</li>
+</ul>
+<h4 id="小结术语"><a href="#小结术语" class="headerlink" title="小结术语"></a>小结术语</h4><ol>
+<li>命名空间（namespace）：可以将库定义的名字放在单一位置处。</li>
+<li>std：标准库所使用的命名空间。</li>
+<li>操纵符：在读写流时用来“操纵流”本身，如std::endl。</li>
+<li>库类型：标准库定义的类型。</li>
+<li>方法：成员函数的术名。</li>
+<li>‘ . ‘运算符: 左侧为类类型对象，右侧时此对象的成员的名字。</li>
+<li>‘ :: ‘运算符：作用域运算符</li>
+</ol>
+<h5 id="注：’-‘-运算符和’-‘-运算符的区别："><a href="#注：’-‘-运算符和’-‘-运算符的区别：" class="headerlink" title="注：’ . ‘ 运算符和’ :: ‘ 运算符的区别："></a>注：’ . ‘ 运算符和’ :: ‘ 运算符的区别：</h5><ol>
+<li><p>名称和用法都不一样<br>1.1. “::” 操作符的用法有很多<br>（1）代表全局作用域  用法： ::name<br>（2）代表类作用域   用法:       class::name<br>（3）名字空间作用域  用法： namespace::name</p>
+<p>1.2. “.” 操作符的主要作用是成员选择<br>（1）用法:     object.name</p>
+</li>
+</ol>
+<p>   ​    <strong><em>ps:</em></strong></p>
+<p>   （1）’ :: ‘    针对 <strong>类</strong>，表示作用域</p>
+<p>   （2）’ . ‘     针对 <strong>对象</strong>，表示成员选择</p>
+<p>   所以呢，类的静态成员（静态成员属于类），使用 ‘ :: ‘ 调用。</p>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java通信客户端</title>
+    <url>/2020/04/22/Java%E9%80%9A%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
+    <content><![CDATA[<p>​    <strong>在经过一段时间的学习，Java的一些基础知识基本上已经掌握，我十分急切的想要体验到Java的网络编程，但仍然实力不足，我偶然间看到B站上有一个教程，写着TCP通信客户端代码实现，在已经研究清楚的情况下，我在自己电脑里复现了一遍。</strong></p>
+<a id="more"></a>
+<h4 id="1-实现客户端的创建和数据传递："><a href="#1-实现客户端的创建和数据传递：" class="headerlink" title="1.实现客户端的创建和数据传递："></a>1.实现客户端的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  该文件的代码的目的是创建一个客户端</span></span><br><span class="line"><span class="comment">// 可以在Java文档里面查询到Socket的详细信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Inetclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个socket客户端，ip地址为127.0.0.1，端口号为8888</span></span><br><span class="line">        Socket socket=<span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//write方法接收的是byte类型的对象</span></span><br><span class="line">        <span class="comment">//向服务器写入数据,写入数据需要转化为byte类型，所以使用getbytes()</span></span><br><span class="line">        os.write(<span class="string">"你好服务器"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getinput()获取网络字节输入流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由服务器发送给该客户端的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-实现服务器的创建和数据传递："><a href="#2-实现服务器的创建和数据传递：" class="headerlink" title="2.实现服务器的创建和数据传递："></a>2.实现服务器的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用accept方法获取到客户端对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Netserver</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建服务器，并指定端口号</span></span><br><span class="line">        ServerSocket server=<span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用accept方法链接一个客户端</span></span><br><span class="line">        Socket socket=server.accept();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将输入流写入到服务器</span></span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由客户端发送给该服务器的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//给客户端回写一条数据</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        os.write(<span class="string">"你好客户端"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭服务器和客户端</span></span><br><span class="line">        socket.close();</span><br><span class="line">        server.close();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="以下为实现结果："><a href="#以下为实现结果：" class="headerlink" title="以下为实现结果："></a>以下为实现结果：</h5><p>客户端实现结果：</p>
+<p><img src="http://www.morenmoren.com/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%93%E6%9E%9C.png" alt=""></p>
+<p>服务器实现结果：</p>
+<p><img src="http://www.morenmoren.com/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%8C%E6%88%90%E7%BB%93%E6%9E%9C.png" alt=""></p>
+<ul>
+<li><strong>之后我会尝试在我的阿里云服务器上传递数据</strong></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>TCP通信客户端</tag>
       </tags>
   </entry>
   <entry>
@@ -133,171 +203,6 @@
       </tags>
   </entry>
   <entry>
-    <title>路径压缩的quick-union算法</title>
-    <url>/2020/05/05/Al%20%E8%B7%AF%E5%BE%84%E5%8E%8B%E7%BC%A9%E7%9A%84quick-union%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<p>​    输入的整数表示的可能是大型计算机网络中的计算机，整数对表示网络中的连接，这个算法可以判定我们是否需要在p和q之间架设新的连接才能通信。以下为最优算法算法——路径压缩的加权quick-union</p>
-<p>​    其他算法还有quick-find，quick-union，加权quick-union算法。</p>
-<a id="more"></a>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">weight</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span>* id,*sz;</span><br><span class="line">	<span class="keyword">int</span> count;</span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">	weight(<span class="keyword">int</span> N) &#123;</span><br><span class="line">		count = N;			<span class="comment">//统计分量的数量，每连接一个就减一</span></span><br><span class="line">		id = <span class="keyword">new</span> <span class="keyword">int</span>[N];	<span class="comment">//父链接数组（连接它的上一级）</span></span><br><span class="line">		sz = <span class="keyword">new</span> <span class="keyword">int</span>[N];	<span class="comment">//统计节点的分量大小</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) id[i] = i;</span><br><span class="line">		<span class="comment">//将所有节点的分支初始化为1</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) sz[i] = <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">count</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> count;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">connected</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//判断根节点是否相同</span></span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">find</span>(p) == <span class="built_in">find</span>(q);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> box = s,sbox;</span><br><span class="line">		<span class="comment">//找到根节点</span></span><br><span class="line">		<span class="keyword">while</span> (s != id[s]) s = id[s];</span><br><span class="line">		<span class="comment">//以下循环就是路径压缩，将路径上的所有点连接到根节点处</span></span><br><span class="line">		<span class="keyword">while</span> (box != s) &#123;</span><br><span class="line">			sbox = id[box];</span><br><span class="line">			id[box] = s;</span><br><span class="line">			box = sbox;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//返回根节点</span></span><br><span class="line">		<span class="keyword">return</span> s;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> q)</span> </span>&#123;</span><br><span class="line">		<span class="comment">//返回根节点，若从无根节点，就返回自身</span></span><br><span class="line">		<span class="keyword">int</span> i = <span class="built_in">find</span>(p);</span><br><span class="line">		<span class="keyword">int</span> j = <span class="built_in">find</span>(q);</span><br><span class="line">		<span class="comment">//两节点相同就退出该函数</span></span><br><span class="line">		<span class="keyword">if</span> (i == j) <span class="keyword">return</span>;</span><br><span class="line">		<span class="comment">//用以下语句将小树连接到大树</span></span><br><span class="line">		<span class="keyword">if</span> (sz[i] &lt; sz[j]) &#123; id[i] = j; sz[j] += sz[i]; &#125;</span><br><span class="line">		<span class="keyword">else</span> &#123; id[j] = i; sz[i] += sz[j]; &#125;</span><br><span class="line">		count--;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>压缩路径的加权quick-union算法是解决该问题的最优算法。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>算法（第四版）</category>
-      </categories>
-      <tags>
-        <tag>算法学习</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《C++Primer》学习笔记（第一部分第二章）</title>
-    <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[<p><strong>2020.4.13写：</strong></p>
-<a id="more"></a>
-<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
-<li>初始化列表（initialize list）：</li>
-</ul>
-<p>如以下4个初始化是等价的：</p>
-<p>​    int i = 0 ;</p>
-<p>​    int i = {0} ;</p>
-<p>​    int i{0} ;</p>
-<p>​    int i(0) ;</p>
-<ul>
-<li>变量的声明：</li>
-</ul>
-<p>​    当我们仅仅是想声明一个变量，而非去定义，我们可以用extern来完成，而当我们用extern去声明一个变量时，我们如果给它初始值，那么extern也就没有意义了。</p>
-<ul>
-<li>全局变量：</li>
-</ul>
-<p>​    当我们在函数体外定义了一个全局变量，如果我们在函数体再次定义了该变量，那么在函数体定义的变量会覆盖该全局变量，而不是去修改它。</p>
-<p>​    而如果我们想要显式的访问全局变量而不是局部变量，那么我们就要如此调用      ‘ : :i ’。此处：：便是作用域操作符。</p>
-<h2 id="引用："><a href="#引用：" class="headerlink" title="引用："></a>引用：</h2><p>​    引用可以给对象起一个别名，但是该引用本身并不是一个对象。然而引用要注意以下几点：</p>
-<pre><code>1. 引用类型必须初始化。因为引用与一个对象绑定以后，不能再改变绑定对象。
- 2. 引用类型必须与对象的类型一致，否则会出错。
- 3. 引用类型的初始值必须是一个对象。假如你给一个int类型的引用赋予10，那么系统就会报错。
-</code></pre><h2 id="指针："><a href="#指针：" class="headerlink" title="指针："></a>指针：</h2><ol>
-<li><p>当我们想要将一个指针初始化为空指针，在C语言中我们学过，可以使用NULL（预处理变量）进行初始化，如此那和用0初始化指针本质上没有区别。</p>
-<p>所以在C++上，我们更倾向于用 <strong>nullptr</strong> 来将指针初始化为空指针。</p>
-</li>
-<li><p><strong>void*</strong>是一个特殊的指针类型，它可以存放任意对象的地址，然而我们一般不拿<strong>void*</strong>指针所指的变量来进行比较，因为我们并不知道它所指的对象是什么类型。概括来说，以<strong>void*</strong>的视角看内存空间也仅仅是内存空间，它没办法访问内存空间所存的变量。</p>
-</li>
-</ol>
-<h2 id="const与constexpr-const-expression-限定符："><a href="#const与constexpr-const-expression-限定符：" class="headerlink" title="const与constexpr(const expression) 限定符："></a>const与constexpr(const expression) 限定符：</h2><p>​    const限定符的主要意图就是不想我们在初始化一个变量后再去改变它，所以用const修饰一个变量时，一定要去初始化该变量。</p>
-<p>​    默认情况下，const 对象被设定为仅在文件内有效，当多个文件出现同名的const 变量时，等同于在不同文件定义了独立的变量。而如果我们想在多个文件中使用同一个变量，那么我们只要在声明和定义 const 变量的前面加上 extern 就行了。</p>
-<ol>
-<li><p><strong>const的引用：</strong></p>
-<ol>
-<li><ol>
-<li>​    我们允许将const的引用与非const的对象绑定，那么此处引用的意义就是，我们无法通过该引用来修改所绑定对象的值，但我们可以通过其它途径去修改。当然，如果反过来，我们就不可以将非const的引用与const的对象绑定。</li>
-</ol>
-</li>
-<li><ol>
-<li><p>​    如果一个常量引用与一个不同类型变量绑定会发生什么：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;  <span class="comment">//此处是double类型，而引用是int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ri = dval;</span><br></pre></td></tr></table></figure>
-<p>​    如此，编译器就会生成一个临时量对象：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> temp = dval;  <span class="comment">//将double转化为整形常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ri = temp;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ol>
-</li>
-<li><p><strong>指针和const :</strong></p>
-<p>2.1. <strong>顶层const与底层const:</strong></p>
-<p>​        <strong>顶层const</strong>: 即指针本身就是个常量（如int *const i）,即它不能改变它所存储的地址，即它不能改变它所指的对象。</p>
-<p>​        <strong>底层const</strong>: 即指针所指的对象是个常量（如const int *i）,即它不能改变它所指的对象的值。</p>
-<p>​    在执行对象的拷贝操作时，常量是顶层const还是底层const区别明显。其中顶层的const（如int *const i）不受什么影响。而底层const的限制往往不能忽略。即拷入与拷出的对象必须具有相同的底层const资格，或者数据类型能转换。</p>
-<p>​    一般来说，非常量可以转换为常量，反之不行。</p>
-</li>
-<li><p>constexpr 和常量表达式：</p>
-<p>​    我们有时很难分辨一个初始值是不是常量表达式。如此，在C++11新标准规定中，允许将变量定义为constexpr,来让编译器验证初始值是否是常量表达式。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> mf = <span class="number">20</span>;  <span class="comment">//20是常量表达式</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> limit = mf + <span class="number">1</span>;	<span class="comment">//mf+1是常量表达式</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> sz = <span class="built_in">size</span>();</span><br><span class="line"><span class="comment">//只有当size是一个constexpr函数才是正确的声明语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//新标准允许定义特殊的constexpr函数</span></span><br><span class="line"><span class="comment">//这个函数要求足够简单到编译时就能得到结果</span></span><br></pre></td></tr></table></figure>
-<p>用const和用constexpr限定指针时，含义有所不同：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p1 = <span class="literal">nullptr</span>;	<span class="comment">//p1是指向'整型常量'的指针。底层const</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> *p2 = <span class="literal">nullptr</span>	<span class="comment">//p2是指向'整型'的常量指针。顶层const</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<hr>
-<p><strong>2020.4.14.写：</strong></p>
-<h2 id="处理类型"><a href="#处理类型" class="headerlink" title="处理类型"></a>处理类型</h2><h4 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h4><ol>
-<li><p>typedef：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> wages;	<span class="comment">//wages是double的同义词</span></span><br><span class="line"><span class="keyword">typedef</span> wages base,*p;</span><br><span class="line"><span class="comment">//base同样是double的同义词</span></span><br><span class="line"><span class="comment">//p是double*的同义词</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>using: </p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> SI = sales_item;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<ul>
-<li>当我们的类型别名是一个复合类型或是常量，那使用的时候会有所不同，如下：</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *pstr;</span><br><span class="line"><span class="keyword">const</span> pstr d=<span class="number">0</span>;		<span class="comment">//此处const是一个顶层const</span></span><br><span class="line"><span class="keyword">const</span> pstr *f;		<span class="comment">//f的对象是指向char的常量指针,而f并非常量指针</span></span><br></pre></td></tr></table></figure>
-<h4 id="auto类型说明符"><a href="#auto类型说明符" class="headerlink" title="auto类型说明符"></a>auto类型说明符</h4><p>​    我们常常需要将表达式的值赋予给变量，当我们不知道表达式的值属于什么类型时，我们可以使用auto类型说明符，来让编译器帮我们判断变量的类型。</p>
-<ol>
-<li>基本数据类型运用：</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> item = val1 + val2;	<span class="comment">//item的类型由后面表达式的类型来决定</span></span><br><span class="line"><span class="keyword">auto</span> i = <span class="number">0</span>,*p = &amp;i;		<span class="comment">//（正确）i是整型变量，p是指向整型变量的指针</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> sz = <span class="number">0</span>,*p = <span class="number">3.14</span>; <span class="comment">// (错误) 两变量的基本数据类型不一致</span></span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>复合类型，常量中auto的运用：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i;</span><br><span class="line"><span class="comment">//auto会忽略掉顶层const，例子如下：</span></span><br><span class="line"><span class="keyword">auto</span> b = ci;	<span class="comment">//此处b只是普通的变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//然而auto不会忽略底层const</span></span><br><span class="line"><span class="keyword">auto</span> *p = &amp;ci;	<span class="comment">//此处p是指向整型常量的指针</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h4><p>​    我们希望从表达式的类型推断出要定义变量的类型，但不想用该表达式的值初始化变量，于是引入了第二种类型说明符decltype，它的作用是选择并返回操作数的数据类型。再此过程中，编译器不去计算表达式的值。</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">decltype</span>(f()) sum = x;	<span class="comment">//sum的类型是f()的返回类型</span></span><br><span class="line"><span class="comment">//编译器并不会去调用f,而是在调用f时，将f的返回类型当作sum的类型</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//decltype处理顶层const与auto有所不同</span></span><br><span class="line"><span class="comment">//如果decltype使用的表达式是一个变量，那么的decltype就会返回该变量的类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i = <span class="number">0</span>，&amp;y = i;</span><br><span class="line"><span class="keyword">decltype</span>(i) x = <span class="number">0</span>;	<span class="comment">//x的类型是const int，即顶层const</span></span><br><span class="line"><span class="keyword">decltype</span>(y) z = x;	<span class="comment">//z的类型是const int&amp;，因为是引用，所以z必须初始化</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果decltype使用的表达式不是一个变量，那么就会返回表达式对应的类型</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>,*p = &amp;i, &amp;r = i;</span><br><span class="line"><span class="keyword">decltype</span>(r+<span class="number">0</span>) b;	<span class="comment">//b的类型是int，而不是int&amp;</span></span><br><span class="line"><span class="keyword">decltype</span>(*p) c=i;		<span class="comment">//c的类型是int&amp;,而不是int,所以c必须初始化</span></span><br><span class="line"><span class="keyword">decltype</span>(p) d	<span class="comment">//d的类型是int*</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">//对于decltype所用的表达式来说，表达式带上括号与不带上括号有所不同</span></span><br><span class="line"><span class="comment">//如果使用不加括号的变量，那么得到的就是该变量的类型</span></span><br><span class="line"><span class="comment">//如果使用加括号的变量（一层或多层），那就会得到引用类型（变量被当成表达式）</span></span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">decltype</span>((i)) d=i;	<span class="comment">//d的类型是int&amp;,所以必须初始化</span></span><br><span class="line"><span class="keyword">decltype</span>(i) e;	<span class="comment">//e的类型是int</span></span><br></pre></td></tr></table></figure>
-<h2 id="自定义数据结构"><a href="#自定义数据结构" class="headerlink" title="自定义数据结构"></a>自定义数据结构</h2><h4 id="编写自己的头文件："><a href="#编写自己的头文件：" class="headerlink" title="编写自己的头文件："></a>编写自己的头文件：</h4><p>​    一般情况下，由于类一般不定义在函数体内，并且为了确保各个文件类的定义一致，我们会编写自己的头文件来存放类，而且类所处的文件应该与类的名字一致。</p>
-<p>​    预处理器：确保头文件能正常工作的常用技术是预处理器，预处理器可以部分改变我们所编写的程序，比如他们看到#include时，会将其替换为该头文件的内容。</p>
-<p>​    头文件保护符：头文件保护符依赖于预处理变量，#define把一个名字设定为预处理变量，另两个指令（#ifdef , #ifndef ）检查某个指定预处理变量是否一定义。如下：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span>	SALE_H		<span class="comment">//当预处理变量已定义时，执行此命令，忽略后面内容</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SALE_H		<span class="comment">//当未定义时，预处理器顺序执行，直至遇到#endif为止</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;	//当需要用到头文件中的类时，我们可以包含头文件</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sale</span>&#123;</span></span><br><span class="line">    ......</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>整个程序预处理变量包括头文件必须唯一，通常做法就是利用类名创建头文件。</li>
-</ul>
-<h2 id="相较C语言的新知识"><a href="#相较C语言的新知识" class="headerlink" title="相较C语言的新知识"></a>相较C语言的新知识</h2><ol>
-<li><p>引用：相当于为一个变量起一个别名，然而这个别名并不是对象。</p>
-</li>
-<li><p>对指针的初始化：我们更应该取用 nullptr ,而不是NULL。</p>
-</li>
-<li>底层const：所指的对象时常量</li>
-<li>顶层const：自身是常量</li>
-<li>auto说明符：用未知类型的表达式给变量初始化时可以auto说明该变量，让编译器自己判断变量应该是什么类型。</li>
-<li>decltype：想定义一个与类型未知的表达式类型一致的变量，并且需要自己初始化该变量的值时，可以使用decltype。</li>
-</ol>
-]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>算法学习笔记（一）：牛顿迭代法（计算平方根）</title>
-    <url>/2020/04/11/Al%20%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80)/</url>
-    <content><![CDATA[<p>​    在算法（第四版）的13页里，我看到了一个的函数，它利用了牛顿迭代法来计算一个数的近似平方根，我通过查询资料理解了牛顿迭代法的实现过程。</p>
-<a id="more"></a>
-<p>​    这个方法所包含的知识：</p>
-<p><em>1.导数的含义</em></p>
-<p><em>2.极限的思维</em></p>
-<p><em>3.函数的零点</em></p>
-<h4 id="牛顿迭代法"><a href="#牛顿迭代法" class="headerlink" title="牛顿迭代法"></a>牛顿迭代法</h4><p>1.在求一个函数零点时，我们可以随意取一个点作为起始点(x0,f(x0)），并过该点做函数的切线,设切线的横截距为x1。在该点（x1,0）垂直于X轴引垂线，交函数于(x1,f(x1)),再对该点做与之前同样的操作，以此往复。如下图：</p>
-<p><img src="http://www.morenmoren.com/%E7%89%9B%E9%A1%BF%E8%BF%AD%E4%BB%A3%E6%B3%95%E5%9B%BE%E8%A7%A3.gif" alt="牛顿迭代法"></p>
-<p>2.对所得到的数据进行处理,经过运算，第一条切线的横截距，多条切线横截距为:</p>
-<script type="math/tex; mode=display">
-x_1=x_0+f(x_0)/f'(x_0)\\
-x_2=x_1+f(x_1)/f'(x_1)\\
-.......\\
-x_(n+1)=x_n+f(x_n)/f'(x_n)</script><h4 id="利用牛顿迭代法来求一个数的平方根"><a href="#利用牛顿迭代法来求一个数的平方根" class="headerlink" title="利用牛顿迭代法来求一个数的平方根"></a>利用牛顿迭代法来求一个数的平方根</h4><p>1.假设：</p>
-<script type="math/tex; mode=display">
-t=\sqrt[2]n\\
-则设f(x)=x^2-n\\
-可设x_0=n</script><p>2.利用代码实现如下：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">sqrt</span><span class="params">(<span class="keyword">double</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">double</span> t;</span><br><span class="line">	t=n;</span><br><span class="line">	<span class="keyword">while</span>(t-n/t&lt;=<span class="number">1e-15</span>*t)</span><br><span class="line">        <span class="comment">//这里跳出循环的条件是你所要求的精度，即1-n/t^2要满足一定精度。</span></span><br><span class="line">		t=(t+n/t);</span><br><span class="line">	<span class="keyword">return</span> t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>算法（第四版）</category>
-      </categories>
-      <tags>
-        <tag>算法学习</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Introduction to CSAPP 实验二：Bomblab</title>
     <url>/2020/05/11/Introduction-to-CSAPP-%E5%AE%9E%E9%AA%8C%E4%BA%8C%EF%BC%9ABomblab/</url>
     <content><![CDATA[<p>​        此次实验教会我基本的汇编语言知识，也教会了我使用gdb调试器做一些简单的调试，虽然过程很痛苦，但受益匪浅吧。</p>
@@ -340,82 +245,6 @@ t=\sqrt[2]n\\
       </categories>
       <tags>
         <tag>《深入理解计算机系统》实验</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《C++Primer》学习笔记（第二部分第八章）</title>
-    <url>/2020/05/14/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E7%AC%AC%E5%85%AB%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[<p>​        C++语言不直接处理输入输出，而是通过一族定义在标准库中的类型处理IO。这些类型支持从设备读取数据，向设备写入数据的IO操作。</p>
-<a id="more"></a>
-<h2 id="IO类"><a href="#IO类" class="headerlink" title="IO类"></a>IO类</h2><ul>
-<li><p>为支持不同种类种类的IO处理操作，我们标准库定义了一些IO类型：</p>
-<p>| 头文件     | 类型                                            |      |      |<br>| ————— | ———————————————————————- | —— | —— |<br>| <code>iostream</code> | <code>istream,wistream</code> 从流读取数据                 |      |      |<br>|            | <code>ostream,wostream</code> 向流写入数据                 |      |      |<br>|            | <code>iostream,wiostream</code> 读写流                     |      |      |<br>| <code>fstream</code>  | <code>ifstream,wifstream</code> 从文件读取数据             |      |      |<br>|            | <code>ofstream,wofstream</code> 向文件写入数据             |      |      |<br>|            | <code>fstream,wfstream</code> 读写文件                     |      |      |<br>| <code>sstream</code>  | <code>istringstream,wistringstream</code> 从string读取数据 |      |      |<br>|            | <code>ostringstream,wostringstream</code> 从string写入数据 |      |      |<br>|            | <code>stringstream,wstringstream</code> 读写string         |      |      |<br>|            |                                                 |      |      |</p>
-</li>
-<li><p>为了支持使用宽字符的语言，标准库定义了一组类型和对象来操作wchar_t类型的数据。宽字符版本的类型和函数名字以一个 w 开头。</p>
-</li>
-<li><p>标准库使我们能忽略这些不同类型的流之间的差异，这是通过继承机制实现的。我们通常可以将一个派生类对象当作基类对象使用。</p>
-</li>
-<li><p>IO对象无拷贝或赋值：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ofstream out1,out2;</span><br><span class="line"><span class="comment">//!  out1 = out2; 		错误：不能对流对象赋值</span></span><br><span class="line"><span class="comment">//！ ofstream print(ofstream);		错误：不能初始化ofstream参数</span></span><br><span class="line"><span class="comment">//！ out2 = print(out2);		错误：不能拷贝对象</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>每个输出流都管理一个缓冲区，用来保存程序读写的数据。导致缓冲刷新（即数据真正写到输出设备或者文件）的原因有很多：</p>
-<ol>
-<li>程序正常结束。</li>
-<li>缓冲区满时，需要刷新缓冲，而后新的数据才能继续写入缓冲区。</li>
-<li>可以使用操纵符如 <code>endl</code> 来显式刷新缓冲区。</li>
-<li>在每个输出操作之后，我们可以用操纵符 <code>unitbuf</code> 设置流内部状态，来清空缓冲区。默认情况下，对 <code>cerr</code> 是设置 <code>unitbuf</code> 的，因此写到 <code>cerr</code> 的内容都是立即刷新的。</li>
-<li>一个输出流可能被关联到另一个流。这种情况下，读写被关联的流时，关联到的流的缓冲区会被刷新。</li>
-</ol>
-</li>
-</ul>
-<h2 id="文件输入输出"><a href="#文件输入输出" class="headerlink" title="文件输入输出"></a>文件输入输出</h2><ul>
-<li><p>我们可以用IO运算符读写文件，可以用<code>getline</code>从一个<code>ifstream</code>读取数据。<code>fstream</code>中定义的类型还增加了一些新的成员来管理与流关联的文件：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">fstream fstrm;		<span class="comment">//创建一个未绑定的文件流</span></span><br><span class="line"><span class="function">fstream <span class="title">fstrm</span><span class="params">(s)</span></span>;	<span class="comment">//创建一个fstream，并打开名叫s的文件</span></span><br><span class="line"><span class="function">fstream <span class="title">fstrm</span><span class="params">(s,mode)</span></span>;	<span class="comment">//与前一个构造函数类似，但按指定的mode打开文件</span></span><br><span class="line">fstrm.<span class="built_in">open</span>(s);	<span class="comment">//打开名为s的文件，并与fstrm绑定</span></span><br><span class="line">fstrm.<span class="built_in">close</span>();	<span class="comment">//关闭与fstrm绑定的文件</span></span><br><span class="line">fstrm.is_open();	</span><br><span class="line"><span class="comment">//返回一个布尔值，指出关联的文件是否成功打开且未关闭</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当一个 <code>fstream</code> 对象被销毁，close 会自动被调用。</p>
-</li>
-<li><p>每个流都有一个关联的文件模式，用来指定如何使用文件：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">in;		<span class="comment">//以读方式打开</span></span><br><span class="line">out;	<span class="comment">//以写方式打开</span></span><br><span class="line">app;	<span class="comment">//每次写操作前均定位到文件末尾</span></span><br><span class="line">ate;	<span class="comment">//打开文件后立即定位到文件末尾</span></span><br><span class="line">trunc;	<span class="comment">//截断文件</span></span><br><span class="line">binary;	<span class="comment">//以二进制方式进行IO</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>保留被 <code>ofstream</code> 打开的文件中已有数据的唯一方法是显式指定 <code>app</code> 或者 <code>in</code> 模式，在未指定打开模式时，意味着同时使用 <code>trunc</code> 模式，因此，打开文件的内容将被清空。</p>
-</li>
-</ul>
-<h2 id="string流"><a href="#string流" class="headerlink" title="string流"></a>string流</h2><ul>
-<li><p>考虑这样一个例子，假设一个文件，列出了一些人和他们的电话号码。我们程序会读取数据文件，创建一个vector来保存每个人的信息：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PersonInfo</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; phones;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readIn</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> <span class="built_in">line</span>,<span class="keyword">word</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;PersonInfo&gt; people;</span><br><span class="line">    <span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))&#123;	<span class="comment">//读取一整行保存到line</span></span><br><span class="line">        PersonInfo info;	<span class="comment">//创建保存此纪录数据的对象</span></span><br><span class="line">        <span class="function"><span class="built_in">istringstream</span> <span class="title">record</span><span class="params">(<span class="built_in">line</span>)</span></span>;</span><br><span class="line">        record &gt;&gt; info.name;</span><br><span class="line">        <span class="keyword">while</span>(record &gt;&gt; <span class="keyword">word</span>)</span><br><span class="line">            info.phones.push_back(<span class="keyword">word</span>);</span><br><span class="line">        people.push_back(info);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用 <code>ostringstream</code> 来逐个构造输出，最后打印：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">To_out</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;entry : people)&#123;</span><br><span class="line">        <span class="built_in">ostringstream</span> formatted,badnums;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;nums : entry.phones)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!valid(nums))&#123;</span><br><span class="line">            badNums &lt;&lt; <span class="string">" "</span> &lt;&lt; nums;</span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                formatted &lt;&lt; <span class="string">" "</span> &lt;&lt; format(nums);	</span><br><span class="line">            	<span class="comment">//将格式化的字符串写入formatted</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(badNums.str().empty())	<span class="comment">//如果没有错误的数</span></span><br><span class="line">            os &lt;&lt; entry.name &lt;&lt; <span class="string">" "</span> &lt;&lt; formatted.str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">cerr</span> &lt;&lt; <span class="string">"input error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java通信客户端</title>
-    <url>/2020/04/22/Java%E9%80%9A%E4%BF%A1%E5%AE%A2%E6%88%B7%E7%AB%AF/</url>
-    <content><![CDATA[<p>​    <strong>在经过一段时间的学习，Java的一些基础知识基本上已经掌握，我十分急切的想要体验到Java的网络编程，但仍然实力不足，我偶然间看到B站上有一个教程，写着TCP通信客户端代码实现，在已经研究清楚的情况下，我在自己电脑里复现了一遍。</strong></p>
-<a id="more"></a>
-<h4 id="1-实现客户端的创建和数据传递："><a href="#1-实现客户端的创建和数据传递：" class="headerlink" title="1.实现客户端的创建和数据传递："></a>1.实现客户端的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//  该文件的代码的目的是创建一个客户端</span></span><br><span class="line"><span class="comment">// 可以在Java文档里面查询到Socket的详细信息</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Inetclient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建一个socket客户端，ip地址为127.0.0.1，端口号为8888</span></span><br><span class="line">        Socket socket=<span class="keyword">new</span> Socket(<span class="string">"127.0.0.1"</span>,<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//write方法接收的是byte类型的对象</span></span><br><span class="line">        <span class="comment">//向服务器写入数据,写入数据需要转化为byte类型，所以使用getbytes()</span></span><br><span class="line">        os.write(<span class="string">"你好服务器"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getinput()获取网络字节输入流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由服务器发送给该客户端的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//释放资源</span></span><br><span class="line">        socket.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="2-实现服务器的创建和数据传递："><a href="#2-实现服务器的创建和数据传递：" class="headerlink" title="2.实现服务器的创建和数据传递："></a>2.实现服务器的创建和数据传递：</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用accept方法获取到客户端对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Netserver</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//创建服务器，并指定端口号</span></span><br><span class="line">        ServerSocket server=<span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用accept方法链接一个客户端</span></span><br><span class="line">        Socket socket=server.accept();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//使用getoutput()方法获取网络字节输出流对象</span></span><br><span class="line">        InputStream is=socket.getInputStream();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//将输入流写入到服务器</span></span><br><span class="line">        <span class="keyword">byte</span>[] bytes=<span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">        <span class="keyword">int</span> len = is.read(bytes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//输出由客户端发送给该服务器的字符串</span></span><br><span class="line">        System.out.println(<span class="keyword">new</span> String(bytes,<span class="number">0</span>,len));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//给客户端回写一条数据</span></span><br><span class="line">        OutputStream os=socket.getOutputStream();</span><br><span class="line">        os.write(<span class="string">"你好客户端"</span>.getBytes());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//关闭服务器和客户端</span></span><br><span class="line">        socket.close();</span><br><span class="line">        server.close();;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="以下为实现结果："><a href="#以下为实现结果：" class="headerlink" title="以下为实现结果："></a>以下为实现结果：</h5><p>客户端实现结果：</p>
-<p><img src="http://www.morenmoren.com/%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BB%93%E6%9E%9C.png" alt=""></p>
-<p>服务器实现结果：</p>
-<p><img src="http://www.morenmoren.com/%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%8C%E6%88%90%E7%BB%93%E6%9E%9C.png" alt=""></p>
-<ul>
-<li><strong>之后我会尝试在我的阿里云服务器上传递数据</strong></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>TCP通信客户端</tag>
       </tags>
   </entry>
   <entry>
@@ -561,6 +390,172 @@ t=\sqrt[2]n\\
       </tags>
   </entry>
   <entry>
+    <title>《C++Primer》学习笔记（第一部分第二章）</title>
+    <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89/</url>
+    <content><![CDATA[<p><strong>2020.4.13写：</strong></p>
+<a id="more"></a>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><ul>
+<li>初始化列表（initialize list）：</li>
+</ul>
+<p>如以下4个初始化是等价的：</p>
+<p>​    int i = 0 ;</p>
+<p>​    int i = {0} ;</p>
+<p>​    int i{0} ;</p>
+<p>​    int i(0) ;</p>
+<ul>
+<li>变量的声明：</li>
+</ul>
+<p>​    当我们仅仅是想声明一个变量，而非去定义，我们可以用extern来完成，而当我们用extern去声明一个变量时，我们如果给它初始值，那么extern也就没有意义了。</p>
+<ul>
+<li>全局变量：</li>
+</ul>
+<p>​    当我们在函数体外定义了一个全局变量，如果我们在函数体再次定义了该变量，那么在函数体定义的变量会覆盖该全局变量，而不是去修改它。</p>
+<p>​    而如果我们想要显式的访问全局变量而不是局部变量，那么我们就要如此调用      ‘ : :i ’。此处：：便是作用域操作符。</p>
+<h2 id="引用："><a href="#引用：" class="headerlink" title="引用："></a>引用：</h2><p>​    引用可以给对象起一个别名，但是该引用本身并不是一个对象。然而引用要注意以下几点：</p>
+<pre><code>1. 引用类型必须初始化。因为引用与一个对象绑定以后，不能再改变绑定对象。
+ 2. 引用类型必须与对象的类型一致，否则会出错。
+ 3. 引用类型的初始值必须是一个对象。假如你给一个int类型的引用赋予10，那么系统就会报错。
+</code></pre><h2 id="指针："><a href="#指针：" class="headerlink" title="指针："></a>指针：</h2><ol>
+<li><p>当我们想要将一个指针初始化为空指针，在C语言中我们学过，可以使用NULL（预处理变量）进行初始化，如此那和用0初始化指针本质上没有区别。</p>
+<p>所以在C++上，我们更倾向于用 <strong>nullptr</strong> 来将指针初始化为空指针。</p>
+</li>
+<li><p><strong>void*</strong>是一个特殊的指针类型，它可以存放任意对象的地址，然而我们一般不拿<strong>void*</strong>指针所指的变量来进行比较，因为我们并不知道它所指的对象是什么类型。概括来说，以<strong>void*</strong>的视角看内存空间也仅仅是内存空间，它没办法访问内存空间所存的变量。</p>
+</li>
+</ol>
+<h2 id="const与constexpr-const-expression-限定符："><a href="#const与constexpr-const-expression-限定符：" class="headerlink" title="const与constexpr(const expression) 限定符："></a>const与constexpr(const expression) 限定符：</h2><p>​    const限定符的主要意图就是不想我们在初始化一个变量后再去改变它，所以用const修饰一个变量时，一定要去初始化该变量。</p>
+<p>​    默认情况下，const 对象被设定为仅在文件内有效，当多个文件出现同名的const 变量时，等同于在不同文件定义了独立的变量。而如果我们想在多个文件中使用同一个变量，那么我们只要在声明和定义 const 变量的前面加上 extern 就行了。</p>
+<ol>
+<li><p><strong>const的引用：</strong></p>
+<ol>
+<li><ol>
+<li>​    我们允许将const的引用与非const的对象绑定，那么此处引用的意义就是，我们无法通过该引用来修改所绑定对象的值，但我们可以通过其它途径去修改。当然，如果反过来，我们就不可以将非const的引用与const的对象绑定。</li>
+</ol>
+</li>
+<li><ol>
+<li><p>​    如果一个常量引用与一个不同类型变量绑定会发生什么：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">double</span> dval = <span class="number">3.14</span>;  <span class="comment">//此处是double类型，而引用是int类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ri = dval;</span><br></pre></td></tr></table></figure>
+<p>​    如此，编译器就会生成一个临时量对象：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> temp = dval;  <span class="comment">//将double转化为整形常量</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;ri = temp;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><p><strong>指针和const :</strong></p>
+<p>2.1. <strong>顶层const与底层const:</strong></p>
+<p>​        <strong>顶层const</strong>: 即指针本身就是个常量（如int *const i）,即它不能改变它所存储的地址，即它不能改变它所指的对象。</p>
+<p>​        <strong>底层const</strong>: 即指针所指的对象是个常量（如const int *i）,即它不能改变它所指的对象的值。</p>
+<p>​    在执行对象的拷贝操作时，常量是顶层const还是底层const区别明显。其中顶层的const（如int *const i）不受什么影响。而底层const的限制往往不能忽略。即拷入与拷出的对象必须具有相同的底层const资格，或者数据类型能转换。</p>
+<p>​    一般来说，非常量可以转换为常量，反之不行。</p>
+</li>
+<li><p>constexpr 和常量表达式：</p>
+<p>​    我们有时很难分辨一个初始值是不是常量表达式。如此，在C++11新标准规定中，允许将变量定义为constexpr,来让编译器验证初始值是否是常量表达式。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> mf = <span class="number">20</span>;  <span class="comment">//20是常量表达式</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> limit = mf + <span class="number">1</span>;	<span class="comment">//mf+1是常量表达式</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> sz = <span class="built_in">size</span>();</span><br><span class="line"><span class="comment">//只有当size是一个constexpr函数才是正确的声明语句</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//新标准允许定义特殊的constexpr函数</span></span><br><span class="line"><span class="comment">//这个函数要求足够简单到编译时就能得到结果</span></span><br></pre></td></tr></table></figure>
+<p>用const和用constexpr限定指针时，含义有所不同：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p1 = <span class="literal">nullptr</span>;	<span class="comment">//p1是指向'整型常量'的指针。底层const</span></span><br><span class="line"><span class="keyword">constexpr</span> <span class="keyword">int</span> *p2 = <span class="literal">nullptr</span>	<span class="comment">//p2是指向'整型'的常量指针。顶层const</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<p><strong>2020.4.14.写：</strong></p>
+<h2 id="处理类型"><a href="#处理类型" class="headerlink" title="处理类型"></a>处理类型</h2><h4 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h4><ol>
+<li><p>typedef：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">double</span> wages;	<span class="comment">//wages是double的同义词</span></span><br><span class="line"><span class="keyword">typedef</span> wages base,*p;</span><br><span class="line"><span class="comment">//base同样是double的同义词</span></span><br><span class="line"><span class="comment">//p是double*的同义词</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>using: </p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> SI = sales_item;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>当我们的类型别名是一个复合类型或是常量，那使用的时候会有所不同，如下：</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> *pstr;</span><br><span class="line"><span class="keyword">const</span> pstr d=<span class="number">0</span>;		<span class="comment">//此处const是一个顶层const</span></span><br><span class="line"><span class="keyword">const</span> pstr *f;		<span class="comment">//f的对象是指向char的常量指针,而f并非常量指针</span></span><br></pre></td></tr></table></figure>
+<h4 id="auto类型说明符"><a href="#auto类型说明符" class="headerlink" title="auto类型说明符"></a>auto类型说明符</h4><p>​    我们常常需要将表达式的值赋予给变量，当我们不知道表达式的值属于什么类型时，我们可以使用auto类型说明符，来让编译器帮我们判断变量的类型。</p>
+<ol>
+<li>基本数据类型运用：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">auto</span> item = val1 + val2;	<span class="comment">//item的类型由后面表达式的类型来决定</span></span><br><span class="line"><span class="keyword">auto</span> i = <span class="number">0</span>,*p = &amp;i;		<span class="comment">//（正确）i是整型变量，p是指向整型变量的指针</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> sz = <span class="number">0</span>,*p = <span class="number">3.14</span>; <span class="comment">// (错误) 两变量的基本数据类型不一致</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>复合类型，常量中auto的运用：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> ci = i;</span><br><span class="line"><span class="comment">//auto会忽略掉顶层const，例子如下：</span></span><br><span class="line"><span class="keyword">auto</span> b = ci;	<span class="comment">//此处b只是普通的变量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//然而auto不会忽略底层const</span></span><br><span class="line"><span class="keyword">auto</span> *p = &amp;ci;	<span class="comment">//此处p是指向整型常量的指针</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="decltype类型指示符"><a href="#decltype类型指示符" class="headerlink" title="decltype类型指示符"></a>decltype类型指示符</h4><p>​    我们希望从表达式的类型推断出要定义变量的类型，但不想用该表达式的值初始化变量，于是引入了第二种类型说明符decltype，它的作用是选择并返回操作数的数据类型。再此过程中，编译器不去计算表达式的值。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">decltype</span>(f()) sum = x;	<span class="comment">//sum的类型是f()的返回类型</span></span><br><span class="line"><span class="comment">//编译器并不会去调用f,而是在调用f时，将f的返回类型当作sum的类型</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//decltype处理顶层const与auto有所不同</span></span><br><span class="line"><span class="comment">//如果decltype使用的表达式是一个变量，那么的decltype就会返回该变量的类型</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> i = <span class="number">0</span>，&amp;y = i;</span><br><span class="line"><span class="keyword">decltype</span>(i) x = <span class="number">0</span>;	<span class="comment">//x的类型是const int，即顶层const</span></span><br><span class="line"><span class="keyword">decltype</span>(y) z = x;	<span class="comment">//z的类型是const int&amp;，因为是引用，所以z必须初始化</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//如果decltype使用的表达式不是一个变量，那么就会返回表达式对应的类型</span></span><br><span class="line"><span class="keyword">int</span> i = <span class="number">42</span>,*p = &amp;i, &amp;r = i;</span><br><span class="line"><span class="keyword">decltype</span>(r+<span class="number">0</span>) b;	<span class="comment">//b的类型是int，而不是int&amp;</span></span><br><span class="line"><span class="keyword">decltype</span>(*p) c=i;		<span class="comment">//c的类型是int&amp;,而不是int,所以c必须初始化</span></span><br><span class="line"><span class="keyword">decltype</span>(p) d	<span class="comment">//d的类型是int*</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">//对于decltype所用的表达式来说，表达式带上括号与不带上括号有所不同</span></span><br><span class="line"><span class="comment">//如果使用不加括号的变量，那么得到的就是该变量的类型</span></span><br><span class="line"><span class="comment">//如果使用加括号的变量（一层或多层），那就会得到引用类型（变量被当成表达式）</span></span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">decltype</span>((i)) d=i;	<span class="comment">//d的类型是int&amp;,所以必须初始化</span></span><br><span class="line"><span class="keyword">decltype</span>(i) e;	<span class="comment">//e的类型是int</span></span><br></pre></td></tr></table></figure>
+<h2 id="自定义数据结构"><a href="#自定义数据结构" class="headerlink" title="自定义数据结构"></a>自定义数据结构</h2><h4 id="编写自己的头文件："><a href="#编写自己的头文件：" class="headerlink" title="编写自己的头文件："></a>编写自己的头文件：</h4><p>​    一般情况下，由于类一般不定义在函数体内，并且为了确保各个文件类的定义一致，我们会编写自己的头文件来存放类，而且类所处的文件应该与类的名字一致。</p>
+<p>​    预处理器：确保头文件能正常工作的常用技术是预处理器，预处理器可以部分改变我们所编写的程序，比如他们看到#include时，会将其替换为该头文件的内容。</p>
+<p>​    头文件保护符：头文件保护符依赖于预处理变量，#define把一个名字设定为预处理变量，另两个指令（#ifdef , #ifndef ）检查某个指定预处理变量是否一定义。如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span>	SALE_H		<span class="comment">//当预处理变量已定义时，执行此命令，忽略后面内容</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SALE_H		<span class="comment">//当未定义时，预处理器顺序执行，直至遇到#endif为止</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;	//当需要用到头文件中的类时，我们可以包含头文件</span></span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Sale</span>&#123;</span></span><br><span class="line">    ......</span><br><span class="line">&#125;;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>整个程序预处理变量包括头文件必须唯一，通常做法就是利用类名创建头文件。</li>
+</ul>
+<h2 id="相较C语言的新知识"><a href="#相较C语言的新知识" class="headerlink" title="相较C语言的新知识"></a>相较C语言的新知识</h2><ol>
+<li><p>引用：相当于为一个变量起一个别名，然而这个别名并不是对象。</p>
+</li>
+<li><p>对指针的初始化：我们更应该取用 nullptr ,而不是NULL。</p>
+</li>
+<li>底层const：所指的对象时常量</li>
+<li>顶层const：自身是常量</li>
+<li>auto说明符：用未知类型的表达式给变量初始化时可以auto说明该变量，让编译器自己判断变量应该是什么类型。</li>
+<li>decltype：想定义一个与类型未知的表达式类型一致的变量，并且需要自己初始化该变量的值时，可以使用decltype。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Introduction to CSAPP 实验(一)：Datalab</title>
+    <url>/2020/05/08/Introduction-to-CSAPP-%E5%AE%9E%E9%AA%8C-%E4%B8%80-%EF%BC%9ADatalab/</url>
+    <content><![CDATA[<p>​        深入理解计算机系统实验：<strong>datalab</strong></p>
+<a id="more"></a>
+<ol>
+<li>仅用~ &amp;实现异或：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * bitXor - x^y using only ~ and &amp; </span></span><br><span class="line"><span class="comment"> *   Example: bitXor(4, 5) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ~ &amp;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//相当于实现书上bis(bic(x,y),bic(y,x))函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitXor</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ~(~(~x&amp;y)&amp;~(x&amp;~y));  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>返回最小的二进制补码整数，即最高位为1，其它全为0：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * tmin - return minimum two's complement integer </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//即符号位为1，其它全为0</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmin</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">1</span>&lt;&lt;<span class="number">31</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当x是最大的二进制补码时返回1，否则返回0：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * isTmax - returns 1 if x is the maximum, two's complement number,</span></span><br><span class="line"><span class="comment"> *     and 0 otherwise </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | +</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第一个条件是想筛选出最大的二进制数与全1</span></span><br><span class="line"><span class="comment">//第二个条件则是将全一排除</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isTmax</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (!(x+<span class="number">1</span>+x+<span class="number">1</span>))&amp;(!!(x+<span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果x所有偶数位为1,那么返回1，否则返回0：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * allOddBits - return 1 if all odd-numbered bits in word set to 1</span></span><br><span class="line"><span class="comment"> *   where bits are numbered from 0 (least significant) to 31 (most significant)</span></span><br><span class="line"><span class="comment"> *   Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//第一步就是创造一个偶数位为1，奇数位为0的数，通过移位实现</span></span><br><span class="line"><span class="comment">//第二步，检测x的偶数位</span></span><br><span class="line"><span class="comment">//第三步，检测第二步是否有改变偶数位，若不改变，那么返回1</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">allOddBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> k = <span class="number">0xaa</span> + (<span class="number">0xaa</span> &lt;&lt; <span class="number">8</span>) + (<span class="number">0xaa</span> &lt;&lt; <span class="number">16</span>) + (<span class="number">0xaa</span> &lt;&lt; <span class="number">24</span>);</span><br><span class="line">  <span class="keyword">int</span> y = k &amp; x;</span><br><span class="line">  <span class="keyword">return</span> !(y ^ k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>求x的加法逆元：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * negate - return -x </span></span><br><span class="line"><span class="comment"> *   Example: negate(1) = -1.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ~x+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果x在0x30到0x39之间(包含二者)，那么返回1，否则返回0：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * isAsciiDigit - return 1 if 0x30 &lt;= x &lt;= 0x39 (ASCII codes for characters '0' to '9')</span></span><br><span class="line"><span class="comment"> *   Example: isAsciiDigit(0x35) = 1.</span></span><br><span class="line"><span class="comment"> *            isAsciiDigit(0x3a) = 0.</span></span><br><span class="line"><span class="comment"> *            isAsciiDigit(0x05) = 0.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//运用了上一个函数的结论，我们无法用-，那么可以加上它的加法逆元</span></span><br><span class="line"><span class="comment">//通过判断2次相减后的正负（运用移位，只留下符号位）来看是否在该区间内</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isAsciiDigit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !((x+~<span class="number">48</span>+<span class="number">1</span>)&gt;&gt;<span class="number">31</span>)&amp;((x+~<span class="number">58</span>+<span class="number">1</span>)&gt;&gt;<span class="number">31</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现C语言里的：x ? y : z</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * conditional - same as x ? y : z </span></span><br><span class="line"><span class="comment"> *   Example: conditional(2,4,5) = 4</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//思想：运用|，x非0，那么关于z的项为0. x为0，那么关于y的项为0</span></span><br><span class="line"><span class="comment">//我们可以通过！来直接区分0和非0</span></span><br><span class="line"><span class="comment">//如此便很容易将二者变为全1或者全0</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">conditional</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ((!x+~<span class="number">1</span>+<span class="number">1</span>)&amp;y)|((~!x+<span class="number">1</span>)&amp;z);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果x&lt;=y，那么返回1，否则返回0：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * isLessOrEqual - if x &lt;= y  then return 1, else return 0 </span></span><br><span class="line"><span class="comment"> *   Example: isLessOrEqual(4,5) = 1.</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里我发现如果二者的符号不同，加法逆元的时候会出问题，因为这可能导致溢出</span></span><br><span class="line"><span class="comment">//如此我们可以将2种情况分开，在一种情况发生时，另一种情况不起作用</span></span><br><span class="line"><span class="comment">//由此我们可以引进标识符sign.相同符号为0，否则为1.如此便简单许多</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isLessOrEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">   <span class="keyword">int</span> sign = !(x&gt;&gt;<span class="number">31</span>)^!(y&gt;&gt;<span class="number">31</span>);      </span><br><span class="line">   <span class="keyword">int</span> a = sign &amp; (x&gt;&gt;<span class="number">31</span>);   </span><br><span class="line">   <span class="keyword">int</span> b = !sign &amp; !((y+(~x+<span class="number">1</span>))&gt;&gt;<span class="number">31</span>);  </span><br><span class="line">   <span class="keyword">return</span> a | b;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运用位级运算符实现！：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * logicalNeg - implement the ! operator, using all of </span></span><br><span class="line"><span class="comment"> *              the legal operators except !</span></span><br><span class="line"><span class="comment"> *   Examples: logicalNeg(3) = 0, logicalNeg(0) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//我们一般都首先实现特殊情况，再推广到一般</span></span><br><span class="line"><span class="comment">//显然，只有全0能够为实现在首位为0的情况下，~(~x+1)操作后首位变为1</span></span><br><span class="line"><span class="comment">//需要&amp;1,因为右移位补的是1</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">logicalNeg</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> ((~(~x+<span class="number">1</span>)&amp;~x)&gt;&gt;<span class="number">31</span>)&amp;<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>计算构成x所需要的位数：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* howManyBits - return the minimum number of bits required to represent x in</span></span><br><span class="line"><span class="comment"> *             two's complement</span></span><br><span class="line"><span class="comment"> *  Examples: howManyBits(12) = 5</span></span><br><span class="line"><span class="comment"> *            howManyBits(298) = 10</span></span><br><span class="line"><span class="comment"> *            howManyBits(-5) = 4</span></span><br><span class="line"><span class="comment"> *            howManyBits(0)  = 1</span></span><br><span class="line"><span class="comment"> *            howManyBits(-1) = 1</span></span><br><span class="line"><span class="comment"> *            howManyBits(0x80000000) = 32</span></span><br><span class="line"><span class="comment"> *  Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//本题最难，运用了二分法的思想</span></span><br><span class="line"><span class="comment">//通过把负数取反，正数不变，我们需要找到第一个1所在的位数然后加1</span></span><br><span class="line"><span class="comment">//如此一共32位，我们就首先查16位处，之后8位处。。。</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">howManyBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  x=x^(x&gt;&gt;<span class="number">31</span>);</span><br><span class="line">  <span class="keyword">int</span> b16=(!!(x&gt;&gt;<span class="number">16</span>))&lt;&lt;<span class="number">4</span>;</span><br><span class="line">  x=x&gt;&gt;b16;</span><br><span class="line">  <span class="keyword">int</span> b8=(!!(x&gt;&gt;<span class="number">8</span>))&lt;&lt;<span class="number">3</span>;</span><br><span class="line">  x=x&gt;&gt;b8;</span><br><span class="line">  <span class="keyword">int</span> b4=(!!(x&gt;&gt;<span class="number">4</span>))&lt;&lt;<span class="number">2</span>;</span><br><span class="line">  x=x&gt;&gt;b4;</span><br><span class="line">  <span class="keyword">int</span> b2=(!!(x&gt;&gt;<span class="number">2</span>))&lt;&lt;<span class="number">1</span>;</span><br><span class="line">  x=x&gt;&gt;b2;</span><br><span class="line">  <span class="keyword">int</span> b=(!!(x&gt;&gt;<span class="number">1</span>));</span><br><span class="line">  x=x&gt;&gt;b;</span><br><span class="line">  <span class="keyword">return</span> b+b16+b8+b4+b2+x+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+</li>
+</ol>
+<p>以下位浮点数的使用：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//float</span></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * floatScale2 - Return bit-level equivalent of expression 2*f for</span></span><br><span class="line"><span class="comment"> *   floating point argument f.</span></span><br><span class="line"><span class="comment"> *   Both the argument and result are passed as unsigned int's, but</span></span><br><span class="line"><span class="comment"> *   they are to be interpreted as the bit-level representation of</span></span><br><span class="line"><span class="comment"> *   single-precision floating point values.</span></span><br><span class="line"><span class="comment"> *   When argument is NaN, return argument</span></span><br><span class="line"><span class="comment"> *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">floatScale2</span><span class="params">(<span class="keyword">unsigned</span> uf)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">unsigned</span> flag = uf &amp; <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> <span class="built_in">exp</span> = uf &gt;&gt; <span class="number">23</span> &amp; <span class="number">0xFF</span>;</span><br><span class="line">  <span class="keyword">unsigned</span> frac = uf &amp; <span class="number">0x7fffff</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">exp</span> == <span class="number">0xff</span>) <span class="comment">// NaN或者无穷大</span></span><br><span class="line">    flag = flag;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">exp</span> == <span class="number">0</span>) <span class="comment">// 非规格化的</span></span><br><span class="line">    frac &lt;&lt;= <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">exp</span> == <span class="number">0xfe</span>) &#123; <span class="comment">//接近无穷大</span></span><br><span class="line">    frac = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">exp</span> = <span class="number">0xff</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="built_in">exp</span> += <span class="number">1</span>; <span class="comment">// 规格化的</span></span><br><span class="line">  <span class="keyword">return</span> flag | (<span class="built_in">exp</span> &lt;&lt; <span class="number">23</span>) | frac;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * floatFloat2Int - Return bit-level equivalent of expression (int) f</span></span><br><span class="line"><span class="comment"> *   for floating point argument f.</span></span><br><span class="line"><span class="comment"> *   Argument is passed as unsigned int, but</span></span><br><span class="line"><span class="comment"> *   it is to be interpreted as the bit-level representation of a</span></span><br><span class="line"><span class="comment"> *   single-precision floating point value.</span></span><br><span class="line"><span class="comment"> *   Anything out of range (including NaN and infinity) should return</span></span><br><span class="line"><span class="comment"> *   0x80000000u.</span></span><br><span class="line"><span class="comment"> *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. also if, while</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">floatFloat2Int</span><span class="params">(<span class="keyword">unsigned</span> uf)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> s_    = uf&gt;&gt;<span class="number">31</span>;</span><br><span class="line">  <span class="keyword">int</span> exp_  = ((uf&amp;<span class="number">0x7f800000</span>)&gt;&gt;<span class="number">23</span>)<span class="number">-127</span>;</span><br><span class="line">  <span class="keyword">int</span> frac_ = (uf&amp;<span class="number">0x007fffff</span>)|<span class="number">0x00800000</span>;</span><br><span class="line">  <span class="keyword">if</span>(!(uf&amp;<span class="number">0x7fffffff</span>)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(exp_ &gt; <span class="number">30</span>) <span class="keyword">return</span> <span class="number">0x80000000</span>;</span><br><span class="line">    <span class="comment">//当E&gt;30时，即使frac=1,符号位也会被覆盖，所以不可以，返回0x800000。</span></span><br><span class="line">  <span class="keyword">if</span>(exp_ &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;	</span><br><span class="line">    <span class="comment">//（1右移x位,x&gt;0，结果为0）则返回0。</span></span><br><span class="line">  <span class="keyword">if</span>(exp_ &gt; <span class="number">23</span>) frac_ &lt;&lt;= (exp_<span class="number">-23</span>);</span><br><span class="line">  <span class="keyword">else</span> frac_ &gt;&gt;= (<span class="number">23</span>-exp_);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(!((frac_&gt;&gt;<span class="number">31</span>)^s_)) <span class="keyword">return</span> frac_;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(frac_&gt;&gt;<span class="number">31</span>) <span class="keyword">return</span> <span class="number">0x80000000</span>;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> ~frac_+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * floatPower2 - Return bit-level equivalent of the expression 2.0^x</span></span><br><span class="line"><span class="comment"> *   (2.0 raised to the power x) for any 32-bit integer x.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> *   The unsigned value that is returned should have the identical bit</span></span><br><span class="line"><span class="comment"> *   representation as the single-precision floating-point number 2.0^x.</span></span><br><span class="line"><span class="comment"> *   If the result is too small to be represented as a denorm, return</span></span><br><span class="line"><span class="comment"> *   0. If too large, return +INF.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *   Legal ops: Any integer/unsigned operations incl. ||, &amp;&amp;. Also if, while </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">floatPower2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (x &lt; <span class="number">-149</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (x &lt; <span class="number">-127</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> &lt;&lt; (x + <span class="number">149</span>);</span><br><span class="line">  <span class="keyword">if</span> (x &gt; <span class="number">127</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0x7f800000</span>;</span><br><span class="line">  <span class="keyword">return</span> (x + <span class="number">127</span>) &lt;&lt; <span class="number">23</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>《深入理解计算机系统》学习</category>
+      </categories>
+      <tags>
+        <tag>《深入理解计算机系统》实验</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《C++Primer》学习笔记（第一部分第六章）</title>
     <url>/2020/05/06/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%89/</url>
     <content><![CDATA[<ul>
@@ -670,55 +665,6 @@ t=\sqrt[2]n\\
       </tags>
   </entry>
   <entry>
-    <title>《C++ Primer》学习笔记（第一部分第一章）</title>
-    <url>/2020/04/13/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89/</url>
-    <content><![CDATA[<h4 id="初识输入输出"><a href="#初识输入输出" class="headerlink" title="初识输入输出"></a>初识输入输出</h4><a id="more"></a>
-<p>一. 输入输出流</p>
-<ol>
-<li><p><strong>istream</strong>: 输入流</p>
-<p>1.1. cin: 标准输入</p>
-</li>
-<li><p>ostream: 输出流</p>
-<p>2.1. cout: 标准输出</p>
-<p>2.2. cerr: 输出警告和错误消息</p>
-<p>2.3. clog: 输出程序运行时的一般性消息</p>
-</li>
-</ol>
-<p>二. 输入输出运算符</p>
-<p> 1.输出运算符:’ &lt;&lt; ‘:输出运算符接收两个运算对象，左侧必须是ostream的运算对象，右侧运算对象是要打印值</p>
-<p> 2.操作符：std::endl :该效果是结束当前行，并保证输入流的所有输出都真正写入输出流。</p>
-<p> 3.输入运算符: ‘ &gt;&gt; ‘:与输出运算符类似，该运算符左侧接受一个istream作为他的左侧运算对象，接受一个对象作为右侧运算对象</p>
-<h4 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h4><p><strong><em>注意：在for语句中，如果我们在for语句外已经定义了一个变量如i,那么如果我们在for语句如此写：for(int i; ; ),那么for循环里的i是与循环外的i无关的，即可将for语句当成单独函数。</em></strong></p>
-<ul>
-<li>读取数量不定的输入数据：当我们使用istream对象作为作为条件是，如：while（cin &gt;&gt; value），它的效果是检测流的状态，只要输入正常，那么它就返回true。而遇到文件结束符（Windows里时Ctrl+Z,其它系统是Ctrl+D）或是遇到无效输入时（类型不匹配），istream才会返回false。</li>
-</ul>
-<h4 id="小结术语"><a href="#小结术语" class="headerlink" title="小结术语"></a>小结术语</h4><ol>
-<li>命名空间（namespace）：可以将库定义的名字放在单一位置处。</li>
-<li>std：标准库所使用的命名空间。</li>
-<li>操纵符：在读写流时用来“操纵流”本身，如std::endl。</li>
-<li>库类型：标准库定义的类型。</li>
-<li>方法：成员函数的术名。</li>
-<li>‘ . ‘运算符: 左侧为类类型对象，右侧时此对象的成员的名字。</li>
-<li>‘ :: ‘运算符：作用域运算符</li>
-</ol>
-<h5 id="注：’-‘-运算符和’-‘-运算符的区别："><a href="#注：’-‘-运算符和’-‘-运算符的区别：" class="headerlink" title="注：’ . ‘ 运算符和’ :: ‘ 运算符的区别："></a>注：’ . ‘ 运算符和’ :: ‘ 运算符的区别：</h5><ol>
-<li><p>名称和用法都不一样<br>1.1. “::” 操作符的用法有很多<br>（1）代表全局作用域  用法： ::name<br>（2）代表类作用域   用法:       class::name<br>（3）名字空间作用域  用法： namespace::name</p>
-<p>1.2. “.” 操作符的主要作用是成员选择<br>（1）用法:     object.name</p>
-</li>
-</ol>
-<p>   ​    <strong><em>ps:</em></strong></p>
-<p>   （1）’ :: ‘    针对 <strong>类</strong>，表示作用域</p>
-<p>   （2）’ . ‘     针对 <strong>对象</strong>，表示成员选择</p>
-<p>   所以呢，类的静态成员（静态成员属于类），使用 ‘ :: ‘ 调用。</p>
-]]></content>
-      <categories>
-        <category>C++学习笔记</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《C++Primer》学习笔记（第一部分第四·五章）</title>
     <url>/2020/04/26/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%E7%AC%AC%E5%9B%9B%C2%B7%E4%BA%94%E7%AB%A0%EF%BC%89/</url>
     <content><![CDATA[<h1 id="第四章"><a href="#第四章" class="headerlink" title="第四章"></a>第四章</h1><h2 id="1-基础"><a href="#1-基础" class="headerlink" title="1.基础"></a>1.基础</h2><h5 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h5><ul>
@@ -758,6 +704,62 @@ t=\sqrt[2]n\\
       </tags>
   </entry>
   <entry>
+    <title>《C++Primer》学习笔记（第二部分第八章）</title>
+    <url>/2020/05/14/%E3%80%8AC++Primer%E3%80%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%E7%AC%AC%E5%85%AB%E7%AB%A0%EF%BC%89/</url>
+    <content><![CDATA[<p>​        C++语言不直接处理输入输出，而是通过一族定义在标准库中的类型处理IO。这些类型支持从设备读取数据，向设备写入数据的IO操作。</p>
+<a id="more"></a>
+<h2 id="IO类"><a href="#IO类" class="headerlink" title="IO类"></a>IO类</h2><ul>
+<li><p>为支持不同种类种类的IO处理操作，我们标准库定义了一些IO类型：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">头文件    		类型                                          </span><br><span class="line">iostream	  istream,wistream 从流读取数据                  </span><br><span class="line">              ostream,wostream 向流写入数据            </span><br><span class="line">              iostream,wiostream 读写流             </span><br><span class="line">              </span><br><span class="line">fstream 	  ifstream,wifstream 从文件读取数据                  </span><br><span class="line">			 ofstream,wofstream 向文件写入数据                   </span><br><span class="line">              fstream,wfstream 读写文件    </span><br><span class="line">              </span><br><span class="line">sstream	      istringstream,wistringstream 从string读取数据     </span><br><span class="line">              ostringstream,wostringstream 从string写入数据     </span><br><span class="line">              stringstream,wstringstream 读写string</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>为了支持使用宽字符的语言，标准库定义了一组类型和对象来操作wchar_t类型的数据。宽字符版本的类型和函数名字以一个 w 开头。</p>
+</li>
+<li><p>标准库使我们能忽略这些不同类型的流之间的差异，这是通过继承机制实现的。我们通常可以将一个派生类对象当作基类对象使用。</p>
+</li>
+<li><p>IO对象无拷贝或赋值：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ofstream out1,out2;</span><br><span class="line"><span class="comment">//!  out1 = out2; 		错误：不能对流对象赋值</span></span><br><span class="line"><span class="comment">//！ ofstream print(ofstream);		错误：不能初始化ofstream参数</span></span><br><span class="line"><span class="comment">//！ out2 = print(out2);		错误：不能拷贝对象</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每个输出流都管理一个缓冲区，用来保存程序读写的数据。导致缓冲刷新（即数据真正写到输出设备或者文件）的原因有很多：</p>
+<ol>
+<li>程序正常结束。</li>
+<li>缓冲区满时，需要刷新缓冲，而后新的数据才能继续写入缓冲区。</li>
+<li>可以使用操纵符如 <code>endl</code> 来显式刷新缓冲区。</li>
+<li>在每个输出操作之后，我们可以用操纵符 <code>unitbuf</code> 设置流内部状态，来清空缓冲区。默认情况下，对 <code>cerr</code> 是设置 <code>unitbuf</code> 的，因此写到 <code>cerr</code> 的内容都是立即刷新的。</li>
+<li>一个输出流可能被关联到另一个流。这种情况下，读写被关联的流时，关联到的流的缓冲区会被刷新。</li>
+</ol>
+</li>
+</ul>
+<h2 id="文件输入输出"><a href="#文件输入输出" class="headerlink" title="文件输入输出"></a>文件输入输出</h2><ul>
+<li><p>我们可以用IO运算符读写文件，可以用<code>getline</code>从一个<code>ifstream</code>读取数据。<code>fstream</code>中定义的类型还增加了一些新的成员来管理与流关联的文件：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">fstream fstrm;		<span class="comment">//创建一个未绑定的文件流</span></span><br><span class="line"><span class="function">fstream <span class="title">fstrm</span><span class="params">(s)</span></span>;	<span class="comment">//创建一个fstream，并打开名叫s的文件</span></span><br><span class="line"><span class="function">fstream <span class="title">fstrm</span><span class="params">(s,mode)</span></span>;	<span class="comment">//与前一个构造函数类似，但按指定的mode打开文件</span></span><br><span class="line">fstrm.<span class="built_in">open</span>(s);	<span class="comment">//打开名为s的文件，并与fstrm绑定</span></span><br><span class="line">fstrm.<span class="built_in">close</span>();	<span class="comment">//关闭与fstrm绑定的文件</span></span><br><span class="line">fstrm.is_open();	</span><br><span class="line"><span class="comment">//返回一个布尔值，指出关联的文件是否成功打开且未关闭</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当一个 <code>fstream</code> 对象被销毁，close 会自动被调用。</p>
+</li>
+<li><p>每个流都有一个关联的文件模式，用来指定如何使用文件：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">in;		<span class="comment">//以读方式打开</span></span><br><span class="line">out;	<span class="comment">//以写方式打开</span></span><br><span class="line">app;	<span class="comment">//每次写操作前均定位到文件末尾</span></span><br><span class="line">ate;	<span class="comment">//打开文件后立即定位到文件末尾</span></span><br><span class="line">trunc;	<span class="comment">//截断文件</span></span><br><span class="line">binary;	<span class="comment">//以二进制方式进行IO</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>保留被 <code>ofstream</code> 打开的文件中已有数据的唯一方法是显式指定 <code>app</code> 或者 <code>in</code> 模式，在未指定打开模式时，意味着同时使用 <code>trunc</code> 模式，因此，打开文件的内容将被清空。</p>
+</li>
+</ul>
+<h2 id="string流"><a href="#string流" class="headerlink" title="string流"></a>string流</h2><ul>
+<li><p>考虑这样一个例子，假设一个文件，列出了一些人和他们的电话号码。我们程序会读取数据文件，创建一个vector来保存每个人的信息：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PersonInfo</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> name;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; phones;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readIn</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">string</span> <span class="built_in">line</span>,<span class="keyword">word</span>;</span><br><span class="line">    <span class="built_in">vector</span>&lt;PersonInfo&gt; people;</span><br><span class="line">    <span class="keyword">while</span>(getline(<span class="built_in">cin</span>,<span class="built_in">line</span>))&#123;	<span class="comment">//读取一整行保存到line</span></span><br><span class="line">        PersonInfo info;	<span class="comment">//创建保存此纪录数据的对象</span></span><br><span class="line">        <span class="function"><span class="built_in">istringstream</span> <span class="title">record</span><span class="params">(<span class="built_in">line</span>)</span></span>;</span><br><span class="line">        record &gt;&gt; info.name;</span><br><span class="line">        <span class="keyword">while</span>(record &gt;&gt; <span class="keyword">word</span>)</span><br><span class="line">            info.phones.push_back(<span class="keyword">word</span>);</span><br><span class="line">        people.push_back(info);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 <code>ostringstream</code> 来逐个构造输出，最后打印：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">To_out</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;entry : people)&#123;</span><br><span class="line">        <span class="built_in">ostringstream</span> formatted,badnums;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">const</span> <span class="keyword">auto</span> &amp;nums : entry.phones)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!valid(nums))&#123;</span><br><span class="line">            badNums &lt;&lt; <span class="string">" "</span> &lt;&lt; nums;</span><br><span class="line">            &#125;<span class="keyword">else</span></span><br><span class="line">                formatted &lt;&lt; <span class="string">" "</span> &lt;&lt; format(nums);	</span><br><span class="line">            	<span class="comment">//将格式化的字符串写入formatted</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(badNums.str().empty())	<span class="comment">//如果没有错误的数</span></span><br><span class="line">            os &lt;&lt; entry.name &lt;&lt; <span class="string">" "</span> &lt;&lt; formatted.str() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">cerr</span> &lt;&lt; <span class="string">"input error"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>C++学习笔记</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二维数组类</title>
     <url>/2020/05/07/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E7%B1%BB/</url>
     <content><![CDATA[<p>​    在编写二维数组类之前我一直认为二维指针与二维数组是等价，其实不然。二维指针是指向指针的指针，而二维数组是指向数组的数组。</p>
@@ -771,26 +773,6 @@ t=\sqrt[2]n\\
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>学生管理系统（持续更新）</title>
-    <url>/2020/04/08/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
-    <content><![CDATA[<p>​    最近一直在学习C++，就想着用C++语言自己做一个程序，就先从最简单的开始吧——学生管理系统（随着我的能力提高会逐步完善该程序）</p>
-<a id="more"></a>
-<p><strong>大致思路</strong>（<strong>利用思维导图给出</strong>）：</p>
-<p><img src="http://www.morenmoren.com/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B01.png" alt="大致思路"></p>
-<p><em>源码如下：</em></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Stu_data</span> &#123;</span></span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	<span class="built_in">string</span> sex;</span><br><span class="line">	<span class="keyword">int</span> num=<span class="number">0</span>;</span><br><span class="line">&#125;Data;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Data data;</span><br><span class="line">	Student* next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Linklist</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	Student* head;</span><br><span class="line">	Student* rear;      <span class="comment">//作为末节点</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Linklist();</span><br><span class="line">	~Linklist();</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Createlist</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Attach</span><span class="params">(<span class="built_in">string</span> name,<span class="built_in">string</span> sex,<span class="keyword">int</span> num,Student**rear)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Showlist</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		利用函数的重载来对不同类型的输入对象，选择如何进行检索，</span></span><br><span class="line"><span class="comment">		同时将该函数类型定义为Student*，在找到所要找的对象时，返</span></span><br><span class="line"><span class="comment">		回其所在链表的位置P。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line">	<span class="function">Student* <span class="title">Searchlist</span><span class="params">(<span class="built_in">string</span> name)</span></span>;</span><br><span class="line">	<span class="function">Student* <span class="title">Searchlist</span><span class="params">(<span class="keyword">int</span> num)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Deletedata</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Changelist</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	Linklist L;</span><br><span class="line">	L.Createlist();</span><br><span class="line">	L.Showlist();</span><br><span class="line">	L.Deletedata();</span><br><span class="line">	L.Showlist();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Linklist::Linklist() &#123;</span><br><span class="line">	n = <span class="number">0</span>;</span><br><span class="line">	head = <span class="keyword">new</span> Student;</span><br><span class="line">	head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	rear = head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Linklist::~Linklist() &#123;</span><br><span class="line">	<span class="keyword">delete</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Linklist::Createlist</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">string</span> name, sex;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"请按以下格式输入信息:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"学号，姓名，性别"</span> &lt;&lt;<span class="built_in">endl</span> ;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span>&gt;&gt; num &amp;&amp; num!=<span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; name &gt;&gt; sex;</span><br><span class="line">		Attach(name, sex, num, &amp;rear);</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> i;       <span class="comment">//返回有多少个节点（即有多少个人），暂时不需要</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//该Attach函数是在链表尾部添加新节点，并且rear始终作为链表末节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Attach</span><span class="params">(<span class="built_in">string</span> name, <span class="built_in">string</span> sex, <span class="keyword">int</span> num,Student**rear)</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = <span class="keyword">new</span> Student;</span><br><span class="line">	P-&gt;data.name = name;</span><br><span class="line">	P-&gt;data.sex = sex;</span><br><span class="line">	P-&gt;data.num = num;</span><br><span class="line">	P-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	(*rear)-&gt;next = P;</span><br><span class="line">	(*rear) = P;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Showlist</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = head;</span><br><span class="line">	<span class="keyword">while</span> (P-&gt;next) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"姓名:"</span> &lt;&lt; P-&gt;next-&gt;data.name</span><br><span class="line">			 &lt;&lt; <span class="string">" 性别："</span> &lt;&lt; P-&gt;next-&gt;data.sex</span><br><span class="line">			 &lt;&lt; <span class="string">" 学号:"</span> &lt;&lt; P-&gt;next-&gt;data.num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		P = P-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Student* <span class="title">Linklist::Searchlist</span><span class="params">(<span class="built_in">string</span> name)</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = head;</span><br><span class="line">		<span class="keyword">while</span> (P-&gt;next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (P-&gt;next-&gt;data.name == name) &#123;</span><br><span class="line">				<span class="keyword">return</span> P;</span><br><span class="line">			&#125;</span><br><span class="line">			P = P-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"未能找到相关信息"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Student* <span class="title">Linklist::Searchlist</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = head;</span><br><span class="line">		<span class="keyword">while</span> (P-&gt;next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (P-&gt;next-&gt;data.num == num) &#123;</span><br><span class="line">				<span class="keyword">return</span> P;</span><br><span class="line">			&#125;</span><br><span class="line">			P = P-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"未能找到相关信息"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Deletedata</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> name,choice;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	Student* P=<span class="keyword">new</span> Student;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要以何种方式（num/name）删除信息："</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; choice;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"num"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要删除哪个学号信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">		P = Searchlist(num);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"name"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要删除哪个学生信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line">		P = Searchlist(name);</span><br><span class="line">	&#125;</span><br><span class="line">	Student* T=<span class="keyword">new</span> Student;</span><br><span class="line">	T = P-&gt;next-&gt;next;</span><br><span class="line">	<span class="keyword">delete</span> P-&gt;next;</span><br><span class="line">	P-&gt;next = T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Changelist</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> name, choice;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	Student* P = <span class="keyword">new</span> Student;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要以何种方式（num/name）修改信息："</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; choice;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"num"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要修改哪个学号信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">		P = Searchlist(num);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"name"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要修改哪个学生信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line">		P = Searchlist(name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//结构中暂未添加保存成绩的数组，暂不具体做修改</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>2020.4.8：<strong>完成项</strong>：目前只完成链表的创建，链表指定节点的删除，链表节点信息的查找</p>
-<p><strong>运用C++新学的知识</strong>：函数重载，类的定义，类的构造函数与析构函数。</p>
-]]></content>
-      <categories>
-        <category>程序开发</category>
-      </categories>
-      <tags>
-        <tag>C/C++语言</tag>
       </tags>
   </entry>
   <entry>
@@ -822,6 +804,26 @@ t=\sqrt[2]n\\
       </categories>
       <tags>
         <tag>网页制作</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>学生管理系统（持续更新）</title>
+    <url>/2020/04/08/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/</url>
+    <content><![CDATA[<p>​    最近一直在学习C++，就想着用C++语言自己做一个程序，就先从最简单的开始吧——学生管理系统（随着我的能力提高会逐步完善该程序）</p>
+<a id="more"></a>
+<p><strong>大致思路</strong>（<strong>利用思维导图给出</strong>）：</p>
+<p><img src="http://www.morenmoren.com/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B01.png" alt="大致思路"></p>
+<p><em>源码如下：</em></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Stu_data</span> &#123;</span></span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	<span class="built_in">string</span> sex;</span><br><span class="line">	<span class="keyword">int</span> num=<span class="number">0</span>;</span><br><span class="line">&#125;Data;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Data data;</span><br><span class="line">	Student* next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Linklist</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	Student* head;</span><br><span class="line">	Student* rear;      <span class="comment">//作为末节点</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	Linklist();</span><br><span class="line">	~Linklist();</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">Createlist</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Attach</span><span class="params">(<span class="built_in">string</span> name,<span class="built_in">string</span> sex,<span class="keyword">int</span> num,Student**rear)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Showlist</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		利用函数的重载来对不同类型的输入对象，选择如何进行检索，</span></span><br><span class="line"><span class="comment">		同时将该函数类型定义为Student*，在找到所要找的对象时，返</span></span><br><span class="line"><span class="comment">		回其所在链表的位置P。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line">	<span class="function">Student* <span class="title">Searchlist</span><span class="params">(<span class="built_in">string</span> name)</span></span>;</span><br><span class="line">	<span class="function">Student* <span class="title">Searchlist</span><span class="params">(<span class="keyword">int</span> num)</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Deletedata</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">Changelist</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	Linklist L;</span><br><span class="line">	L.Createlist();</span><br><span class="line">	L.Showlist();</span><br><span class="line">	L.Deletedata();</span><br><span class="line">	L.Showlist();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Linklist::Linklist() &#123;</span><br><span class="line">	n = <span class="number">0</span>;</span><br><span class="line">	head = <span class="keyword">new</span> Student;</span><br><span class="line">	head-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	rear = head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Linklist::~Linklist() &#123;</span><br><span class="line">	<span class="keyword">delete</span> head;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Linklist::Createlist</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="built_in">string</span> name, sex;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"请按以下格式输入信息:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"学号，姓名，性别"</span> &lt;&lt;<span class="built_in">endl</span> ;</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">cin</span>&gt;&gt; num &amp;&amp; num!=<span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; name &gt;&gt; sex;</span><br><span class="line">		Attach(name, sex, num, &amp;rear);</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> i;       <span class="comment">//返回有多少个节点（即有多少个人），暂时不需要</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//该Attach函数是在链表尾部添加新节点，并且rear始终作为链表末节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Attach</span><span class="params">(<span class="built_in">string</span> name, <span class="built_in">string</span> sex, <span class="keyword">int</span> num,Student**rear)</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = <span class="keyword">new</span> Student;</span><br><span class="line">	P-&gt;data.name = name;</span><br><span class="line">	P-&gt;data.sex = sex;</span><br><span class="line">	P-&gt;data.num = num;</span><br><span class="line">	P-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">	(*rear)-&gt;next = P;</span><br><span class="line">	(*rear) = P;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Showlist</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = head;</span><br><span class="line">	<span class="keyword">while</span> (P-&gt;next) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"姓名:"</span> &lt;&lt; P-&gt;next-&gt;data.name</span><br><span class="line">			 &lt;&lt; <span class="string">" 性别："</span> &lt;&lt; P-&gt;next-&gt;data.sex</span><br><span class="line">			 &lt;&lt; <span class="string">" 学号:"</span> &lt;&lt; P-&gt;next-&gt;data.num &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		P = P-&gt;next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Student* <span class="title">Linklist::Searchlist</span><span class="params">(<span class="built_in">string</span> name)</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = head;</span><br><span class="line">		<span class="keyword">while</span> (P-&gt;next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (P-&gt;next-&gt;data.name == name) &#123;</span><br><span class="line">				<span class="keyword">return</span> P;</span><br><span class="line">			&#125;</span><br><span class="line">			P = P-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"未能找到相关信息"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Student* <span class="title">Linklist::Searchlist</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</span><br><span class="line">	Student* P;</span><br><span class="line">	P = head;</span><br><span class="line">		<span class="keyword">while</span> (P-&gt;next) &#123;</span><br><span class="line">			<span class="keyword">if</span> (P-&gt;next-&gt;data.num == num) &#123;</span><br><span class="line">				<span class="keyword">return</span> P;</span><br><span class="line">			&#125;</span><br><span class="line">			P = P-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"未能找到相关信息"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Deletedata</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> name,choice;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	Student* P=<span class="keyword">new</span> Student;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要以何种方式（num/name）删除信息："</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; choice;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"num"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要删除哪个学号信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">		P = Searchlist(num);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"name"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要删除哪个学生信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line">		P = Searchlist(name);</span><br><span class="line">	&#125;</span><br><span class="line">	Student* T=<span class="keyword">new</span> Student;</span><br><span class="line">	T = P-&gt;next-&gt;next;</span><br><span class="line">	<span class="keyword">delete</span> P-&gt;next;</span><br><span class="line">	P-&gt;next = T;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Linklist::Changelist</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">string</span> name, choice;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	Student* P = <span class="keyword">new</span> Student;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要以何种方式（num/name）修改信息："</span>;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; choice;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"num"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要修改哪个学号信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; num;</span><br><span class="line">		P = Searchlist(num);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (choice == <span class="string">"name"</span>) &#123;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">"你要修改哪个学生信息："</span>;</span><br><span class="line">		<span class="built_in">cin</span> &gt;&gt; name;</span><br><span class="line">		P = Searchlist(name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//结构中暂未添加保存成绩的数组，暂不具体做修改</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<p>2020.4.8：<strong>完成项</strong>：目前只完成链表的创建，链表指定节点的删除，链表节点信息的查找</p>
+<p><strong>运用C++新学的知识</strong>：函数重载，类的定义，类的构造函数与析构函数。</p>
+]]></content>
+      <categories>
+        <category>程序开发</category>
+      </categories>
+      <tags>
+        <tag>C/C++语言</tag>
       </tags>
   </entry>
   <entry>
